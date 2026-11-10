@@ -6,6 +6,10 @@ import { MODES, cineOn, cineMode, setCineMode, shareOn, bestFx, loadCine } from 
 import { GAME_INFO, gameTile, dropRow, betsTable, newsCard, EVENT_KIND, catRu, stat, progress, featureOff } from './shared.js';
 const sellApi = async (b) => { const r = await api('/api/inventory/sell', b); sfx('sell'); return r; };
 
+const CASE_CAT_RU = { starter: 'Стартовые', premium: 'Премиум', knives: 'Ножи', gloves: 'Перчатки', legendary: 'Легендарные', themed: 'Тематические', weapon: 'По оружию',
+  cheap: 'Дешёвые', rare: 'Редкие', collection: 'Коллекционные', official: 'Официальные', knives_gloves: 'Ножи и перчатки', rarity: 'По редкости', souvenir: 'Сувенирные',
+  mid: 'Средние', expensive: 'Дорогие', elite: 'Элитные', covert: 'Тайные', exclusive: 'Эксклюзивные', awp: 'AWP', ak47: 'AK-47', m4: 'M4A4 / M4A1-S', pistols: 'Пистолеты',
+  smg: 'Пистолеты-пулемёты', heavy: 'Тяжёлое оружие', sniper: 'Снайперские', new: 'Новые', popular: 'Популярные' };
 const debounce = (fn, ms = 300) => { let t = 0; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 
 // ================= ГЛАВНАЯ =================
@@ -26,18 +30,21 @@ page('/', async (ctx) => {
         <div class="row gap"><a class="btn lg" href="/cases">Открыть кейсы</a><a class="btn ghost lg" href="/battles">${icon('battles')} Битвы кейсов</a></div>
         <div class="hero-stats"><div><b>${num(s.cases)}</b><span>кейсов</span></div><div><b>${num(s.items)}</b><span>скинов</span></div><div><b>${num(s.opens)}</b><span>открытий</span></div><div><b>${num(s.users)}</b><span>игроков</span></div></div>
       </div>
-      <div class="hero-art">${img(b.image || '/img/items/Kilowatt-ak.png', '', title)}</div>
+      <div class="hero-art">${img(b.image || d.heroImage || '/img/brand/logo.svg', '', title)}</div>
     </section>
     <div class="quick">
       <a href="/cases"><span>${icon('cases')}</span>Кейсы</a><a href="/battles"><span>${icon('battles')}</span>Битвы</a><a href="/upgrade"><span>${icon('upgrade')}</span>Апгрейд</a>
       <a href="/contracts"><span>${icon('contracts')}</span>Контракты</a><a href="/games"><span>${icon('games')}</span>Игры</a><a href="/pass"><span>${icon('pass')}</span>BURGER PASS</a>
     </div>
 
+    ${d.featured?.length ? html`<section class="sec"><div class="sec-head"><h2><span class="ic">${icon('star')}</span>Рекомендуемые кейсы</h2><a href="/cases?category=featured">Все рекомендуемые →</a></div>
+      <div class="grid g-feat">${d.featured.slice(0, 4).map((c) => caseCard(c, { cls: 'xl', desc: true, stats: true }))}</div></section>` : ''}
+
     <section class="sec"><div class="sec-head"><h2><span class="ic">${icon('flame')}</span>Популярные кейсы</h2><a href="/cases?category=popular">Все кейсы →</a></div>
-      ${d.popular?.length ? html`<div class="grid g-cases">${d.popular.map(caseCard)}</div>` : empty('Кейсы скоро появятся.')}</section>
+      ${d.popular?.length ? html`<div class="grid g-cases">${d.popular.map((c) => caseCard(c))}</div>` : empty('Кейсы скоро появятся.')}</section>
 
     <section class="sec"><div class="sec-head"><h2><span class="ic">${icon('sparkles')}</span>Новые кейсы</h2><a href="/cases?category=new&sort=new">Смотреть →</a></div>
-      <div class="grid g-cases">${(d.fresh || []).slice(0, 10).map(caseCard)}</div></section>
+      <div class="grid g-cases">${(d.fresh || []).slice(0, 10).map((c) => caseCard(c))}</div></section>
 
     <section class="sec"><div class="sec-head"><h2><span class="ic">${icon('games')}</span>Игры</h2><a href="/games">Все игры →</a></div>
       <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">${games.map((g) => gameTile(g.key, g.enabled))}</div></section>
@@ -76,41 +83,79 @@ page('/', async (ctx) => {
 }, { title: 'Кейсы CS2' });
 
 // ================= КАТАЛОГ КЕЙСОВ =================
+const GROUP_ICON = { all: 'grid', featured: 'star', new: 'sparkles', starter: 'zap', premium: 'gem', knives: 'sword', gloves: 'hand', legendary: 'crown', themed: 'layers', weapon: 'target' };
+const PRICE_BANDS = [['', '', 'Любая цена'], ['', '100', 'до 100 ₽'], ['100', '1000', '100 – 1 000 ₽'], ['1000', '10000', '1 000 – 10 000 ₽'], ['10000', '', 'от 10 000 ₽']];
+const SUB_TAGS = ['ak47', 'awp', 'm4', 'pistols', 'smg', 'heavy', 'sniper', 'covert', 'official', 'collection', 'rarity', 'souvenir'];
+const GROUP_HINT = {
+  starter: 'Доступные кейсы для первых открытий.', premium: 'Дорогие скины и высокая ставка.', knives: 'Кейсы с настоящими ножами CS2.', gloves: 'Перчатки всех моделей.',
+  legendary: 'Dragon Lore, Howl, Wild Lotus и другие легенды.', themed: 'Авторские подборки по стилю.', weapon: 'Только одно оружие или класс оружия.',
+};
 page('/cases', async (ctx) => {
   const st = { q: ctx.q.get('q') || '', category: ctx.q.get('category') || 'all', sort: ctx.q.get('sort') || '', min: ctx.q.get('min') || '', max: ctx.q.get('max') || '', item: ctx.q.get('item') || '' };
-  mount(ctx.el, html`<div class="wrap">${head('Кейсы CS2', 'Выбирайте кейс, смотрите содержимое и шансы до открытия.', html`<a class="btn ghost" href="/battles/new">${icon('battles')} Создать битву</a>`)}
-    <div class="filters">
-      <label class="search"><input name="q" placeholder="Поиск кейса" value="${st.q}" aria-label="Поиск кейса"></label>
-      <label class="search" style="flex:1 1 200px"><input name="item" placeholder="Кейсы со скином…" value="${st.item}" aria-label="Поиск по скину"></label>
-      <select name="sort" aria-label="Сортировка">${[['', 'По популярности'], ['new', 'Сначала новые'], ['price_asc', 'Сначала дешёвые'], ['price_desc', 'Сначала дорогие'], ['rtp', 'Лучшая отдача'], ['name', 'По названию']].map(([k, l]) => html`<option value="${k}" ${st.sort === k ? raw('selected') : ''}>${l}</option>`)}</select>
-      <input name="min" type="number" min="0" step="1" placeholder="Цена от" value="${st.min}" style="width:120px" aria-label="Цена от">
-      <input name="max" type="number" min="0" step="1" placeholder="до" value="${st.max}" style="width:110px" aria-label="Цена до">
+  mount(ctx.el, html`<div class="wrap">${head('Кейсы CS2', 'Выбирайте кейс, смотрите содержимое и точные шансы до открытия.', html`<a class="btn ghost" href="/battles/new">${icon('battles')} Создать битву</a>`)}
+    <div class="cat-bar">
+      <nav class="cat-tabs" data-tabs aria-label="Категории кейсов"></nav>
+      <div class="filters">
+        <label class="search"><input name="q" placeholder="Название кейса" value="${st.q}" aria-label="Поиск кейса" autocomplete="off"></label>
+        <label class="search" style="flex:1 1 200px"><input name="item" placeholder="Кейсы со скином…" value="${st.item}" aria-label="Поиск по скину" autocomplete="off"></label>
+        <select name="sort" aria-label="Сортировка">${[['', 'По популярности'], ['new', 'Сначала новые'], ['price_asc', 'Сначала дешёвые'], ['price_desc', 'Сначала дорогие'], ['rtp', 'Лучшая отдача'], ['name', 'По названию']].map(([k, l]) => html`<option value="${k}" ${st.sort === k ? raw('selected') : ''}>${l}</option>`)}</select>
+      </div>
+      <div class="price-row"><div class="seg" data-bands>${PRICE_BANDS.map(([a, b, l]) => html`<button type="button" data-band="${a}|${b}">${l}</button>`)}</div>
+        <span class="price-in"><input name="min" type="number" min="0" step="1" placeholder="от, ₽" value="${st.min}" aria-label="Цена от"><span class="dim">—</span><input name="max" type="number" min="0" step="1" placeholder="до, ₽" value="${st.max}" aria-label="Цена до"></span></div>
+      <div class="chips scroll" data-subs></div>
     </div>
-    <div class="chips scroll mb" data-chips></div>
     <div data-list>${loader()}</div></div>`);
-  let first = true;
+  const browsing = () => st.category === 'all' && !st.q && !st.item && !st.min && !st.max && !st.sort;
+  const markBands = () => { for (const b of $$('[data-band]', ctx.el)) b.classList.toggle('on', b.dataset.band === `${st.min}|${st.max}`); };
+  const section = (key, label, list, more = true) => html`<section class="sec cat-sec" id="g-${key}"><div class="sec-head"><h2><span class="ic">${icon(GROUP_ICON[key] || 'cases')}</span>${label}<span class="n">${list.length}</span></h2>
+      ${more ? html`<button class="lnk" data-cat="${key}">Все ${label.toLowerCase()} →</button>` : ''}</div>${GROUP_HINT[key] ? html`<p class="muted sm cat-hint">${GROUP_HINT[key]}</p>` : ''}
+      <div class="grid g-cases">${list.map((c) => caseCard(c, { group: false }))}</div></section>`;
   const load = async () => {
-    setQuery({ ...st, category: st.category === 'all' ? '' : st.category });
-    const r = await api('/api/cases' + qs({ ...st, category: st.category === 'all' ? '' : st.category }));
+    const cat = st.category === 'all' ? '' : st.category;
+    setQuery({ ...st, category: cat });
+    markBands();
+    const r = await api('/api/cases' + qs({ ...st, category: cat }));
     if (!ctx.alive()) return;
-    const cats = { all: 'Все', ...r.categories };
-    mount($('[data-chips]', ctx.el), html`${Object.entries(cats).filter(([k]) => k === 'all' || k === 'popular' || k === 'new' || r.counts[k]).map(([k, l]) => html`<button class="chip ${st.category === k ? 'on' : ''}" data-cat="${k}">${l}${r.counts[k] ? html`<span class="n">${r.counts[k]}</span>` : ''}</button>`)}`);
-    mount($('[data-list]', ctx.el), r.cases.length ? html`<p class="muted sm">Найдено кейсов: ${r.cases.length}</p><div class="grid g-cases">${r.cases.map(caseCard)}</div>` : empty('По вашему запросу ничего не найдено.', html`<button class="btn ghost" data-reset>Сбросить фильтры</button>`));
-    first = false;
+    const tabs = [['all', 'Все'], ['featured', 'Рекомендуемые'], ['new', 'Новые'], ...(r.groups || []).map((g) => [g.key, g.label])].filter(([k]) => k === 'all' || r.counts[k]);
+    mount($('[data-tabs]', ctx.el), html`${tabs.map(([k, l]) => html`<button class="cat-tab ${st.category === k ? 'on' : ''}" data-cat="${k}"><span class="ic">${icon(GROUP_ICON[k] || 'cases')}</span><span>${l}</span>${r.counts[k] ? html`<span class="n">${r.counts[k]}</span>` : ''}</button>`)}`);
+    mount($('[data-subs]', ctx.el), html`${SUB_TAGS.filter((k) => r.counts[k]).map((k) => html`<button class="chip ${st.category === k ? 'on' : ''}" data-cat="${k}">${r.categories[k] || k}<span class="n">${r.counts[k]}</span></button>`)}`);
+    const list = r.cases || [];
+    if (!list.length) { mount($('[data-list]', ctx.el), empty('По вашему запросу ничего не найдено.', html`<button class="btn ghost" data-reset>Сбросить фильтры</button>`)); return; }
+    if (browsing()) {
+      const feat = list.filter((c) => c.featured).sort((a, b) => a.price - b.price);
+      const byPrice = (a, b) => a.price - b.price;
+      const groups = (r.groups || []).map((g) => [g.key, g.label, list.filter((c) => c.group === g.key).sort(byPrice)]).filter(([, , l]) => l.length);
+      const rest = list.filter((c) => !c.group);
+      mount($('[data-list]', ctx.el), html`
+        ${feat.length ? html`<section class="sec feat-sec"><div class="sec-head"><h2><span class="ic">${icon('star')}</span>Рекомендуемые</h2><button class="lnk" data-cat="featured">Все →</button></div>
+          <div class="grid g-feat">${feat.slice(0, 8).map((c) => caseCard(c, { cls: 'xl', desc: true, stats: true }))}</div></section>` : ''}
+        <nav class="cat-jump" aria-label="Разделы">${groups.map(([k, l, g]) => html`<a href="#g-${k}"><span class="ic">${icon(GROUP_ICON[k])}</span>${l}<span class="n">${g.length}</span></a>`)}</nav>
+        ${groups.map(([k, l, g]) => section(k, l, g))}
+        ${rest.length ? section('other', 'Другие кейсы', rest, false) : ''}`);
+    } else {
+      mount($('[data-list]', ctx.el), html`<p class="muted sm">Найдено кейсов: ${list.length}</p><div class="grid g-cases">${list.map((c) => caseCard(c))}</div>`);
+    }
   };
   const later = debounce(() => load().catch(fail));
   ctx.el.addEventListener('input', (e) => { const n = e.target.name; if (n in st) { st[n] = e.target.value.trim(); later(); } });
-  on(ctx.el, 'click', '[data-cat]', (e, b) => { st.category = b.dataset.cat; if (st.category === 'new' && !st.sort) st.sort = 'new'; load().catch(fail); });
-  on(ctx.el, 'click', '[data-reset]', () => { Object.assign(st, { q: '', category: 'all', sort: '', min: '', max: '', item: '' }); for (const el of $$('.filters input, .filters select', ctx.el)) el.value = ''; load().catch(fail); });
+  on(ctx.el, 'click', '[data-cat]', (e, b) => { e.preventDefault(); st.category = b.dataset.cat; if (st.category === 'new' && !st.sort) st.sort = 'new'; load().then(() => $('.cat-bar', ctx.el)?.scrollIntoView({ behavior: 'smooth', block: 'start' })).catch(fail); });
+  on(ctx.el, 'click', '[data-band]', (e, b) => { const [a, z] = b.dataset.band.split('|'); st.min = a; st.max = z; $('input[name=min]', ctx.el).value = a; $('input[name=max]', ctx.el).value = z; load().catch(fail); });
+  on(ctx.el, 'click', '.cat-jump a', (e, a) => { e.preventDefault(); $(a.getAttribute('href'), ctx.el)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  on(ctx.el, 'click', '[data-reset]', () => { Object.assign(st, { q: '', category: 'all', sort: '', min: '', max: '', item: '' }); for (const el of $$('.filters input, .filters select, .price-in input', ctx.el)) el.value = ''; load().catch(fail); });
   await load();
 }, { title: 'Кейсы' });
 
 // ================= СТРАНИЦА КЕЙСА И ОТКРЫТИЕ =================
+const pct4 = (x) => ((Number(x) || 0) * 100).toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) + '%';
 function wearsModal(it) {
-  modal(html`<h3>${it.name}</h3><div class="row gap mb"><span class="badge" style="color:${cssColor(it.color)}">${rarityRu(it.rarityName)}</span>${it.stattrak ? html`<span class="tag st">StatTrak™ возможен</span>` : ''}</div>
-    <div class="item-img" style="max-width:280px;margin:0 auto 12px">${img(it.image, '', it.name)}</div>
-    <p class="muted sm">Шанс предмета в кейсе: <b>${pct(it.chance)}</b>. Качество определяется float-значением при выпадении.</p>
-    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Качество</th><th class="r">Шанс</th><th class="r">Цена</th></tr></thead><tbody>${(it.wears || []).map((w) => html`<tr><td>${w.wear ? WEARS[w.wear] + ' (' + w.wear + ')' : 'Без качества'}</td><td class="r">${pct(w.p * it.chance)}</td><td class="r">${bc(w.price)}</td></tr>`)}</tbody></table></div>
+  // Изображение для каждого качества — официальное изображение Steam именно этого износа.
+  const seen = new Set();
+  const shots = (it.wears || []).filter((w) => w.image && !seen.has(w.image) && seen.add(w.image));
+  modal(html`<h3>${it.name}</h3><div class="row gap mb"><span class="badge" style="color:${cssColor(it.color)}">${rarityRu(it.rarityName)}</span>${it.phase ? html`<span class="tag ph">${it.phase}</span>` : ''}${it.stattrak ? html`<span class="tag st">StatTrak™ возможен</span>` : ''}</div>
+    ${shots.length > 1 ? html`<div class="wear-shots">${shots.map((w) => html`<figure>${img(w.image, '', it.name + ' ' + (w.wear || ''))}<figcaption>${(it.wears || []).filter((x) => x.image === w.image).map((x) => x.wear).join(' · ')}</figcaption></figure>`)}</div>`
+      : html`<div class="item-img" style="max-width:280px;margin:0 auto 12px">${img(shots[0]?.image || it.image, '', it.name)}</div>`}
+    <p class="muted sm">Шанс предмета в кейсе: <b>${pct4(it.chance)}</b>${it.weight ? html` (вес ${num(it.weight)})` : ''}. Качество определяется float-значением при выпадении.</p>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Качество</th><th class="r">Шанс</th><th class="r">Цена</th></tr></thead><tbody>${(it.wears || []).map((w) => html`<tr><td>${w.wear ? WEARS[w.wear] + ' (' + w.wear + ')' : 'Без качества'}</td><td class="r">${pct4(w.p * it.chance)}</td><td class="r">${bc(w.price)}</td></tr>`)}</tbody></table></div>
     <div class="row end mt"><a class="btn ghost" href="/skins/${it.id}" data-close>Карточка скина</a></div>`);
 }
 // ---------- кинодроп до выпадения ----------
@@ -156,7 +201,7 @@ async function casePage(ctx) {
     <section class="case-hero" style="--ac:${cssColor(c.accent, '#FFB627')}">
       <div class="ci">${coverHtml(c, 'lg')}</div>
       <div>
-        <div class="chips mb">${(c.categories || []).slice(0, 5).map((k) => html`<a class="chip" href="/cases?category=${k}">${k}</a>`)}</div>
+        <div class="chips mb">${c.featured ? html`<a class="chip on" href="/cases?category=featured">${icon('star')} Рекомендуем</a>` : ''}${(c.categories || []).filter((k) => CASE_CAT_RU[k]).slice(0, 5).map((k) => html`<a class="chip" href="/cases?category=${k}">${CASE_CAT_RU[k]}</a>`)}</div>
         <h1>${c.name}</h1>
         ${c.description ? html`<p class="muted">${c.description}</p>` : ''}
         <div class="row gap-l"><div><div class="xs dim">ЦЕНА</div><div class="lg">${bc(c.price)}</div></div><div><div class="xs dim">ПРЕДМЕТОВ</div><b class="lg">${items.length}</b></div><div><div class="xs dim">ОТКРЫТИЙ</div><b class="lg">${num(c.opens)}</b></div></div>
@@ -172,6 +217,7 @@ async function casePage(ctx) {
     <div data-result></div>
     <section class="sec"><div class="sec-head"><h2>Содержимое и шансы</h2><a class="sm" href="/fair">Как рассчитывается результат →</a></div>
       <div class="rar-legend">${Object.entries(rar).map(([k, r]) => html`<span style="--rc:${cssColor(r.color)}"><i></i>${rarityRu(k)} · ${pct(r.chance)}</span>`)}</div>
+      <p class="odds-sum sm">${icon('check')} Сумма шансов всех ${items.length} предметов: <b>${pct4(items.reduce((a, x) => a + (x.chance || 0), 0))}</b>${c.exact ? html` · точные целые веса, сумма ${num(c.weightTotal)} = 100%` : ''} · ожидаемая стоимость ${bc(c.ev)} · отдача ${Math.round((c.rtp || 0) * 100)}%</p>
       <div class="grid g-items chance-list">${items.map((it, i) => itemCard(it, { id: i, chance: it.chance }))}</div>
     </section>
     ${d.recent?.length ? html`<section class="sec"><div class="sec-head"><h2>Последние дропы из этого кейса</h2></div><div class="grid g2">${d.recent.slice(0, 10).map((x) => dropRow({ ...x, caseName: c.name }))}</div></section>` : ''}
