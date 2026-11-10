@@ -164,6 +164,25 @@ UPDATE news SET title=replace(title,' BC',' ₽') WHERE title LIKE '% BC%';
 UPDATE achievements SET icon=CASE WHEN icon LIKE '🍔%' THEN 'pass' WHEN icon LIKE '🍟%' THEN 'flame' WHEN icon LIKE '👨%' THEN 'award' WHEN icon LIKE '⬆%' THEN 'upgrade' WHEN icon LIKE '🚀%' THEN 'crash' WHEN icon LIKE '📜%' THEN 'contracts' WHEN icon LIKE '⚔%' THEN 'battles' WHEN icon LIKE '🤝%' THEN 'friends' WHEN icon LIKE '💎%' THEN 'gem' WHEN icon LIKE '📅%' THEN 'calendar' WHEN icon LIKE '🔥%' THEN 'flame' WHEN icon LIKE '🏆%' THEN 'trophy' WHEN icon LIKE '🏅%' THEN 'medal' ELSE 'medal' END WHERE icon IS NOT NULL AND icon<>'' AND icon NOT GLOB '[a-zA-Z]*';
 CREATE INDEX IF NOT EXISTS bets_game_user ON bets(game, user_id, id);
 `,
+  /* 4: фазы Doppler, изображения по качеству, статус проверки изображений, витрина кейсов, уровни кинодропов */ `
+ALTER TABLE items ADD COLUMN phase TEXT;
+ALTER TABLE items ADD COLUMN image_status TEXT;
+ALTER TABLE items ADD COLUMN image_source TEXT;
+ALTER TABLE items ADD COLUMN image_checked_at INTEGER;
+CREATE INDEX IF NOT EXISTS items_name_phase ON items(name, phase);
+CREATE TABLE IF NOT EXISTS item_images(item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE, wear TEXT NOT NULL,
+  image TEXT NOT NULL, source TEXT, verified_at INTEGER, PRIMARY KEY(item_id, wear));
+ALTER TABLE cases ADD COLUMN featured INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE cases ADD COLUMN cover_theme TEXT;
+ALTER TABLE cases ADD COLUMN accent TEXT;
+CREATE INDEX IF NOT EXISTS cases_status_sort ON cases(status, sort);
+UPDATE settings SET value=json_set(value, '$.levels', json_object(
+  'rare', MIN(150000, COALESCE(json_extract(value, '$.godlike'), 500000) / 2),
+  'epic', COALESCE(json_extract(value, '$.godlike'), 500000),
+  'legendary', COALESCE(json_extract(value, '$.mythic'), 2500000),
+  'godlike', COALESCE(json_extract(value, '$.divine'), 10000000)))
+  WHERE key='drop_fx' AND json_extract(value, '$.levels') IS NULL;
+`,
 ];
 
 export function migrate() {

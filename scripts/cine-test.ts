@@ -34,7 +34,7 @@ console.log('BURGER SKIN: автотест кинодропов на време�
 
 let r = await req('GET', '/api/site');
 const sfx = r.j?.dropFx;
-check('Сайт отдаёт настройки кинодропов', r.status === 200 && sfx && typeof sfx.enabled === 'boolean' && !!sfx.tiers, r.t);
+check('Сайт отдаёт настройки кинодропов', r.status === 200 && sfx && typeof sfx.enabled === 'boolean' && !!sfx.levels && typeof sfx.trigger === 'string', r.t);
 r = await req('GET', '/js/cinematic.js');
 check('Модуль сцен отдаётся', r.status === 200 && r.t.includes('playDrop'), String(r.status));
 r = await req('GET', '/cine.css');
@@ -48,7 +48,7 @@ r = await req('GET', '/api/me');
 const me = r.j?.user || r.j;
 r = await req('GET', '/api/admin/drop-fx');
 check('Игрок не видит админку кинодропов', r.status === 403, String(r.status));
-r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { enabled: true, godlike: 100, mythic: 200, divine: 300, min_x: 0, knife_scene: true, glove_scene: true, share: true, default_mode: 'full' } });
+r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { enabled: true, trigger: 'standard', levels: { rare: 100, epic: 200, legendary: 300, godlike: 400 }, min_x: 0, knife_scene: true, glove_scene: true, share: true, default_mode: 'full' } });
 check('Игрок не может менять пороги', r.status === 403, String(r.status));
 
 dbm.run("UPDATE users SET role='OWNER' WHERE id=?", me.id);
@@ -58,7 +58,7 @@ check('Вход владельца', r.status === 200, r.t);
 r = await req('GET', '/api/admin/drop-fx');
 check('Админка: статистика уровней и кейсов', r.status === 200 && !!r.j?.settings && !!r.j?.catalog && Array.isArray(r.j?.cases) && !!r.j?.samples, r.t);
 const statsBefore = r.j;
-r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, godlike: 900000, mythic: 500000 } });
+r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, levels: { rare: 900000, epic: 500000, legendary: 2500000, godlike: 10000000 } } });
 check('Неверный порядок порогов отклоняется', r.status === 400, String(r.status) + ' ' + r.t);
 
 // Шансы кейсов до и после смены порогов должны совпадать бит-в-бит.
@@ -67,8 +67,8 @@ const list = (j: any) => (Array.isArray(j) ? j : j?.rows || j?.items || j?.cases
 const slug = list(cases0)[0].slug;
 const odds = async () => { const j = (await req('GET', '/api/cases/' + slug)).j; return JSON.stringify((j?.case?.items || j?.items || []).map((x: any) => [x.itemId ?? x.id, x.chance ?? x.weight ?? x.odds])); };
 const oddsA = await odds();
-r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, godlike: 100, mythic: 200, divine: 300, min_x: 0 } });
-check('Пороги сохраняются', r.status === 200 && r.j?.value?.godlike === 100, r.t);
+r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, trigger: 'standard', levels: { rare: 100, epic: 200, legendary: 300, godlike: 400 }, min_x: 0 } });
+check('Пороги сохраняются', r.status === 200 && r.j?.value?.levels?.rare === 100 && r.j?.value?.trigger === 'standard', r.t);
 const oddsB = await odds();
 check('Смена порогов не меняет шансы кейса', oddsA === oddsB && oddsA.length > 4, oddsA.slice(0, 120) + ' vs ' + oddsB.slice(0, 120));
 
@@ -76,16 +76,18 @@ dbm.run('UPDATE users SET balance=? WHERE id=?', 50_000_000, me.id);
 const o = await req('POST', '/api/cases/' + slug + '/open', { count: 5 });
 const drops = o.j?.drops || o.j?.results || o.j?.items || [];
 check('Открытие кейса x5', o.status === 200 && drops.length === 5, o.t);
-const t = { godlike: 100, mythic: 200, divine: 300 };
-const want = (p: number) => (p >= t.divine ? 'divine' : p >= t.mythic ? 'mythic' : p >= t.godlike ? 'godlike' : null);
+// Уровень: по цене выданного предмета; для ножей и перчаток — не ниже special_floor (epic).
+const RANK = ['standard', 'rare', 'epic', 'legendary', 'godlike'];
+const want = (p: number, inv: any) => { let l = p >= 400 ? 'godlike' : p >= 300 ? 'legendary' : p >= 200 ? 'epic' : p >= 100 ? 'rare' : 'standard';
+  if ((inv.category === 'Knives' || inv.category === 'Gloves' || String(inv.name).startsWith('★')) && RANK.indexOf(l) < 2) l = 'epic'; return l; };
 check('У каждого дропа есть серверный уровень и ссылка', drops.every((d: any) => d.share && 'fx' in d), JSON.stringify(drops[0] || {}).slice(0, 300));
-check('Уровень соответствует цене выданного предмета', drops.every((d: any) => (d.fx?.tier ?? null) === want(d.inv.price)), JSON.stringify(drops.map((d: any) => [d.inv.price, d.fx?.tier])));
+check('Уровень соответствует цене выданного предмета', drops.every((d: any) => (d.fx?.level ?? null) === want(d.inv.price, d.inv)), JSON.stringify(drops.map((d: any) => [d.inv.price, d.fx?.level])));
 const invIds = new Set(list((await req('GET', '/api/inventory')).j).map((x: any) => x.id));
 check('Показанные предметы = предметы в инвентаре', drops.every((d: any) => invIds.has(d.inv.id)));
 const d0 = drops[0];
 r = await req('GET', '/api/drops/' + d0.share);
 check('Публичный дроп отдаётся', r.status === 200 && r.j?.drop?.token === d0.share, r.t);
-check('Публичный дроп = записанная ставка (предмет, цена, уровень)', r.j?.drop?.item?.name === d0.inv.name && r.j?.drop?.item?.price === d0.inv.price && (r.j?.drop?.fx?.tier ?? null) === (d0.fx?.tier ?? null), JSON.stringify(r.j?.drop || {}).slice(0, 300));
+check('Публичный дроп = записанная ставка (предмет, цена, уровень)', r.j?.drop?.item?.name === d0.inv.name && r.j?.drop?.item?.price === d0.inv.price && (r.j?.drop?.fx?.level ?? null) === (d0.fx?.level ?? null), JSON.stringify(r.j?.drop || {}).slice(0, 300));
 check('Публичный дроп не раскрывает e-mail и сид сервера', !r.t.includes('cine1@example.com') && !/serverSeed"/.test(r.t));
 const bad = d0.share.slice(0, -2) + (d0.share.slice(-2) === 'aa' ? 'bb' : 'aa');
 r = await req('GET', '/api/drops/' + bad);
@@ -94,7 +96,7 @@ r = await req('GET', '/drop/' + d0.share);
 check('Страница /drop/… с Open Graph превью', r.status === 200 && r.t.includes('og:title'), r.t.slice(0, 300));
 
 // Ссылки можно отключить
-r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, godlike: 100, mythic: 200, divine: 300, min_x: 0, share: false } });
+r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, levels: { rare: 100, epic: 200, legendary: 300, godlike: 400 }, min_x: 0, share: false } });
 r = await req('GET', '/api/drops/' + d0.share);
 check('Отключённые ссылки не открываются', r.status === 404, String(r.status));
 // Выключенные кинодропы — fx = null, открытие работает как раньше
@@ -102,7 +104,7 @@ r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...stats
 const o2 = await req('POST', '/api/cases/' + slug + '/open', { count: 1 });
 const dd = o2.j?.drops || [];
 check('С выключенными кинодропами кейс открывается без сцены', o2.status === 200 && dd.length === 1 && dd[0].fx === null, o2.t);
-r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, godlike: 100, mythic: 200, divine: 300, min_x: 0 } });
+r = await req('POST', '/api/admin/settings', { key: 'drop_fx', value: { ...statsBefore.settings, levels: { rare: 100, epic: 200, legendary: 300, godlike: 400 }, min_x: 0 } });
 r = await req('GET', '/api/admin/audit/verify');
 check('Цепочка журнала аудита не нарушена', r.status === 200 && r.j?.ok === true, r.t);
 

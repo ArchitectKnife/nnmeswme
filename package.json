@@ -21,7 +21,11 @@
     "import:prices:local": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/import-prices-local.ts",
     "create-owner": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/create-owner.ts",
     "backup": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/backup.ts",
-    "test": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/smoke-test.ts"
+    "test": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/smoke-test.ts",
+    "seed:cases4": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/seed-cases-v4.ts",
+    "audit:images": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/audit-images.ts",
+    "test:v4": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/v4-test.ts",
+    "test:cine": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/cine-test.ts"
   },
   "devDependencies": {
     "typescript": "^5.8.0",

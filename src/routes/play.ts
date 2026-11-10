@@ -2,16 +2,16 @@
 import { one, all, run, tx, now } from '../lib/db.ts';
 import { route, v, bad, notFound, HttpError, sha256, onlineCount } from '../lib/http.ts';
 import { WEARS, hasWear, wearsAvailable, priceOf, itemView, invView, INV_SELECT, addInventory, consumeInventory, change, track, roll, rotateSeed,
-  activeSeed, floatsFrom, getSetting, requireFeature, checkRestriction, publicUser, imageUrl, feature, periodKey } from '../lib/core.ts';
-import { caseCard, caseDetail, openCase, wearOdds } from '../lib/cases.ts';
+  activeSeed, floatsFrom, getSetting, itemImage, requireFeature, checkRestriction, publicUser, imageUrl, feature, periodKey } from '../lib/core.ts';
+import { caseCard, caseDetail, openCase, wearOdds, CASE_GROUPS, NEW_DAYS } from '../lib/cases.ts';
 import { can } from '../lib/auth.ts';
 import { sharedDrop, parseShare } from '../lib/dropfx.ts';
 
 export const CASE_CATEGORIES: Record<string, string> = {
   popular: 'Популярные', new: 'Новые', cheap: 'Дешёвые', premium: 'Премиум', rare: 'Редкие', themed: 'Тематические',
-  collection: 'Коллекционные', official: 'Официальные', knives: 'С ножами', gloves: 'С перчатками', knives_gloves: 'Ножи и перчатки',
-  rarity: 'По редкости', weapon: 'По оружию', souvenir: 'Сувенирные',
-  mid: 'Средние', expensive: 'Дорогие', elite: 'Элитные', covert: 'Тайные', exclusive: 'Эксклюзивные', awp: 'AWP', ak47: 'AK-47',
+  collection: 'Коллекционные', official: 'Официальные', knives: 'Ножи', gloves: 'Перчатки', knives_gloves: 'Ножи и перчатки',
+  rarity: 'По редкости', weapon: 'По оружию', souvenir: 'Сувенирные', starter: 'Стартовые', legendary: 'Легендарные', featured: 'Рекомендуемые',
+  mid: 'Средние', expensive: 'Дорогие', elite: 'Элитные', covert: 'Тайные', exclusive: 'Эксклюзивные', awp: 'AWP', ak47: 'AK-47', m4: 'M4A4 / M4A1-S', pistols: 'Пистолеты', smg: 'Пистолеты-пулемёты', heavy: 'Тяжёлое оружие', sniper: 'Снайперские',
 };
 const RARE_KNIFE = "(i.category='Knives' OR i.weapon LIKE '%Knife%' OR i.name LIKE '★%')";
 
@@ -66,7 +66,9 @@ route('GET', '/api/cases', (c) => {
   const p: any[] = [];
   if (q.get('q')) { where.push('c.name LIKE ?'); p.push('%' + String(q.get('q')).slice(0, 60) + '%'); }
   const cat = q.get('category');
-  if (cat && cat !== 'all' && cat !== 'popular' && cat !== 'new') { where.push('EXISTS (SELECT 1 FROM json_each(c.categories) WHERE value=?)'); p.push(cat); }
+  if (cat === 'featured' || q.get('featured') === '1') where.push('c.featured=1');
+  if (cat === 'new') { where.push('(c.created_at > ? OR EXISTS (SELECT 1 FROM json_each(c.categories) WHERE value=?))'); p.push(now() - NEW_DAYS * 86400_000, 'new'); }
+  else if (cat && cat !== 'all' && cat !== 'popular' && cat !== 'featured') { where.push('EXISTS (SELECT 1 FROM json_each(c.categories) WHERE value=?)'); p.push(cat); }
   if (q.get('min')) { where.push('c.price >= ?'); p.push(Math.round(Number(q.get('min')) * 100) || 0); }
   if (q.get('max')) { where.push('c.price <= ?'); p.push(Math.round(Number(q.get('max')) * 100) || 1e12); }
   if (q.get('item')) { where.push(`EXISTS (SELECT 1 FROM case_items ci JOIN items i ON i.id=ci.item_id WHERE ci.case_id=c.id AND i.name LIKE ?)`); p.push('%' + String(q.get('item')).slice(0, 60) + '%'); }
@@ -76,7 +78,10 @@ route('GET', '/api/cases', (c) => {
   const counts: Record<string, number> = {};
   for (const r of all("SELECT value k, COUNT(*) n FROM cases, json_each(cases.categories) WHERE status='published' GROUP BY value")) counts[r.k] = r.n;
   counts.all = one("SELECT COUNT(*) n FROM cases WHERE status='published'").n;
-  return { cases: rows.map(caseCard), categories: CASE_CATEGORIES, counts };
+  counts.featured = one("SELECT COUNT(*) n FROM cases WHERE status='published' AND featured=1").n;
+  counts.new = one("SELECT COUNT(*) n FROM cases c WHERE status='published' AND (created_at > ? OR EXISTS (SELECT 1 FROM json_each(c.categories) WHERE value='new'))", now() - NEW_DAYS * 86400_000).n;
+  const range = one("SELECT MIN(price) lo, MAX(price) hi FROM cases WHERE status='published'");
+  return { cases: rows.map(caseCard), categories: CASE_CATEGORIES, groups: CASE_GROUPS.map((k) => ({ key: k, label: CASE_CATEGORIES[k] })), counts, range };
 });
 function loadCase(c: any, slug: string) {
   const cs = one('SELECT * FROM cases WHERE slug=?', slug);
@@ -311,7 +316,7 @@ route('POST', '/api/upgrade', (c) => {
     const betId = run('INSERT INTO bets(user_id,game,amount,payout,multiplier,status,data,seed_id,nonce,server_hash,created_at,settled_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
       c.user.id, 'upgrade', input, won ? won.price : 0, mult, win ? 'won' : 'lost',
       JSON.stringify({ inputs: inputs.map((i) => ({ id: i.id, name: i.name, image: i.image, price: i.price, wear: i.wear, color: i.color })),
-        target: { itemId, name: target.name, image: imageUrl(target.image), color: target.rarity_color, wear, variant, price: tPrice }, chance, roll: r.floats[0], invId: won?.id || null }),
+        target: { itemId, name: target.name, image: itemImage(itemId, wear, target.image), color: target.rarity_color, wear, variant, price: tPrice }, chance, roll: r.floats[0], invId: won?.id || null }),
       r.seedId, r.nonce, r.hash, now(), now()).lastInsertRowid;
     if (won) run('UPDATE inventory SET source_id=? WHERE id=?', String(betId), won.id);
     track(c.user.id, 'upgrade');
@@ -439,11 +444,14 @@ route('GET', '/api/home', (c) => {
   return {
     site: getSetting('site'), banner: getSetting('banner'), features: getSetting('features'),
     popular: all(`SELECT * FROM cases WHERE ${pub} ORDER BY opens DESC, sort DESC LIMIT 10`).map(caseCard),
+    featured: all(`SELECT * FROM cases WHERE ${pub} AND featured=1 ORDER BY sort, id LIMIT 12`).map(caseCard),
     fresh: all(`SELECT * FROM cases WHERE ${pub} ORDER BY created_at DESC, id DESC LIMIT 10`).map(caseCard),
     cheap: all(`SELECT * FROM cases WHERE ${pub} ORDER BY price ASC LIMIT 5`).map(caseCard),
     rare: all(`SELECT * FROM items i WHERE archived=0 AND ${RARE_KNIFE} ORDER BY COALESCE(base_price,0) DESC LIMIT 6`).concat(all("SELECT * FROM items WHERE archived=0 ORDER BY COALESCE(base_price,0) DESC LIMIT 12"))
       .filter((x: any, i: number, a: any[]) => a.findIndex((y) => y.id === x.id) === i).slice(0, 12).map(itemView),
     feed: feed(16), big: feed(8, 1), top,
+    // Картинка героя главной — самый дорогой нож/перчатки каталога (настоящее изображение предмета).
+    heroImage: (() => { const r = one(`SELECT image FROM items i WHERE archived=0 AND image IS NOT NULL AND image<>'' AND ${RARE_KNIFE} ORDER BY COALESCE(base_price,0) DESC LIMIT 1`); return r ? imageUrl(r.image) : null; })(),
     quests: all("SELECT * FROM quests WHERE active=1 AND scope='daily' ORDER BY sort LIMIT 4").map((qst) => ({ ...qst, progress: c.user ? one('SELECT progress FROM quest_progress WHERE user_id=? AND quest_id=? AND period=?', c.user.id, qst.id, day)?.progress || 0 : 0 })),
     daily: getSetting('daily'),
     news: all('SELECT id, title, kind, image, created_at, substr(body,1,180) excerpt FROM news WHERE published=1 ORDER BY id DESC LIMIT 4'),
