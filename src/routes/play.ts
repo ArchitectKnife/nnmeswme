@@ -10,7 +10,7 @@ import { sharedDrop, parseShare } from '../lib/dropfx.ts';
 export const CASE_CATEGORIES: Record<string, string> = {
   popular: 'Популярные', new: 'Новые', cheap: 'Дешёвые', premium: 'Премиум', rare: 'Редкие', themed: 'Тематические',
   collection: 'Коллекционные', official: 'Официальные', knives: 'Ножи', gloves: 'Перчатки', knives_gloves: 'Ножи и перчатки',
-  rarity: 'По редкости', weapon: 'По оружию', souvenir: 'Сувенирные', starter: 'Стартовые', legendary: 'Легендарные', featured: 'Рекомендуемые',
+  rarity: 'По редкости', weapon: 'По оружию', souvenir: 'Сувенирные', starter: 'Стартовые', legendary: 'Легендарные',
   mid: 'Средние', expensive: 'Дорогие', elite: 'Элитные', covert: 'Тайные', exclusive: 'Эксклюзивные', awp: 'AWP', ak47: 'AK-47', m4: 'M4A4 / M4A1-S', pistols: 'Пистолеты', smg: 'Пистолеты-пулемёты', heavy: 'Тяжёлое оружие', sniper: 'Снайперские',
 };
 const RARE_KNIFE = "(i.category='Knives' OR i.weapon LIKE '%Knife%' OR i.name LIKE '★%')";
