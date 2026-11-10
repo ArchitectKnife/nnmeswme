@@ -1,0 +1,4876 @@
+{
+ "meta": {
+  "built_at": "2026-11-10T18:38:26.728Z",
+  "version": 4,
+  "sources": {
+   "items": {
+    "name": "ByMykel CSGO-API (MIT)",
+    "url": "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins.json",
+    "variants": "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins_not_grouped.json",
+    "fetched": "2026-11-09T13:43:38.000Z"
+   },
+   "images": {
+    "name": "Steam Community CDN (official item images)",
+    "host": "community.akamai.steamstatic.com"
+   },
+   "prices": {
+    "name": "Skinport API, suggested_price",
+    "currency": "RUB",
+    "file": "prices-rub.json",
+    "updated_from": "2026-11-09T13:50:13.000Z",
+    "updated_to": "2026-11-09T13:50:13.000Z",
+    "source_tag": "skinport:2026-11-09"
+   }
+  },
+  "weights_total": 1000000,
+  "margin": 0.12
+ },
+ "categories": {
+  "starter": "Стартовые",
+  "premium": "Премиум",
+  "knives": "Ножи",
+  "gloves": "Перчатки",
+  "legendary": "Легендарные",
+  "themed": "Тематические",
+  "weapon": "По оружию"
+ },
+ "cases": [
+  {
+   "slug": "first-bite",
+   "name": "Первый укус",
+   "description": "Самый доступный кейс BURGER SKIN: армейские скины на каждый день и шанс забрать AK-47 | Redline или AWP | Atheris.",
+   "group": "starter",
+   "categories": [
+    "starter",
+    "cheap",
+    "new"
+   ],
+   "featured": true,
+   "theme": "burst",
+   "accent": "#FFB627",
+   "cover": [
+    "AK-47 | Redline",
+    "AWP | Atheris",
+    "Glock-18 | Vogue"
+   ],
+   "items": [
+    {
+     "key": "AK-47 | Redline",
+     "weight": 444
+    },
+    {
+     "key": "Desert Eagle | Conspiracy",
+     "weight": 777
+    },
+    {
+     "key": "AWP | Atheris",
+     "weight": 2312
+    },
+    {
+     "key": "USP-S | Cortex",
+     "weight": 2400
+    },
+    {
+     "key": "Glock-18 | Vogue",
+     "weight": 2827
+    },
+    {
+     "key": "M4A4 | Evil Daimyo",
+     "weight": 3024
+    },
+    {
+     "key": "M4A1-S | Nitro",
+     "weight": 17085
+    },
+    {
+     "key": "Negev | Prototype",
+     "weight": 31970
+    },
+    {
+     "key": "P90 | Reef Grief",
+     "weight": 38230
+    },
+    {
+     "key": "SSG 08 | Blush Pour",
+     "weight": 44940
+    },
+    {
+     "key": "XM1014 | Oxide Blaze",
+     "weight": 53577
+    },
+    {
+     "key": "Sawed-Off | Fusion",
+     "weight": 64494
+    },
+    {
+     "key": "Negev | Drop Me",
+     "weight": 75889
+    },
+    {
+     "key": "MAG-7 | Metallic DDPAT",
+     "weight": 90298
+    },
+    {
+     "key": "XM1014 | Blue Steel",
+     "weight": 108232
+    },
+    {
+     "key": "Dual Berettas | Rose Nacre",
+     "weight": 130650
+    },
+    {
+     "key": "Zeus x27 | Electric Blue",
+     "weight": 151863
+    },
+    {
+     "key": "P2000 | Marsh",
+     "weight": 180988
+    }
+   ]
+  },
+  {
+   "slug": "camo-pack",
+   "name": "Камуфляж",
+   "description": "Классические камуфляжи CS2: Safari Mesh, Boreal Forest, DDPAT и пустынные расцветки. Главный трофей — перчатки Forest DDPAT.",
+   "group": "starter",
+   "categories": [
+    "starter",
+    "cheap"
+   ],
+   "featured": false,
+   "theme": "topo",
+   "accent": "#7FA35B",
+   "cover": [
+    "★ Specialist Gloves | Forest DDPAT",
+    "AWP | Pink DDPAT",
+    "M4A4 | Desert Storm"
+   ],
+   "items": [
+    {
+     "key": "★ Specialist Gloves | Forest DDPAT",
+     "weight": 253
+    },
+    {
+     "key": "★ Navaja Knife | Forest DDPAT",
+     "weight": 995
+    },
+    {
+     "key": "AWP | Pink DDPAT",
+     "weight": 1626
+    },
+    {
+     "key": "Glock-18 | Groundwater",
+     "weight": 2853
+    },
+    {
+     "key": "Glock-18 | Sand Dune",
+     "weight": 3245
+    },
+    {
+     "key": "M4A4 | Desert Storm",
+     "weight": 3543
+    },
+    {
+     "key": "AK-47 | Jungle Spray",
+     "weight": 5158
+    },
+    {
+     "key": "M4A4 | Jungle Tiger",
+     "weight": 6698
+    },
+    {
+     "key": "Desert Eagle | Urban DDPAT",
+     "weight": 21097
+    },
+    {
+     "key": "M4A4 | Urban DDPAT",
+     "weight": 50057
+    },
+    {
+     "key": "M4A1-S | VariCamo",
+     "weight": 84398
+    },
+    {
+     "key": "USP-S | Desert Tactical",
+     "weight": 87228
+    },
+    {
+     "key": "USP-S | Night Ops",
+     "weight": 98279
+    },
+    {
+     "key": "M4A1-S | Boreal Forest",
+     "weight": 106348
+    },
+    {
+     "key": "AWP | Safari Mesh",
+     "weight": 123948
+    },
+    {
+     "key": "AK-47 | Safari Mesh",
+     "weight": 179808
+    },
+    {
+     "key": "USP-S | Forest Leaves",
+     "weight": 224466
+    }
+   ]
+  },
+  {
+   "slug": "pistol-start",
+   "name": "Пистолетный старт",
+   "description": "Пистолеты на любой бюджет: от Glock-18 до Five-SeveN | Hyper Beast и USP-S | Kill Confirmed.",
+   "group": "starter",
+   "categories": [
+    "starter",
+    "cheap",
+    "pistols"
+   ],
+   "featured": false,
+   "theme": "stripes",
+   "accent": "#5AA9FF",
+   "cover": [
+    "Five-SeveN | Hyper Beast",
+    "USP-S | Kill Confirmed",
+    "Desert Eagle | Code Red"
+   ],
+   "items": [
+    {
+     "key": "Five-SeveN | Hyper Beast",
+     "weight": 149
+    },
+    {
+     "key": "USP-S | Kill Confirmed",
+     "weight": 303
+    },
+    {
+     "key": "Desert Eagle | Code Red",
+     "weight": 473
+    },
+    {
+     "key": "Glock-18 | Water Elemental",
+     "weight": 973
+    },
+    {
+     "key": "Desert Eagle | Mecha Industries",
+     "weight": 2205
+    },
+    {
+     "key": "P250 | Visions",
+     "weight": 4143
+    },
+    {
+     "key": "R8 Revolver | Night",
+     "weight": 20566
+    },
+    {
+     "key": "Dual Berettas | Shred",
+     "weight": 24930
+    },
+    {
+     "key": "R8 Revolver | Junk Yard",
+     "weight": 30841
+    },
+    {
+     "key": "Desert Eagle | Urban Rubble",
+     "weight": 38964
+    },
+    {
+     "key": "Five-SeveN | Flame Test",
+     "weight": 46735
+    },
+    {
+     "key": "P2000 | Granite Marbleized",
+     "weight": 58219
+    },
+    {
+     "key": "USP-S | Forest Leaves",
+     "weight": 71641
+    },
+    {
+     "key": "Glock-18 | Ocean Topo",
+     "weight": 86237
+    },
+    {
+     "key": "Five-SeveN | Orange Peel",
+     "weight": 106639
+    },
+    {
+     "key": "Dual Berettas | Rose Nacre",
+     "weight": 133370
+    },
+    {
+     "key": "Tec-9 | Urban DDPAT",
+     "weight": 162074
+    },
+    {
+     "key": "Dual Berettas | Colony",
+     "weight": 211538
+    }
+   ]
+  },
+  {
+   "slug": "daily-burger",
+   "name": "Бургер дня",
+   "description": "Ежедневный набор популярных скинов: винтовки, пистолеты и пистолеты-пулемёты по честной цене.",
+   "group": "starter",
+   "categories": [
+    "starter",
+    "cheap"
+   ],
+   "featured": false,
+   "theme": "dots",
+   "accent": "#FF8A3D",
+   "cover": [
+    "USP-S | The Traitor",
+    "AK-47 | Slate",
+    "Desert Eagle | Kumicho Dragon"
+   ],
+   "items": [
+    {
+     "key": "USP-S | The Traitor",
+     "weight": 818
+    },
+    {
+     "key": "Desert Eagle | Kumicho Dragon",
+     "weight": 1293
+    },
+    {
+     "key": "M4A1-S | Nightmare",
+     "weight": 1424
+    },
+    {
+     "key": "AK-47 | Ice Coaled",
+     "weight": 4840
+    },
+    {
+     "key": "AK-47 | Slate",
+     "weight": 5162
+    },
+    {
+     "key": "MP9 | Food Chain",
+     "weight": 6041
+    },
+    {
+     "key": "P90 | Nostalgia",
+     "weight": 6068
+    },
+    {
+     "key": "AWP | Duality",
+     "weight": 7418
+    },
+    {
+     "key": "USP-S | Royal Guard",
+     "weight": 22976
+    },
+    {
+     "key": "MP7 | Anodized Navy",
+     "weight": 29735
+    },
+    {
+     "key": "G3SG1 | Dream Glade",
+     "weight": 38626
+    },
+    {
+     "key": "MP5-SD | Kitbash",
+     "weight": 50471
+    },
+    {
+     "key": "MAC-10 | Classic Crate",
+     "weight": 65093
+    },
+    {
+     "key": "Glock-18 | Coral Bloom",
+     "weight": 84664
+    },
+    {
+     "key": "Galil AR | Metallic Squeezer",
+     "weight": 110121
+    },
+    {
+     "key": "M4A4 | Choppa",
+     "weight": 139488
+    },
+    {
+     "key": "Sawed-Off | Fusion",
+     "weight": 185420
+    },
+    {
+     "key": "MAC-10 | Poplar Thicket",
+     "weight": 240342
+    }
+   ]
+  },
+  {
+   "slug": "lucky-ticket",
+   "name": "Счастливый билет",
+   "description": "Недорогой кейс с настоящим шансом на нож или перчатки. Остальное — популярные скины для апгрейда.",
+   "group": "starter",
+   "categories": [
+    "starter",
+    "cheap",
+    "knives",
+    "gloves"
+   ],
+   "featured": true,
+   "theme": "rays",
+   "accent": "#F2D16B",
+   "cover": [
+    "★ Navaja Knife | Night Stripe",
+    "★ Hydra Gloves | Rattler",
+    "AWP | Asiimov"
+   ],
+   "items": [
+    {
+     "key": "AWP | Asiimov",
+     "weight": 573
+    },
+    {
+     "key": "AK-47 | Asiimov",
+     "weight": 1006
+    },
+    {
+     "key": "★ Gut Knife | Safari Mesh",
+     "weight": 1141
+    },
+    {
+     "key": "★ Navaja Knife | Night Stripe",
+     "weight": 1254
+    },
+    {
+     "key": "AK-47 | Redline",
+     "weight": 1418
+    },
+    {
+     "key": "M4A4 | Neo-Noir",
+     "weight": 1530
+    },
+    {
+     "key": "★ Hydra Gloves | Rattler",
+     "weight": 1740
+    },
+    {
+     "key": "M4A1-S | Electrum",
+     "weight": 31527
+    },
+    {
+     "key": "Sawed-Off | Limelight",
+     "weight": 37113
+    },
+    {
+     "key": "SCAR-20 | Powercore",
+     "weight": 42729
+    },
+    {
+     "key": "Five-SeveN | Buddy",
+     "weight": 49911
+    },
+    {
+     "key": "Glock-18 | Glockingbird",
+     "weight": 57322
+    },
+    {
+     "key": "UMP-45 | Continuum",
+     "weight": 67238
+    },
+    {
+     "key": "G3SG1 | Scavenger",
+     "weight": 78271
+    },
+    {
+     "key": "MAC-10 | Button Masher",
+     "weight": 91119
+    },
+    {
+     "key": "M249 | Downtown",
+     "weight": 105726
+    },
+    {
+     "key": "MAC-10 | Sakkaku",
+     "weight": 111380
+    },
+    {
+     "key": "Dual Berettas | Cobalt Quartz",
+     "weight": 140578
+    },
+    {
+     "key": "Tec-9 | Red Quartz",
+     "weight": 178424
+    }
+   ]
+  },
+  {
+   "slug": "covert-ops",
+   "name": "Особый отдел",
+   "description": "Только скины уровня «Тайное» (Covert): от Neon Rider до AK-47 | Fire Serpent и AWP | Lightning Strike.",
+   "group": "premium",
+   "categories": [
+    "premium",
+    "covert",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "hex",
+   "accent": "#EB4B4B",
+   "cover": [
+    "AK-47 | Fire Serpent",
+    "AWP | Lightning Strike",
+    "M4A1-S | Printstream"
+   ],
+   "items": [
+    {
+     "key": "AK-47 | Fire Serpent",
+     "weight": 22
+    },
+    {
+     "key": "AK-47 | X-Ray",
+     "weight": 68
+    },
+    {
+     "key": "AWP | Lightning Strike",
+     "weight": 77
+    },
+    {
+     "key": "M4A4 | Buzz Kill",
+     "weight": 1133
+    },
+    {
+     "key": "M4A1-S | Printstream",
+     "weight": 1248
+    },
+    {
+     "key": "M4A4 | Asiimov",
+     "weight": 4854
+    },
+    {
+     "key": "AWP | Sovereign Flame",
+     "weight": 6231
+    },
+    {
+     "key": "USP-S | Neo-Noir",
+     "weight": 8697
+    },
+    {
+     "key": "USP-S | Kill Confirmed",
+     "weight": 12499
+    },
+    {
+     "key": "CZ75-Auto | Victoria",
+     "weight": 18136
+    },
+    {
+     "key": "M4A4 | The Emperor",
+     "weight": 26056
+    },
+    {
+     "key": "MP9 | Starlight Protector",
+     "weight": 34781
+    },
+    {
+     "key": "AWP | Printstream",
+     "weight": 49961
+    },
+    {
+     "key": "AK-47 | Aquamarine Revenge",
+     "weight": 81786
+    },
+    {
+     "key": "M4A4 | Full Throttle",
+     "weight": 102940
+    },
+    {
+     "key": "USP-S | The Traitor",
+     "weight": 146704
+    },
+    {
+     "key": "AK-47 | Head Shot",
+     "weight": 214277
+    },
+    {
+     "key": "AWP | Chrome Cannon",
+     "weight": 290530
+    }
+   ]
+  },
+  {
+   "slug": "black-card",
+   "name": "Чёрная карта",
+   "description": "Чёрное и золото: AK-47 | Gold Arabesque, Desert Eagle | Golden Koi, Karambit | Black Laminate и Driver Gloves | Black Tie.",
+   "group": "premium",
+   "categories": [
+    "premium",
+    "expensive",
+    "knives",
+    "gloves"
+   ],
+   "featured": true,
+   "theme": "carbon",
+   "accent": "#D4AF37",
+   "cover": [
+    "AK-47 | Gold Arabesque",
+    "★ Karambit | Black Laminate",
+    "Desert Eagle | Golden Koi"
+   ],
+   "items": [
+    {
+     "key": "AK-47 | Gold Arabesque",
+     "weight": 2845
+    },
+    {
+     "key": "★ Karambit | Black Laminate",
+     "weight": 4424
+    },
+    {
+     "key": "Desert Eagle | Golden Koi",
+     "weight": 10861
+    },
+    {
+     "key": "AWP | Graphite",
+     "weight": 12697
+    },
+    {
+     "key": "★ Driver Gloves | Black Tie",
+     "weight": 13299
+    },
+    {
+     "key": "AK-47 | The Empress",
+     "weight": 15475
+    },
+    {
+     "key": "M4A1-S | Golden Coil",
+     "weight": 20323
+    },
+    {
+     "key": "★ Bowie Knife | Night",
+     "weight": 20480
+    },
+    {
+     "key": "M4A4 | The Emperor",
+     "weight": 20832
+    },
+    {
+     "key": "AK-47 | Black Laminate",
+     "weight": 31693
+    },
+    {
+     "key": "Glock-18 | Gold Toof",
+     "weight": 32158
+    },
+    {
+     "key": "Five-SeveN | Fairy Tale",
+     "weight": 33630
+    },
+    {
+     "key": "MAC-10 | Gold Brick",
+     "weight": 35023
+    },
+    {
+     "key": "Desert Eagle | Night",
+     "weight": 60466
+    },
+    {
+     "key": "M4A1-S | Black Lotus",
+     "weight": 111915
+    },
+    {
+     "key": "AWP | Black Nile",
+     "weight": 146497
+    },
+    {
+     "key": "USP-S | Black Lotus",
+     "weight": 198499
+    },
+    {
+     "key": "Glock-18 | Night",
+     "weight": 228883
+    }
+   ]
+  },
+  {
+   "slug": "business-class",
+   "name": "Бизнес-класс",
+   "description": "Первый класс, бизнес-класс и частный джет: AK-47 | Jet Set, AK-47 | First Class, USP-S | Business Class и другие скины для статуса.",
+   "group": "premium",
+   "categories": [
+    "premium",
+    "mid"
+   ],
+   "featured": false,
+   "theme": "stripes",
+   "accent": "#B9C7D9",
+   "cover": [
+    "AK-47 | Jet Set",
+    "USP-S | Business Class",
+    "AK-47 | First Class"
+   ],
+   "items": [
+    {
+     "key": "AK-47 | Jet Set",
+     "weight": 1730
+    },
+    {
+     "key": "M4A1-S | Master Piece",
+     "weight": 6042
+    },
+    {
+     "key": "M4A4 | Royal Paladin",
+     "weight": 7246
+    },
+    {
+     "key": "AK-47 | First Class",
+     "weight": 7411
+    },
+    {
+     "key": "Desert Eagle | Pilot",
+     "weight": 7677
+    },
+    {
+     "key": "Glock-18 | Franklin",
+     "weight": 8175
+    },
+    {
+     "key": "P2000 | Silver",
+     "weight": 8233
+    },
+    {
+     "key": "Sawed-Off | First Class",
+     "weight": 18739
+    },
+    {
+     "key": "MAC-10 | Gold Brick",
+     "weight": 19887
+    },
+    {
+     "key": "USP-S | Business Class",
+     "weight": 22333
+    },
+    {
+     "key": "AWP | Elite Build",
+     "weight": 44218
+    },
+    {
+     "key": "Desert Eagle | Heirloom",
+     "weight": 47505
+    },
+    {
+     "key": "USP-S | Royal Blue",
+     "weight": 63301
+    },
+    {
+     "key": "Glock-18 | Royal Legion",
+     "weight": 148543
+    },
+    {
+     "key": "AK-47 | Elite Build",
+     "weight": 257328
+    },
+    {
+     "key": "P250 | Franklin",
+     "weight": 331632
+    }
+   ]
+  },
+  {
+   "slug": "chrome-district",
+   "name": "Хромовый квартал",
+   "description": "Металл, хром и закалка: AK-47 | Case Hardened, Desert Eagle | Hand Cannon, AWP | Chrome Cannon и другие стальные скины.",
+   "group": "premium",
+   "categories": [
+    "premium",
+    "mid"
+   ],
+   "featured": false,
+   "theme": "grid",
+   "accent": "#9FB3C8",
+   "cover": [
+    "Desert Eagle | Hand Cannon",
+    "AK-47 | Case Hardened",
+    "AWP | Chrome Cannon"
+   ],
+   "items": [
+    {
+     "key": "Desert Eagle | Hand Cannon",
+     "weight": 540
+    },
+    {
+     "key": "AK-47 | Case Hardened",
+     "weight": 1024
+    },
+    {
+     "key": "AWP | Graphite",
+     "weight": 1843
+    },
+    {
+     "key": "P2000 | Silver",
+     "weight": 3848
+    },
+    {
+     "key": "P2000 | Chainmail",
+     "weight": 7422
+    },
+    {
+     "key": "M4A1-S | Atomic Alloy",
+     "weight": 8907
+    },
+    {
+     "key": "AWP | Chrome Cannon",
+     "weight": 12246
+    },
+    {
+     "key": "Glock-18 | Brass",
+     "weight": 12945
+    },
+    {
+     "key": "MAC-10 | Case Hardened",
+     "weight": 16094
+    },
+    {
+     "key": "Tec-9 | Blue Titanium",
+     "weight": 20047
+    },
+    {
+     "key": "Five-SeveN | Case Hardened",
+     "weight": 32222
+    },
+    {
+     "key": "MAG-7 | Chainmail",
+     "weight": 33932
+    },
+    {
+     "key": "USP-S | Stainless",
+     "weight": 38816
+    },
+    {
+     "key": "MAG-7 | Silver",
+     "weight": 43172
+    },
+    {
+     "key": "Nova | Graphite",
+     "weight": 63488
+    },
+    {
+     "key": "Desert Eagle | The Bronze",
+     "weight": 78132
+    },
+    {
+     "key": "Desert Eagle | Heat Treated",
+     "weight": 160341
+    },
+    {
+     "key": "R8 Revolver | Amber Fade",
+     "weight": 464981
+    }
+   ]
+  },
+  {
+   "slug": "million-grill",
+   "name": "Миллион на гриле",
+   "description": "Флагманские скины: Glock-18 | Fade, M4A1-S | Hot Rod, AK-47 | Hydroponic, M4A4 | Poseidon и ножи Fade.",
+   "group": "premium",
+   "categories": [
+    "premium",
+    "expensive",
+    "knives",
+    "rare"
+   ],
+   "featured": true,
+   "theme": "rays",
+   "accent": "#FF6B2C",
+   "cover": [
+    "Glock-18 | Fade",
+    "★ Karambit | Fade",
+    "M4A1-S | Hot Rod"
+   ],
+   "items": [
+    {
+     "key": "★ Butterfly Knife | Fade",
+     "weight": 72
+    },
+    {
+     "key": "★ Karambit | Fade",
+     "weight": 100
+    },
+    {
+     "key": "Glock-18 | Fade",
+     "weight": 186
+    },
+    {
+     "key": "M4A4 | Poseidon",
+     "weight": 211
+    },
+    {
+     "key": "M4A1-S | Hot Rod",
+     "weight": 216
+    },
+    {
+     "key": "AK-47 | Hydroponic",
+     "weight": 231
+    },
+    {
+     "key": "AWP | Desert Hydra",
+     "weight": 300
+    },
+    {
+     "key": "M4A1-S | Imminent Danger",
+     "weight": 614
+    },
+    {
+     "key": "AWP | Fade",
+     "weight": 795
+    },
+    {
+     "key": "Desert Eagle | Blaze",
+     "weight": 810
+    },
+    {
+     "key": "M4A4 | Buzz Kill",
+     "weight": 7613
+    },
+    {
+     "key": "P90 | Asiimov",
+     "weight": 11097
+    },
+    {
+     "key": "M4A4 | Asiimov",
+     "weight": 20897
+    },
+    {
+     "key": "Glock-18 | Wasteland Rebel",
+     "weight": 26937
+    },
+    {
+     "key": "AK-47 | B the Monster",
+     "weight": 41145
+    },
+    {
+     "key": "M4A1-S | Golden Coil",
+     "weight": 62440
+    },
+    {
+     "key": "Glock-18 | Bullet Queen",
+     "weight": 97745
+    },
+    {
+     "key": "AK-47 | Aquamarine Revenge",
+     "weight": 148379
+    },
+    {
+     "key": "USP-S | The Traitor",
+     "weight": 222580
+    },
+    {
+     "key": "AWP | Chrome Cannon",
+     "weight": 357632
+    }
+   ]
+  },
+  {
+   "slug": "karambit-claw",
+   "name": "Коготь Karambit",
+   "description": "Только Karambit: Fade, Tiger Tooth, Marble Fade, Lore, Doppler и Gamma Doppler разных фаз — каждое открытие приносит нож.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare",
+    "elite"
+   ],
+   "featured": true,
+   "theme": "shards",
+   "accent": "#C084FC",
+   "cover": [
+    "★ Karambit | Fade",
+    "★ Karambit | Doppler @ Ruby",
+    "★ Karambit | Tiger Tooth"
+   ],
+   "items": [
+    {
+     "key": "★ Karambit | Doppler @ Ruby",
+     "weight": 421
+    },
+    {
+     "key": "★ Karambit | Doppler @ Sapphire",
+     "weight": 1044
+    },
+    {
+     "key": "★ Karambit | Gamma Doppler @ Phase 2",
+     "weight": 4846
+    },
+    {
+     "key": "★ Karambit | Fade",
+     "weight": 6928
+    },
+    {
+     "key": "★ Karambit | Doppler @ Phase 2",
+     "weight": 8557
+    },
+    {
+     "key": "★ Karambit | Doppler @ Phase 4",
+     "weight": 16513
+    },
+    {
+     "key": "★ Karambit | Marble Fade",
+     "weight": 22539
+    },
+    {
+     "key": "★ Karambit",
+     "weight": 26312
+    },
+    {
+     "key": "★ Karambit | Slaughter",
+     "weight": 27133
+    },
+    {
+     "key": "★ Karambit | Tiger Tooth",
+     "weight": 33677
+    },
+    {
+     "key": "★ Karambit | Autotronic",
+     "weight": 34429
+    },
+    {
+     "key": "★ Karambit | Case Hardened",
+     "weight": 40970
+    },
+    {
+     "key": "★ Karambit | Crimson Web",
+     "weight": 45389
+    },
+    {
+     "key": "★ Karambit | Blue Steel",
+     "weight": 47483
+    },
+    {
+     "key": "★ Karambit | Lore",
+     "weight": 63954
+    },
+    {
+     "key": "★ Karambit | Damascus Steel",
+     "weight": 67941
+    },
+    {
+     "key": "★ Karambit | Stained",
+     "weight": 88363
+    },
+    {
+     "key": "★ Karambit | Freehand",
+     "weight": 101095
+    },
+    {
+     "key": "★ Karambit | Night",
+     "weight": 108011
+    },
+    {
+     "key": "★ Karambit | Bright Water",
+     "weight": 123607
+    },
+    {
+     "key": "★ Karambit | Rust Coat",
+     "weight": 130788
+    }
+   ]
+  },
+  {
+   "slug": "steel-wings",
+   "name": "Стальные крылья",
+   "description": "Только Butterfly Knife: от Safari Mesh до Doppler Ruby и Gamma Doppler Emerald.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare",
+    "elite"
+   ],
+   "featured": false,
+   "theme": "prism",
+   "accent": "#7DD3FC",
+   "cover": [
+    "★ Butterfly Knife | Fade",
+    "★ Butterfly Knife | Doppler @ Sapphire",
+    "★ Butterfly Knife | Marble Fade"
+   ],
+   "items": [
+    {
+     "key": "★ Butterfly Knife | Doppler @ Ruby",
+     "weight": 281
+    },
+    {
+     "key": "★ Butterfly Knife | Gamma Doppler @ Emerald",
+     "weight": 457
+    },
+    {
+     "key": "★ Butterfly Knife | Doppler @ Sapphire",
+     "weight": 693
+    },
+    {
+     "key": "★ Butterfly Knife | Fade",
+     "weight": 6542
+    },
+    {
+     "key": "★ Butterfly Knife | Doppler @ Phase 3",
+     "weight": 9491
+    },
+    {
+     "key": "★ Butterfly Knife | Marble Fade",
+     "weight": 17365
+    },
+    {
+     "key": "★ Butterfly Knife | Slaughter",
+     "weight": 19575
+    },
+    {
+     "key": "★ Butterfly Knife",
+     "weight": 23121
+    },
+    {
+     "key": "★ Butterfly Knife | Tiger Tooth",
+     "weight": 27198
+    },
+    {
+     "key": "★ Butterfly Knife | Blue Steel",
+     "weight": 50216
+    },
+    {
+     "key": "★ Butterfly Knife | Case Hardened",
+     "weight": 51145
+    },
+    {
+     "key": "★ Butterfly Knife | Damascus Steel",
+     "weight": 60575
+    },
+    {
+     "key": "★ Butterfly Knife | Lore",
+     "weight": 68019
+    },
+    {
+     "key": "★ Butterfly Knife | Stained",
+     "weight": 89304
+    },
+    {
+     "key": "★ Butterfly Knife | Night",
+     "weight": 107595
+    },
+    {
+     "key": "★ Butterfly Knife | Urban Masked",
+     "weight": 143705
+    },
+    {
+     "key": "★ Butterfly Knife | Boreal Forest",
+     "weight": 159207
+    },
+    {
+     "key": "★ Butterfly Knife | Safari Mesh",
+     "weight": 165511
+    }
+   ]
+  },
+  {
+   "slug": "pocket-blade",
+   "name": "Карманный клинок",
+   "description": "Самый доступный кейс, где нож выпадает всегда: Navaja, Shadow Daggers, Gut, Survival, Paracord, Kukri, Ursus, Bowie и другие.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "rare"
+   ],
+   "featured": true,
+   "theme": "carbon",
+   "accent": "#94A3B8",
+   "cover": [
+    "★ Classic Knife | Fade",
+    "★ Huntsman Knife | Fade",
+    "★ Falchion Knife | Fade"
+   ],
+   "items": [
+    {
+     "key": "★ Classic Knife | Fade",
+     "weight": 590
+    },
+    {
+     "key": "★ Huntsman Knife | Fade",
+     "weight": 1105
+    },
+    {
+     "key": "★ Falchion Knife | Fade",
+     "weight": 1150
+    },
+    {
+     "key": "★ Ursus Knife | Fade",
+     "weight": 1486
+    },
+    {
+     "key": "★ Huntsman Knife | Marble Fade",
+     "weight": 1950
+    },
+    {
+     "key": "★ Classic Knife",
+     "weight": 2382
+    },
+    {
+     "key": "★ Bowie Knife | Case Hardened",
+     "weight": 3013
+    },
+    {
+     "key": "★ Paracord Knife | Fade",
+     "weight": 3989
+    },
+    {
+     "key": "★ Ursus Knife | Crimson Web",
+     "weight": 5035
+    },
+    {
+     "key": "★ Paracord Knife | Slaughter",
+     "weight": 6321
+    },
+    {
+     "key": "★ Survival Knife | Slaughter",
+     "weight": 8434
+    },
+    {
+     "key": "★ Paracord Knife | Tiger Tooth",
+     "weight": 11092
+    },
+    {
+     "key": "★ Bowie Knife | Blue Steel",
+     "weight": 13532
+    },
+    {
+     "key": "★ Survival Knife | Case Hardened",
+     "weight": 17862
+    },
+    {
+     "key": "★ Bowie Knife | Lore",
+     "weight": 23899
+    },
+    {
+     "key": "★ Falchion Knife | Ultraviolet",
+     "weight": 30244
+    },
+    {
+     "key": "★ Ursus Knife | Night Stripe",
+     "weight": 37856
+    },
+    {
+     "key": "★ Shadow Daggers",
+     "weight": 48173
+    },
+    {
+     "key": "★ Falchion Knife | Forest DDPAT",
+     "weight": 63293
+    },
+    {
+     "key": "★ Falchion Knife | Rust Coat",
+     "weight": 81635
+    },
+    {
+     "key": "★ Paracord Knife",
+     "weight": 105289
+    },
+    {
+     "key": "★ Survival Knife | Scorched",
+     "weight": 131748
+    },
+    {
+     "key": "★ Paracord Knife | Forest DDPAT",
+     "weight": 173160
+    },
+    {
+     "key": "★ Shadow Daggers | Black Laminate",
+     "weight": 226762
+    }
+   ]
+  },
+  {
+   "slug": "knife-hunt",
+   "name": "Охота за ножом",
+   "description": "Премиальные винтовки и пистолеты плюс полтора десятка ножей разных моделей: от Navaja до Karambit.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "burst",
+   "accent": "#E879F9",
+   "cover": [
+    "★ Karambit | Rust Coat",
+    "★ M9 Bayonet | Night",
+    "★ Navaja Knife | Fade"
+   ],
+   "items": [
+    {
+     "key": "★ Karambit | Rust Coat",
+     "weight": 580
+    },
+    {
+     "key": "★ M9 Bayonet | Night",
+     "weight": 777
+    },
+    {
+     "key": "★ Talon Knife | Scorched",
+     "weight": 1480
+    },
+    {
+     "key": "★ Bowie Knife | Case Hardened",
+     "weight": 2140
+    },
+    {
+     "key": "★ Gut Knife | Doppler @ Phase 2",
+     "weight": 2522
+    },
+    {
+     "key": "★ Falchion Knife | Crimson Web",
+     "weight": 2613
+    },
+    {
+     "key": "★ Huntsman Knife | Blue Steel",
+     "weight": 2654
+    },
+    {
+     "key": "★ Bayonet | Urban Masked",
+     "weight": 2674
+    },
+    {
+     "key": "★ Ursus Knife | Tiger Tooth",
+     "weight": 2708
+    },
+    {
+     "key": "★ Flip Knife | Safari Mesh",
+     "weight": 3655
+    },
+    {
+     "key": "★ Navaja Knife | Fade",
+     "weight": 3870
+    },
+    {
+     "key": "★ Shadow Daggers | Slaughter",
+     "weight": 4229
+    },
+    {
+     "key": "★ Kukri Knife | Crimson Web",
+     "weight": 5013
+    },
+    {
+     "key": "★ Paracord Knife | Stained",
+     "weight": 7155
+    },
+    {
+     "key": "★ Survival Knife | Night Stripe",
+     "weight": 8851
+    },
+    {
+     "key": "Desert Eagle | Printstream",
+     "weight": 11854
+    },
+    {
+     "key": "AK-47 | Head Shot",
+     "weight": 15456
+    },
+    {
+     "key": "M4A1-S | Fatal Glitch",
+     "weight": 19943
+    },
+    {
+     "key": "M4A1-S | Nightmare",
+     "weight": 26509
+    },
+    {
+     "key": "M4A1-S | Control Panel",
+     "weight": 34362
+    },
+    {
+     "key": "P250 | Muertos",
+     "weight": 45517
+    },
+    {
+     "key": "MP9 | Latte Rush",
+     "weight": 60742
+    },
+    {
+     "key": "G3SG1 | The Executioner",
+     "weight": 78811
+    },
+    {
+     "key": "MAC-10 | Disco Tech",
+     "weight": 111424
+    },
+    {
+     "key": "USP-S | Cortex",
+     "weight": 133652
+    },
+    {
+     "key": "AWP | Mortis",
+     "weight": 173587
+    },
+    {
+     "key": "Tec-9 | Remote Control",
+     "weight": 237222
+    }
+   ]
+  },
+  {
+   "slug": "doppler-prism",
+   "name": "Призма Doppler",
+   "description": "Ножи Doppler и Gamma Doppler с указанной фазой: Phase 1–4, Ruby, Sapphire, Black Pearl и Emerald. Каждая фаза — отдельный предмет со своим изображением и ценой.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare",
+    "elite"
+   ],
+   "featured": false,
+   "theme": "prism",
+   "accent": "#A78BFA",
+   "cover": [
+    "★ Karambit | Gamma Doppler @ Emerald",
+    "★ Butterfly Knife | Doppler @ Black Pearl",
+    "★ Butterfly Knife | Doppler @ Sapphire"
+   ],
+   "items": [
+    {
+     "key": "★ Karambit | Gamma Doppler @ Emerald",
+     "weight": 342
+    },
+    {
+     "key": "★ Butterfly Knife | Doppler @ Black Pearl",
+     "weight": 436
+    },
+    {
+     "key": "★ Butterfly Knife | Doppler @ Sapphire",
+     "weight": 536
+    },
+    {
+     "key": "★ Karambit | Doppler @ Black Pearl",
+     "weight": 596
+    },
+    {
+     "key": "★ M9 Bayonet | Doppler @ Sapphire",
+     "weight": 900
+    },
+    {
+     "key": "★ Karambit | Doppler @ Sapphire",
+     "weight": 957
+    },
+    {
+     "key": "★ Butterfly Knife | Doppler @ Phase 2",
+     "weight": 1127
+    },
+    {
+     "key": "★ Butterfly Knife | Doppler @ Phase 4",
+     "weight": 2360
+    },
+    {
+     "key": "★ Karambit | Gamma Doppler @ Phase 2",
+     "weight": 2676
+    },
+    {
+     "key": "★ Karambit | Gamma Doppler @ Phase 1",
+     "weight": 3399
+    },
+    {
+     "key": "★ Butterfly Knife | Gamma Doppler @ Phase 4",
+     "weight": 4255
+    },
+    {
+     "key": "★ M9 Bayonet | Gamma Doppler @ Phase 2",
+     "weight": 6004
+    },
+    {
+     "key": "★ M9 Bayonet | Gamma Doppler @ Phase 3",
+     "weight": 7189
+    },
+    {
+     "key": "★ Talon Knife | Doppler @ Phase 2",
+     "weight": 10121
+    },
+    {
+     "key": "★ Talon Knife | Doppler @ Phase 1",
+     "weight": 12997
+    },
+    {
+     "key": "★ Paracord Knife | Doppler @ Black Pearl",
+     "weight": 16757
+    },
+    {
+     "key": "★ Falchion Knife | Gamma Doppler @ Emerald",
+     "weight": 22250
+    },
+    {
+     "key": "★ Nomad Knife | Doppler @ Phase 2",
+     "weight": 27983
+    },
+    {
+     "key": "★ Navaja Knife | Doppler @ Black Pearl",
+     "weight": 37120
+    },
+    {
+     "key": "★ Flip Knife | Doppler @ Phase 3",
+     "weight": 47996
+    },
+    {
+     "key": "★ Bowie Knife | Doppler @ Phase 1",
+     "weight": 63532
+    },
+    {
+     "key": "★ Huntsman Knife | Gamma Doppler @ Phase 1",
+     "weight": 81163
+    },
+    {
+     "key": "★ Survival Knife | Doppler @ Phase 3",
+     "weight": 102744
+    },
+    {
+     "key": "★ Gut Knife | Doppler @ Phase 2",
+     "weight": 136011
+    },
+    {
+     "key": "★ Gut Knife | Doppler @ Phase 3",
+     "weight": 174184
+    },
+    {
+     "key": "★ Shadow Daggers | Gamma Doppler @ Phase 3",
+     "weight": 236365
+    }
+   ]
+  },
+  {
+   "slug": "fade-factory",
+   "name": "Фабрика Fade",
+   "description": "Всё в градиенте: ножи Fade и Marble Fade, Glock-18 | Fade, AWP | Fade, M4A1-S | Fade и перчатки Specialist Fade.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare",
+    "themed"
+   ],
+   "featured": false,
+   "theme": "waves",
+   "accent": "#FB7185",
+   "cover": [
+    "★ Karambit | Fade",
+    "Glock-18 | Fade",
+    "★ Specialist Gloves | Fade"
+   ],
+   "items": [
+    {
+     "key": "★ Butterfly Knife | Fade",
+     "weight": 245
+    },
+    {
+     "key": "★ Karambit | Fade",
+     "weight": 321
+    },
+    {
+     "key": "Glock-18 | Fade",
+     "weight": 532
+    },
+    {
+     "key": "★ M9 Bayonet | Fade",
+     "weight": 967
+    },
+    {
+     "key": "★ Talon Knife | Fade",
+     "weight": 1106
+    },
+    {
+     "key": "AWP | Fade",
+     "weight": 1737
+    },
+    {
+     "key": "★ Stiletto Knife | Fade",
+     "weight": 3609
+    },
+    {
+     "key": "★ Bayonet | Fade",
+     "weight": 4310
+    },
+    {
+     "key": "★ Bayonet | Marble Fade",
+     "weight": 4828
+    },
+    {
+     "key": "★ Flip Knife | Fade",
+     "weight": 6340
+    },
+    {
+     "key": "★ Classic Knife | Fade",
+     "weight": 6808
+    },
+    {
+     "key": "★ Flip Knife | Marble Fade",
+     "weight": 7548
+    },
+    {
+     "key": "★ Huntsman Knife | Fade",
+     "weight": 9449
+    },
+    {
+     "key": "★ Falchion Knife | Fade",
+     "weight": 9650
+    },
+    {
+     "key": "★ Ursus Knife | Fade",
+     "weight": 11033
+    },
+    {
+     "key": "★ Specialist Gloves | Fade",
+     "weight": 12979
+    },
+    {
+     "key": "M4A1-S | Fade",
+     "weight": 14443
+    },
+    {
+     "key": "UMP-45 | Fade",
+     "weight": 14657
+    },
+    {
+     "key": "★ Specialist Gloves | Marble Fade",
+     "weight": 17227
+    },
+    {
+     "key": "★ Shadow Daggers | Fade",
+     "weight": 21257
+    },
+    {
+     "key": "★ Gut Knife | Fade",
+     "weight": 25557
+    },
+    {
+     "key": "★ Navaja Knife | Fade",
+     "weight": 34681
+    },
+    {
+     "key": "R8 Revolver | Fade",
+     "weight": 45505
+    },
+    {
+     "key": "MAC-10 | Fade",
+     "weight": 166153
+    },
+    {
+     "key": "MAC-10 | Amber Fade",
+     "weight": 579058
+    }
+   ]
+  },
+  {
+   "slug": "bayonet-squad",
+   "name": "Отряд штыков",
+   "description": "Bayonet и M9 Bayonet в лучших отделках: Lore, Tiger Tooth, Fade, Doppler, Crimson Web и классические камуфляжи.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "grid",
+   "accent": "#60A5FA",
+   "cover": [
+    "★ M9 Bayonet | Lore",
+    "★ Bayonet | Doppler @ Ruby",
+    "★ M9 Bayonet | Tiger Tooth"
+   ],
+   "items": [
+    {
+     "key": "★ M9 Bayonet | Doppler @ Ruby",
+     "weight": 916
+    },
+    {
+     "key": "★ Bayonet | Doppler @ Ruby",
+     "weight": 6637
+    },
+    {
+     "key": "★ M9 Bayonet | Fade",
+     "weight": 16675
+    },
+    {
+     "key": "★ M9 Bayonet | Marble Fade",
+     "weight": 22130
+    },
+    {
+     "key": "★ M9 Bayonet | Autotronic",
+     "weight": 26520
+    },
+    {
+     "key": "★ M9 Bayonet | Tiger Tooth",
+     "weight": 27229
+    },
+    {
+     "key": "★ M9 Bayonet | Crimson Web",
+     "weight": 32489
+    },
+    {
+     "key": "★ M9 Bayonet | Lore",
+     "weight": 33101
+    },
+    {
+     "key": "★ M9 Bayonet | Night",
+     "weight": 55138
+    },
+    {
+     "key": "★ Bayonet | Fade",
+     "weight": 55902
+    },
+    {
+     "key": "★ Bayonet | Slaughter",
+     "weight": 67872
+    },
+    {
+     "key": "★ Bayonet | Tiger Tooth",
+     "weight": 78779
+    },
+    {
+     "key": "★ Bayonet | Lore",
+     "weight": 89430
+    },
+    {
+     "key": "★ Bayonet",
+     "weight": 111440
+    },
+    {
+     "key": "★ Bayonet | Damascus Steel",
+     "weight": 149712
+    },
+    {
+     "key": "★ Bayonet | Safari Mesh",
+     "weight": 226030
+    }
+   ]
+  },
+  {
+   "slug": "tiger-marble",
+   "name": "Тигр и мрамор",
+   "description": "Две самые узнаваемые отделки ножей — Tiger Tooth и Marble Fade — на разных моделях.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare",
+    "themed"
+   ],
+   "featured": false,
+   "theme": "waves",
+   "accent": "#F59E0B",
+   "cover": [
+    "★ Butterfly Knife | Marble Fade",
+    "★ Butterfly Knife | Tiger Tooth",
+    "★ Karambit | Marble Fade"
+   ],
+   "items": [
+    {
+     "key": "★ Butterfly Knife | Marble Fade",
+     "weight": 2022
+    },
+    {
+     "key": "★ Butterfly Knife | Tiger Tooth",
+     "weight": 2860
+    },
+    {
+     "key": "★ Karambit | Marble Fade",
+     "weight": 2901
+    },
+    {
+     "key": "★ Karambit | Tiger Tooth",
+     "weight": 3880
+    },
+    {
+     "key": "★ M9 Bayonet | Marble Fade",
+     "weight": 5031
+    },
+    {
+     "key": "★ M9 Bayonet | Tiger Tooth",
+     "weight": 6446
+    },
+    {
+     "key": "★ Talon Knife | Marble Fade",
+     "weight": 7860
+    },
+    {
+     "key": "★ Talon Knife | Tiger Tooth",
+     "weight": 9602
+    },
+    {
+     "key": "★ Skeleton Knife | Marble Fade",
+     "weight": 14045
+    },
+    {
+     "key": "★ Bayonet | Marble Fade",
+     "weight": 16990
+    },
+    {
+     "key": "★ Stiletto Knife | Marble Fade",
+     "weight": 20027
+    },
+    {
+     "key": "★ Stiletto Knife | Tiger Tooth",
+     "weight": 23406
+    },
+    {
+     "key": "★ Nomad Knife | Marble Fade",
+     "weight": 31593
+    },
+    {
+     "key": "★ Flip Knife | Tiger Tooth",
+     "weight": 36331
+    },
+    {
+     "key": "★ Nomad Knife | Tiger Tooth",
+     "weight": 44102
+    },
+    {
+     "key": "★ Bowie Knife | Marble Fade",
+     "weight": 55272
+    },
+    {
+     "key": "★ Huntsman Knife | Tiger Tooth",
+     "weight": 66115
+    },
+    {
+     "key": "★ Survival Knife | Marble Fade",
+     "weight": 84652
+    },
+    {
+     "key": "★ Paracord Knife | Tiger Tooth",
+     "weight": 104458
+    },
+    {
+     "key": "★ Gut Knife | Tiger Tooth",
+     "weight": 123322
+    },
+    {
+     "key": "★ Navaja Knife | Marble Fade",
+     "weight": 146096
+    },
+    {
+     "key": "★ Shadow Daggers | Tiger Tooth",
+     "weight": 192989
+    }
+   ]
+  },
+  {
+   "slug": "factory-steel",
+   "name": "Заводская сталь",
+   "description": "Ножи в заводском исполнении без покраски (Vanilla): от Navaja до Butterfly Knife и Karambit.",
+   "group": "knives",
+   "categories": [
+    "knives",
+    "premium",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "shards",
+   "accent": "#CBD5E1",
+   "cover": [
+    "★ Butterfly Knife",
+    "★ Karambit",
+    "★ M9 Bayonet"
+   ],
+   "items": [
+    {
+     "key": "★ Butterfly Knife",
+     "weight": 34800
+    },
+    {
+     "key": "★ Karambit",
+     "weight": 35755
+    },
+    {
+     "key": "★ M9 Bayonet",
+     "weight": 37801
+    },
+    {
+     "key": "★ Talon Knife",
+     "weight": 43411
+    },
+    {
+     "key": "★ Bayonet",
+     "weight": 46131
+    },
+    {
+     "key": "★ Skeleton Knife",
+     "weight": 46546
+    },
+    {
+     "key": "★ Stiletto Knife",
+     "weight": 47477
+    },
+    {
+     "key": "★ Classic Knife",
+     "weight": 47763
+    },
+    {
+     "key": "★ Flip Knife",
+     "weight": 48216
+    },
+    {
+     "key": "★ Nomad Knife",
+     "weight": 51096
+    },
+    {
+     "key": "★ Huntsman Knife",
+     "weight": 51287
+    },
+    {
+     "key": "★ Falchion Knife",
+     "weight": 52493
+    },
+    {
+     "key": "★ Bowie Knife",
+     "weight": 54569
+    },
+    {
+     "key": "★ Kukri Knife",
+     "weight": 54589
+    },
+    {
+     "key": "★ Ursus Knife",
+     "weight": 55454
+    },
+    {
+     "key": "★ Shadow Daggers",
+     "weight": 56247
+    },
+    {
+     "key": "★ Gut Knife",
+     "weight": 57698
+    },
+    {
+     "key": "★ Paracord Knife",
+     "weight": 58690
+    },
+    {
+     "key": "★ Survival Knife",
+     "weight": 59241
+    },
+    {
+     "key": "★ Navaja Knife",
+     "weight": 60736
+    }
+   ]
+  },
+  {
+   "slug": "glove-locker",
+   "name": "Перчаточный шкаф",
+   "description": "Перчатки всех моделей CS2: Sport, Specialist, Driver, Moto, Hand Wraps, Hydra, Broken Fang и Bloodhound. Каждое открытие — перчатки.",
+   "group": "gloves",
+   "categories": [
+    "gloves",
+    "premium",
+    "rare"
+   ],
+   "featured": true,
+   "theme": "hex",
+   "accent": "#7AC74F",
+   "cover": [
+    "★ Sport Gloves | Hedge Maze",
+    "★ Sport Gloves | Pandora's Box",
+    "★ Specialist Gloves | Crimson Kimono"
+   ],
+   "items": [
+    {
+     "key": "★ Sport Gloves | Hedge Maze",
+     "weight": 1692
+    },
+    {
+     "key": "★ Sport Gloves | Pandora's Box",
+     "weight": 1953
+    },
+    {
+     "key": "★ Specialist Gloves | Crimson Kimono",
+     "weight": 3705
+    },
+    {
+     "key": "★ Sport Gloves | Superconductor",
+     "weight": 4308
+    },
+    {
+     "key": "★ Moto Gloves | Spearmint",
+     "weight": 5340
+    },
+    {
+     "key": "★ Sport Gloves | Ultra Violent",
+     "weight": 6600
+    },
+    {
+     "key": "★ Specialist Gloves | Emerald Web",
+     "weight": 6991
+    },
+    {
+     "key": "★ Sport Gloves | Arid",
+     "weight": 9071
+    },
+    {
+     "key": "★ Moto Gloves | Cool Mint",
+     "weight": 9580
+    },
+    {
+     "key": "★ Driver Gloves | Crimson Weave",
+     "weight": 9936
+    },
+    {
+     "key": "★ Specialist Gloves | Foundation",
+     "weight": 11810
+    },
+    {
+     "key": "★ Specialist Gloves | Pillow Punchers",
+     "weight": 11865
+    },
+    {
+     "key": "★ Specialist Gloves | Cloud Chaser",
+     "weight": 13009
+    },
+    {
+     "key": "★ Driver Gloves | Lunar Weave",
+     "weight": 15348
+    },
+    {
+     "key": "★ Sport Gloves | Amphibious",
+     "weight": 18267
+    },
+    {
+     "key": "★ Moto Gloves | Boom!",
+     "weight": 20897
+    },
+    {
+     "key": "★ Driver Gloves | Wave Chaser",
+     "weight": 26254
+    },
+    {
+     "key": "★ Specialist Gloves | Big Swell",
+     "weight": 29250
+    },
+    {
+     "key": "★ Specialist Gloves | Marble Fade",
+     "weight": 34367
+    },
+    {
+     "key": "★ Driver Gloves | Black Tie",
+     "weight": 40081
+    },
+    {
+     "key": "★ Driver Gloves | Dragon Fists",
+     "weight": 46938
+    },
+    {
+     "key": "★ Sport Gloves | Creme Pinstripe",
+     "weight": 55208
+    },
+    {
+     "key": "★ Broken Fang Gloves | Jade",
+     "weight": 64484
+    },
+    {
+     "key": "★ Moto Gloves | Turtle",
+     "weight": 77867
+    },
+    {
+     "key": "★ Driver Gloves | Queen Jaguar",
+     "weight": 88975
+    },
+    {
+     "key": "★ Moto Gloves | 3rd Commando Company",
+     "weight": 107218
+    },
+    {
+     "key": "★ Moto Gloves | Transport",
+     "weight": 123989
+    },
+    {
+     "key": "★ Driver Gloves | Racing Green",
+     "weight": 154997
+    }
+   ]
+  },
+  {
+   "slug": "sport-luxe",
+   "name": "Спорт-люкс",
+   "description": "Только Sport Gloves: Pandora's Box, Hedge Maze, Superconductor, Vice, Amphibious и другие.",
+   "group": "gloves",
+   "categories": [
+    "gloves",
+    "premium",
+    "elite",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "rays",
+   "accent": "#22D3EE",
+   "cover": [
+    "★ Sport Gloves | Pandora's Box",
+    "★ Sport Gloves | Vice",
+    "★ Sport Gloves | Superconductor"
+   ],
+   "items": [
+    {
+     "key": "★ Sport Gloves | Hedge Maze",
+     "weight": 18974
+    },
+    {
+     "key": "★ Sport Gloves | Pandora's Box",
+     "weight": 20158
+    },
+    {
+     "key": "★ Sport Gloves | Superconductor",
+     "weight": 28132
+    },
+    {
+     "key": "★ Sport Gloves | Ultra Violent",
+     "weight": 33671
+    },
+    {
+     "key": "★ Sport Gloves | Arid",
+     "weight": 38498
+    },
+    {
+     "key": "★ Sport Gloves | Nocts",
+     "weight": 40228
+    },
+    {
+     "key": "★ Sport Gloves | Vice",
+     "weight": 43512
+    },
+    {
+     "key": "★ Sport Gloves | Occult",
+     "weight": 44099
+    },
+    {
+     "key": "★ Sport Gloves | Slingshot",
+     "weight": 49848
+    },
+    {
+     "key": "★ Sport Gloves | Amphibious",
+     "weight": 51704
+    },
+    {
+     "key": "★ Sport Gloves | Violet Beadwork",
+     "weight": 54544
+    },
+    {
+     "key": "★ Sport Gloves | Omega",
+     "weight": 62670
+    },
+    {
+     "key": "★ Sport Gloves | Frosty",
+     "weight": 64518
+    },
+    {
+     "key": "★ Sport Gloves | Scarlet Shamagh",
+     "weight": 64787
+    },
+    {
+     "key": "★ Sport Gloves | Red Racer",
+     "weight": 69542
+    },
+    {
+     "key": "★ Sport Gloves | Big Game",
+     "weight": 72787
+    },
+    {
+     "key": "★ Sport Gloves | Blaze",
+     "weight": 72858
+    },
+    {
+     "key": "★ Sport Gloves | Creme Pinstripe",
+     "weight": 82398
+    },
+    {
+     "key": "★ Sport Gloves | Bronze Morph",
+     "weight": 87072
+    }
+   ]
+  },
+  {
+   "slug": "specialist-ops",
+   "name": "Спецназ",
+   "description": "Specialist Gloves: Crimson Kimono, Emerald Web, Fade, Marble Fade, Foundation и вся линейка.",
+   "group": "gloves",
+   "categories": [
+    "gloves",
+    "premium",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "circuit",
+   "accent": "#F97316",
+   "cover": [
+    "★ Specialist Gloves | Crimson Kimono",
+    "★ Specialist Gloves | Emerald Web",
+    "★ Specialist Gloves | Fade"
+   ],
+   "items": [
+    {
+     "key": "★ Specialist Gloves | Crimson Kimono",
+     "weight": 24424
+    },
+    {
+     "key": "★ Specialist Gloves | Emerald Web",
+     "weight": 30995
+    },
+    {
+     "key": "★ Specialist Gloves | Foundation",
+     "weight": 37734
+    },
+    {
+     "key": "★ Specialist Gloves | Pillow Punchers",
+     "weight": 37799
+    },
+    {
+     "key": "★ Specialist Gloves | Cloud Chaser",
+     "weight": 39128
+    },
+    {
+     "key": "★ Specialist Gloves | Lime Polycam",
+     "weight": 46209
+    },
+    {
+     "key": "★ Specialist Gloves | Blackbook",
+     "weight": 46640
+    },
+    {
+     "key": "★ Specialist Gloves | Fade",
+     "weight": 52909
+    },
+    {
+     "key": "★ Specialist Gloves | Big Swell",
+     "weight": 53032
+    },
+    {
+     "key": "★ Specialist Gloves | Forest DDPAT",
+     "weight": 53418
+    },
+    {
+     "key": "★ Specialist Gloves | Sunburst",
+     "weight": 53736
+    },
+    {
+     "key": "★ Specialist Gloves | Marble Fade",
+     "weight": 56338
+    },
+    {
+     "key": "★ Specialist Gloves | Tiger Strike",
+     "weight": 58437
+    },
+    {
+     "key": "★ Specialist Gloves | Crimson Web",
+     "weight": 58782
+    },
+    {
+     "key": "★ Specialist Gloves | Field Agent",
+     "weight": 61239
+    },
+    {
+     "key": "★ Specialist Gloves | Chocolate Chesterfield",
+     "weight": 66214
+    },
+    {
+     "key": "★ Specialist Gloves | Lt. Commander",
+     "weight": 67181
+    },
+    {
+     "key": "★ Specialist Gloves | Mogul",
+     "weight": 68284
+    },
+    {
+     "key": "★ Specialist Gloves | Buckshot",
+     "weight": 87501
+    }
+   ]
+  },
+  {
+   "slug": "drive-and-wrap",
+   "name": "Руль и бинты",
+   "description": "Driver Gloves и Hand Wraps: Crimson Weave, King Snake, Lunar Weave, Slaughter, Leather и другие.",
+   "group": "gloves",
+   "categories": [
+    "gloves",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "stripes",
+   "accent": "#DC6B4A",
+   "cover": [
+    "★ Driver Gloves | Crimson Weave",
+    "★ Hand Wraps | Slaughter",
+    "★ Driver Gloves | King Snake"
+   ],
+   "items": [
+    {
+     "key": "★ Driver Gloves | Crimson Weave",
+     "weight": 17473
+    },
+    {
+     "key": "★ Hand Wraps | Leather",
+     "weight": 21216
+    },
+    {
+     "key": "★ Driver Gloves | Lunar Weave",
+     "weight": 21645
+    },
+    {
+     "key": "★ Hand Wraps | Slaughter",
+     "weight": 22472
+    },
+    {
+     "key": "★ Driver Gloves | Snow Leopard",
+     "weight": 24529
+    },
+    {
+     "key": "★ Driver Gloves | Convoy",
+     "weight": 24767
+    },
+    {
+     "key": "★ Hand Wraps | Spruce DDPAT",
+     "weight": 26393
+    },
+    {
+     "key": "★ Driver Gloves | Wave Chaser",
+     "weight": 28195
+    },
+    {
+     "key": "★ Hand Wraps | Cobalt Skulls",
+     "weight": 29007
+    },
+    {
+     "key": "★ Driver Gloves | Brocade Crane",
+     "weight": 29078
+    },
+    {
+     "key": "★ Driver Gloves | King Snake",
+     "weight": 30325
+    },
+    {
+     "key": "★ Driver Gloves | Brocade Flowers",
+     "weight": 31012
+    },
+    {
+     "key": "★ Driver Gloves | Imperial Plaid",
+     "weight": 32619
+    },
+    {
+     "key": "★ Driver Gloves | Black Tie",
+     "weight": 34727
+    },
+    {
+     "key": "★ Driver Gloves | Hand Sweaters",
+     "weight": 35659
+    },
+    {
+     "key": "★ Hand Wraps | CAUTION!",
+     "weight": 36084
+    },
+    {
+     "key": "★ Driver Gloves | Plum Quill",
+     "weight": 37296
+    },
+    {
+     "key": "★ Driver Gloves | Dragon Fists",
+     "weight": 37536
+    },
+    {
+     "key": "★ Driver Gloves | Seigaiha",
+     "weight": 40624
+    },
+    {
+     "key": "★ Hand Wraps | Overprint",
+     "weight": 43480
+    },
+    {
+     "key": "★ Driver Gloves | Rezan the Red",
+     "weight": 45749
+    },
+    {
+     "key": "★ Driver Gloves | Queen Jaguar",
+     "weight": 51431
+    },
+    {
+     "key": "★ Driver Gloves | Overtake",
+     "weight": 55090
+    },
+    {
+     "key": "★ Hand Wraps | Duct Tape",
+     "weight": 56691
+    },
+    {
+     "key": "★ Hand Wraps | Desert Shamagh",
+     "weight": 59519
+    },
+    {
+     "key": "★ Hand Wraps | Arboreal",
+     "weight": 59784
+    },
+    {
+     "key": "★ Driver Gloves | Racing Green",
+     "weight": 67599
+    }
+   ]
+  },
+  {
+   "slug": "moto-and-fang",
+   "name": "Мото и клыки",
+   "description": "Moto Gloves, Hydra Gloves, Broken Fang Gloves и Bloodhound Gloves — самые доступные перчатки CS2 и Moto Gloves | Spearmint как главный приз.",
+   "group": "gloves",
+   "categories": [
+    "gloves",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "dots",
+   "accent": "#34D399",
+   "cover": [
+    "★ Moto Gloves | Spearmint",
+    "★ Hydra Gloves | Case Hardened",
+    "★ Broken Fang Gloves | Jade"
+   ],
+   "items": [
+    {
+     "key": "★ Moto Gloves | Spearmint",
+     "weight": 10142
+    },
+    {
+     "key": "★ Moto Gloves | Boom!",
+     "weight": 24942
+    },
+    {
+     "key": "★ Bloodhound Gloves | Charred",
+     "weight": 35628
+    },
+    {
+     "key": "★ Bloodhound Gloves | Bronzed",
+     "weight": 38742
+    },
+    {
+     "key": "★ Bloodhound Gloves | Snakebite",
+     "weight": 42033
+    },
+    {
+     "key": "★ Bloodhound Gloves | Guerrilla",
+     "weight": 43237
+    },
+    {
+     "key": "★ Moto Gloves | Smoke Out",
+     "weight": 46356
+    },
+    {
+     "key": "★ Moto Gloves | Polygon",
+     "weight": 46459
+    },
+    {
+     "key": "★ Broken Fang Gloves | Jade",
+     "weight": 52438
+    },
+    {
+     "key": "★ Moto Gloves | Finish Line",
+     "weight": 56205
+    },
+    {
+     "key": "★ Moto Gloves | Turtle",
+     "weight": 59382
+    },
+    {
+     "key": "★ Hydra Gloves | Case Hardened",
+     "weight": 61846
+    },
+    {
+     "key": "★ Broken Fang Gloves | Unhinged",
+     "weight": 67083
+    },
+    {
+     "key": "★ Broken Fang Gloves | Yellow-banded",
+     "weight": 71687
+    },
+    {
+     "key": "★ Broken Fang Gloves | Needle Point",
+     "weight": 73537
+    },
+    {
+     "key": "★ Hydra Gloves | Emerald",
+     "weight": 86306
+    },
+    {
+     "key": "★ Hydra Gloves | Mangrove",
+     "weight": 88124
+    },
+    {
+     "key": "★ Hydra Gloves | Rattler",
+     "weight": 95853
+    }
+   ]
+  },
+  {
+   "slug": "blade-and-fist",
+   "name": "Клинок и кулак",
+   "description": "Нож или перчатки с заметным шансом, а остальное — дорогие скины уровня Covert для апгрейда.",
+   "group": "gloves",
+   "categories": [
+    "gloves",
+    "knives",
+    "premium",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "burst",
+   "accent": "#FACC15",
+   "cover": [
+    "★ Sport Gloves | Arid",
+    "★ Talon Knife | Safari Mesh",
+    "★ Driver Gloves | Lunar Weave"
+   ],
+   "items": [
+    {
+     "key": "★ Sport Gloves | Arid",
+     "weight": 5847
+    },
+    {
+     "key": "★ Driver Gloves | Lunar Weave",
+     "weight": 8232
+    },
+    {
+     "key": "★ Moto Gloves | Eclipse",
+     "weight": 10006
+    },
+    {
+     "key": "★ Hand Wraps | Badlands",
+     "weight": 10303
+    },
+    {
+     "key": "★ Talon Knife | Safari Mesh",
+     "weight": 11747
+    },
+    {
+     "key": "★ Specialist Gloves | Tiger Strike",
+     "weight": 14820
+    },
+    {
+     "key": "★ Flip Knife | Urban Masked",
+     "weight": 16278
+    },
+    {
+     "key": "★ Huntsman Knife | Night",
+     "weight": 19092
+    },
+    {
+     "key": "★ Ursus Knife | Blue Steel",
+     "weight": 19109
+    },
+    {
+     "key": "★ Bowie Knife | Ultraviolet",
+     "weight": 23218
+    },
+    {
+     "key": "Glock-18 | Gamma Doppler @ Phase 4",
+     "weight": 25090
+    },
+    {
+     "key": "Dual Berettas | Cobra Strike",
+     "weight": 29428
+    },
+    {
+     "key": "★ Hydra Gloves | Emerald",
+     "weight": 34246
+    },
+    {
+     "key": "Glock-18 | Gold Toof",
+     "weight": 34288
+    },
+    {
+     "key": "P250 | Undertow",
+     "weight": 40189
+    },
+    {
+     "key": "SSG 08 | Turbo Peek",
+     "weight": 47654
+    },
+    {
+     "key": "M4A1-S | Control Panel",
+     "weight": 54643
+    },
+    {
+     "key": "CZ75-Auto | Xiangliu",
+     "weight": 64439
+    },
+    {
+     "key": "Nova | Antique",
+     "weight": 75780
+    },
+    {
+     "key": "AWP | Ice Coaled",
+     "weight": 88807
+    },
+    {
+     "key": "XM1014 | Incinegator",
+     "weight": 103965
+    },
+    {
+     "key": "USP-S | Jawbreaker",
+     "weight": 121634
+    },
+    {
+     "key": "P2000 | Wicked Sick",
+     "weight": 141185
+    }
+   ]
+  },
+  {
+   "slug": "dragon-hoard",
+   "name": "Сокровищница дракона",
+   "description": "AWP | Dragon Lore, AWP | Gungnir, AWP | Medusa и The Prince — легенды снайперской винтовки в одном кейсе.",
+   "group": "legendary",
+   "categories": [
+    "legendary",
+    "awp",
+    "rare",
+    "elite"
+   ],
+   "featured": true,
+   "theme": "rays",
+   "accent": "#E4AE39",
+   "cover": [
+    "AWP | Dragon Lore",
+    "AWP | Gungnir",
+    "AWP | Medusa"
+   ],
+   "items": [
+    {
+     "key": "AWP | Gungnir",
+     "weight": 314
+    },
+    {
+     "key": "AWP | Dragon Lore",
+     "weight": 399
+    },
+    {
+     "key": "AWP | Medusa",
+     "weight": 1518
+    },
+    {
+     "key": "AWP | The Prince",
+     "weight": 1988
+    },
+    {
+     "key": "AWP | Desert Hydra",
+     "weight": 4110
+    },
+    {
+     "key": "AWP | Fade",
+     "weight": 7543
+    },
+    {
+     "key": "AWP | Lightning Strike",
+     "weight": 9646
+    },
+    {
+     "key": "AWP | Oni Taiji",
+     "weight": 17707
+    },
+    {
+     "key": "AWP | Silk Tiger",
+     "weight": 29593
+    },
+    {
+     "key": "AWP | CMYK",
+     "weight": 49868
+    },
+    {
+     "key": "AWP | Man-o'-war",
+     "weight": 62613
+    },
+    {
+     "key": "AWP | Sovereign Flame",
+     "weight": 64408
+    },
+    {
+     "key": "AWP | Asiimov",
+     "weight": 81680
+    },
+    {
+     "key": "AWP | Containment Breach",
+     "weight": 94366
+    },
+    {
+     "key": "AWP | Printstream",
+     "weight": 158443
+    },
+    {
+     "key": "AWP | Hyper Beast",
+     "weight": 204574
+    },
+    {
+     "key": "AWP | Neo-Noir",
+     "weight": 211230
+    }
+   ]
+  },
+  {
+   "slug": "contraband",
+   "name": "Контрабанда",
+   "description": "M4A4 | Howl — единственный скин категории «Контрабанда» — и лучшие M4: Poseidon, Knight, Hot Rod, Imminent Danger.",
+   "group": "legendary",
+   "categories": [
+    "legendary",
+    "rare",
+    "elite"
+   ],
+   "featured": false,
+   "theme": "circuit",
+   "accent": "#F43F5E",
+   "cover": [
+    "M4A4 | Howl",
+    "M4A1-S | Knight",
+    "M4A4 | Poseidon"
+   ],
+   "items": [
+    {
+     "key": "M4A4 | Howl",
+     "weight": 2000
+    },
+    {
+     "key": "M4A1-S | Knight",
+     "weight": 2809
+    },
+    {
+     "key": "M4A4 | Poseidon",
+     "weight": 4512
+    },
+    {
+     "key": "M4A1-S | Hot Rod",
+     "weight": 4541
+    },
+    {
+     "key": "M4A1-S | Imminent Danger",
+     "weight": 6016
+    },
+    {
+     "key": "M4A1-S | Welcome to the Jungle",
+     "weight": 6171
+    },
+    {
+     "key": "M4A1-S | Blue Phosphor",
+     "weight": 7088
+    },
+    {
+     "key": "M4A4 | Daybreak",
+     "weight": 7226
+    },
+    {
+     "key": "M4A1-S | Icarus Fell",
+     "weight": 7858
+    },
+    {
+     "key": "M4A4 | Eye of Horus",
+     "weight": 11222
+    },
+    {
+     "key": "M4A4 | The Coalition",
+     "weight": 11731
+    },
+    {
+     "key": "M4A4 | Buzz Kill",
+     "weight": 11844
+    },
+    {
+     "key": "M4A1-S | Printstream",
+     "weight": 12061
+    },
+    {
+     "key": "M4A1-S | Cyrex",
+     "weight": 12950
+    },
+    {
+     "key": "M4A4 | Asiimov",
+     "weight": 15541
+    },
+    {
+     "key": "M4A1-S | Chantico's Fire",
+     "weight": 15658
+    },
+    {
+     "key": "M4A4 | X-Ray",
+     "weight": 18655
+    },
+    {
+     "key": "M4A4 | Hellish",
+     "weight": 39867
+    },
+    {
+     "key": "M4A4 | Desert Storm",
+     "weight": 56428
+    },
+    {
+     "key": "M4A1-S | Blood Tiger",
+     "weight": 74624
+    },
+    {
+     "key": "M4A4 | Evil Daimyo",
+     "weight": 91902
+    },
+    {
+     "key": "M4A4 | Turbine",
+     "weight": 134135
+    },
+    {
+     "key": "M4A4 | Sheet Lightning",
+     "weight": 195625
+    },
+    {
+     "key": "M4A4 | Etch Lord",
+     "weight": 249536
+    }
+   ]
+  },
+  {
+   "slug": "lotus-throne",
+   "name": "Трон лотоса",
+   "description": "AK-47 | Wild Lotus во главе цветочной коллекции: MP9 | Wild Lily, AUG | Midnight Lily, UMP-45 | Day Lily и легендарные AK-47.",
+   "group": "legendary",
+   "categories": [
+    "legendary",
+    "ak47",
+    "rare",
+    "elite"
+   ],
+   "featured": false,
+   "theme": "waves",
+   "accent": "#4ADE80",
+   "cover": [
+    "AK-47 | Wild Lotus",
+    "MP9 | Wild Lily",
+    "AK-47 | Gold Arabesque"
+   ],
+   "items": [
+    {
+     "key": "AK-47 | Wild Lotus",
+     "weight": 3396
+    },
+    {
+     "key": "MP9 | Wild Lily",
+     "weight": 4677
+    },
+    {
+     "key": "AK-47 | Gold Arabesque",
+     "weight": 6275
+    },
+    {
+     "key": "AK-47 | Hydroponic",
+     "weight": 6396
+    },
+    {
+     "key": "AK-47 | Fire Serpent",
+     "weight": 7381
+    },
+    {
+     "key": "AK-47 | X-Ray",
+     "weight": 8565
+    },
+    {
+     "key": "AK-47 | Jet Set",
+     "weight": 10028
+    },
+    {
+     "key": "AUG | Midnight Lily",
+     "weight": 10833
+    },
+    {
+     "key": "AK-47 | Case Hardened",
+     "weight": 11869
+    },
+    {
+     "key": "AK-47 | Vulcan",
+     "weight": 12731
+    },
+    {
+     "key": "AK-47 | Panthera onca",
+     "weight": 14079
+    },
+    {
+     "key": "AK-47 | Bloodsport",
+     "weight": 14447
+    },
+    {
+     "key": "Five-SeveN | Crimson Blossom",
+     "weight": 19244
+    },
+    {
+     "key": "MP7 | Teal Blossom",
+     "weight": 20200
+    },
+    {
+     "key": "UMP-45 | Day Lily",
+     "weight": 20213
+    },
+    {
+     "key": "M4A4 | Spider Lily",
+     "weight": 37967
+    },
+    {
+     "key": "Glock-18 | Nuclear Garden",
+     "weight": 47087
+    },
+    {
+     "key": "MP5-SD | Bamboo Garden",
+     "weight": 62989
+    },
+    {
+     "key": "USP-S | Black Lotus",
+     "weight": 64304
+    },
+    {
+     "key": "SG 553 | Desert Blossom",
+     "weight": 65173
+    },
+    {
+     "key": "Glock-18 | Coral Bloom",
+     "weight": 139779
+    },
+    {
+     "key": "M4A1-S | Rose Hex",
+     "weight": 158152
+    },
+    {
+     "key": "Dual Berettas | Rose Nacre",
+     "weight": 254215
+    }
+   ]
+  },
+  {
+   "slug": "olympus",
+   "name": "Олимп",
+   "description": "Кейс уровня GODLIKE: AWP | Gungnir, AWP | Dragon Lore, AK-47 | Wild Lotus, M4A4 | Howl, Butterfly Knife | Doppler Ruby, Karambit | Gamma Doppler Emerald и Sport Gloves | Hedge Maze.",
+   "group": "legendary",
+   "categories": [
+    "legendary",
+    "knives",
+    "gloves",
+    "elite",
+    "exclusive"
+   ],
+   "featured": true,
+   "theme": "prism",
+   "accent": "#FDE68A",
+   "cover": [
+    "AWP | Gungnir",
+    "★ Butterfly Knife | Doppler @ Ruby",
+    "AK-47 | Wild Lotus"
+   ],
+   "items": [
+    {
+     "key": "★ Butterfly Knife | Doppler @ Ruby",
+     "weight": 762
+    },
+    {
+     "key": "★ Karambit | Gamma Doppler @ Emerald",
+     "weight": 900
+    },
+    {
+     "key": "★ M9 Bayonet | Doppler @ Ruby",
+     "weight": 960
+    },
+    {
+     "key": "AWP | Gungnir",
+     "weight": 969
+    },
+    {
+     "key": "AWP | Dragon Lore",
+     "weight": 1232
+    },
+    {
+     "key": "AK-47 | Wild Lotus",
+     "weight": 1339
+    },
+    {
+     "key": "M4A4 | Howl",
+     "weight": 1545
+    },
+    {
+     "key": "★ Sport Gloves | Hedge Maze",
+     "weight": 2735
+    },
+    {
+     "key": "★ Sport Gloves | Pandora's Box",
+     "weight": 3294
+    },
+    {
+     "key": "M4A1-S | Knight",
+     "weight": 3392
+    },
+    {
+     "key": "MP9 | Wild Lily",
+     "weight": 3841
+    },
+    {
+     "key": "AWP | Medusa",
+     "weight": 4681
+    },
+    {
+     "key": "Glock-18 | Fade",
+     "weight": 9407
+    },
+    {
+     "key": "AK-47 | Gold Arabesque",
+     "weight": 10113
+    },
+    {
+     "key": "M4A4 | Poseidon",
+     "weight": 10160
+    },
+    {
+     "key": "AUG | Akihabara Accept",
+     "weight": 25132
+    },
+    {
+     "key": "Five-SeveN | Hyper Beast",
+     "weight": 94260
+    },
+    {
+     "key": "SSG 08 | Dragonfire",
+     "weight": 97216
+    },
+    {
+     "key": "Glock-18 | Gamma Doppler @ Emerald",
+     "weight": 99143
+    },
+    {
+     "key": "Desert Eagle | Golden Koi",
+     "weight": 113509
+    },
+    {
+     "key": "P90 | Asiimov",
+     "weight": 119946
+    },
+    {
+     "key": "M4A1-S | Chantico's Fire",
+     "weight": 181020
+    },
+    {
+     "key": "SSG 08 | Blood in the Water",
+     "weight": 214444
+    }
+   ]
+  },
+  {
+   "slug": "collectors-vault",
+   "name": "Хранилище коллекционера",
+   "description": "Редкие и дорогие скины для коллекции: Desert Eagle | Blaze, MAG-7 | Cinquedea, AUG | Akihabara Accept, Five-SeveN | Neon Kimono и другие.",
+   "group": "legendary",
+   "categories": [
+    "legendary",
+    "rare",
+    "elite",
+    "collection"
+   ],
+   "featured": false,
+   "theme": "hex",
+   "accent": "#C4B5FD",
+   "cover": [
+    "Desert Eagle | Blaze",
+    "AUG | Akihabara Accept",
+    "MAG-7 | Cinquedea"
+   ],
+   "items": [
+    {
+     "key": "AWP | The Prince",
+     "weight": 6343
+    },
+    {
+     "key": "Desert Eagle | Blaze",
+     "weight": 10795
+    },
+    {
+     "key": "AUG | Akihabara Accept",
+     "weight": 11083
+    },
+    {
+     "key": "MAG-7 | Cinquedea",
+     "weight": 11550
+    },
+    {
+     "key": "M4A4 | Daybreak",
+     "weight": 11922
+    },
+    {
+     "key": "Five-SeveN | Neon Kimono",
+     "weight": 12477
+    },
+    {
+     "key": "AUG | Hot Rod",
+     "weight": 12991
+    },
+    {
+     "key": "Desert Eagle | Hand Cannon",
+     "weight": 13696
+    },
+    {
+     "key": "CZ75-Auto | Chalice",
+     "weight": 15040
+    },
+    {
+     "key": "Glock-18 | Synth Leaf",
+     "weight": 15456
+    },
+    {
+     "key": "Negev | Anodized Navy",
+     "weight": 15665
+    },
+    {
+     "key": "SSG 08 | Sea Calico",
+     "weight": 15669
+    },
+    {
+     "key": "P90 | Astral Jörmungandr",
+     "weight": 16019
+    },
+    {
+     "key": "SG 553 | Hazard Pay",
+     "weight": 17039
+    },
+    {
+     "key": "XM1014 | Red Leather",
+     "weight": 17378
+    },
+    {
+     "key": "G3SG1 | Chronos",
+     "weight": 18589
+    },
+    {
+     "key": "MP9 | Hot Rod",
+     "weight": 20306
+    },
+    {
+     "key": "Dual Berettas | Duelist",
+     "weight": 22560
+    },
+    {
+     "key": "Glock-18 | Pink DDPAT",
+     "weight": 54439
+    },
+    {
+     "key": "P250 | Mehndi",
+     "weight": 65923
+    },
+    {
+     "key": "AK-47 | The Outsiders",
+     "weight": 80592
+    },
+    {
+     "key": "USP-S | Cyrex",
+     "weight": 96766
+    },
+    {
+     "key": "Five-SeveN | Boost Protocol",
+     "weight": 118172
+    },
+    {
+     "key": "P2000 | Obsidian",
+     "weight": 144956
+    },
+    {
+     "key": "SSG 08 | Rapid Transit",
+     "weight": 174574
+    }
+   ]
+  },
+  {
+   "slug": "dragon-den",
+   "name": "Драконье логово",
+   "description": "Драконы и змеи: Desert Eagle | Emerald Jörmungandr, SSG 08 | Dragonfire, Glock-18 | Dragon Tattoo, M4A4 | 龍王 (Dragon King) и другие.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid"
+   ],
+   "featured": false,
+   "theme": "shards",
+   "accent": "#EF4444",
+   "cover": [
+    "SSG 08 | Dragonfire",
+    "Desert Eagle | Emerald Jörmungandr",
+    "M4A4 | 龍王 (Dragon King)"
+   ],
+   "items": [
+    {
+     "key": "Desert Eagle | Emerald Jörmungandr",
+     "weight": 4233
+    },
+    {
+     "key": "P90 | Astral Jörmungandr",
+     "weight": 4751
+    },
+    {
+     "key": "SSG 08 | Dragonfire",
+     "weight": 5647
+    },
+    {
+     "key": "AUG | Flame Jörmungandr",
+     "weight": 5830
+    },
+    {
+     "key": "MAC-10 | Hot Snakes",
+     "weight": 6032
+    },
+    {
+     "key": "P90 | Emerald Dragon",
+     "weight": 7830
+    },
+    {
+     "key": "Glock-18 | Dragon Tattoo",
+     "weight": 8411
+    },
+    {
+     "key": "P2000 | Fire Elemental",
+     "weight": 9029
+    },
+    {
+     "key": "Desert Eagle | Kumicho Dragon",
+     "weight": 16784
+    },
+    {
+     "key": "M4A4 | 龍王 (Dragon King)",
+     "weight": 18702
+    },
+    {
+     "key": "M4A1-S | Basilisk",
+     "weight": 24776
+    },
+    {
+     "key": "AWP | Atheris",
+     "weight": 33541
+    },
+    {
+     "key": "XM1014 | Red Python",
+     "weight": 57837
+    },
+    {
+     "key": "Desert Eagle | Firebreathing",
+     "weight": 69935
+    },
+    {
+     "key": "AWP | Pit Viper",
+     "weight": 82453
+    },
+    {
+     "key": "Desert Eagle | Serpent Strike",
+     "weight": 95521
+    },
+    {
+     "key": "FAMAS | Snake Song",
+     "weight": 123058
+    },
+    {
+     "key": "Sawed-Off | Lunar Wyrm",
+     "weight": 131927
+    },
+    {
+     "key": "MP9 | Dune Asp",
+     "weight": 293703
+    }
+   ]
+  },
+  {
+   "slug": "neon-district",
+   "name": "Неоновый район",
+   "description": "Неон, синтвейв и глитч: Neon Rider, Neon Revolution, Neo-Noir, Vaporwave и Five-SeveN | Neon Kimono.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid",
+    "popular"
+   ],
+   "featured": true,
+   "theme": "circuit",
+   "accent": "#F0ABFC",
+   "cover": [
+    "AK-47 | Neon Rider",
+    "Five-SeveN | Neon Kimono",
+    "USP-S | Neo-Noir"
+   ],
+   "items": [
+    {
+     "key": "Five-SeveN | Neon Kimono",
+     "weight": 1999
+    },
+    {
+     "key": "MAC-10 | Neon Rider",
+     "weight": 4358
+    },
+    {
+     "key": "AK-47 | Neon Revolution",
+     "weight": 4462
+    },
+    {
+     "key": "USP-S | Neo-Noir",
+     "weight": 4778
+    },
+    {
+     "key": "AK-47 | Neon Rider",
+     "weight": 6219
+    },
+    {
+     "key": "M4A1-S | Vaporwave",
+     "weight": 6245
+    },
+    {
+     "key": "Desert Eagle | Starcade",
+     "weight": 7685
+    },
+    {
+     "key": "AWP | Neo-Noir",
+     "weight": 7690
+    },
+    {
+     "key": "Glock-18 | Neo-Noir",
+     "weight": 8020
+    },
+    {
+     "key": "M4A4 | Neo-Noir",
+     "weight": 8658
+    },
+    {
+     "key": "M4A4 | In Living Color",
+     "weight": 8843
+    },
+    {
+     "key": "M4A1-S | Fatal Glitch",
+     "weight": 10097
+    },
+    {
+     "key": "USP-S | Spiral Glitch",
+     "weight": 10342
+    },
+    {
+     "key": "AK-47 | Phantom Disruptor",
+     "weight": 17862
+    },
+    {
+     "key": "P90 | Nostalgia",
+     "weight": 26580
+    },
+    {
+     "key": "MP7 | Neon Ply",
+     "weight": 33927
+    },
+    {
+     "key": "Five-SeveN | Retrobution",
+     "weight": 44950
+    },
+    {
+     "key": "M4A1-S | Glitched Paint",
+     "weight": 46028
+    },
+    {
+     "key": "G3SG1 | Digital Mesh",
+     "weight": 74136
+    },
+    {
+     "key": "P250 | Cyber Shell",
+     "weight": 79894
+    },
+    {
+     "key": "SG 553 | Cyberforce",
+     "weight": 216243
+    },
+    {
+     "key": "MP5-SD | Neon Squeezer",
+     "weight": 370984
+    }
+   ]
+  },
+  {
+   "slug": "inferno-grill",
+   "name": "Адский гриль",
+   "description": "Огонь и пламя: Desert Eagle | Blaze, M4A1-S | Chantico's Fire, AWP | Wildfire, M4A4 | Hellfire и Sport Gloves | Blaze.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid"
+   ],
+   "featured": false,
+   "theme": "burst",
+   "accent": "#FB923C",
+   "cover": [
+    "Desert Eagle | Blaze",
+    "M4A1-S | Chantico's Fire",
+    "★ Sport Gloves | Blaze"
+   ],
+   "items": [
+    {
+     "key": "Desert Eagle | Blaze",
+     "weight": 3857
+    },
+    {
+     "key": "★ Sport Gloves | Blaze",
+     "weight": 7968
+    },
+    {
+     "key": "M4A1-S | Chantico's Fire",
+     "weight": 8160
+    },
+    {
+     "key": "M4A4 | Hellfire",
+     "weight": 8348
+    },
+    {
+     "key": "AWP | Sovereign Flame",
+     "weight": 8436
+    },
+    {
+     "key": "P2000 | Fire Elemental",
+     "weight": 9889
+    },
+    {
+     "key": "AWP | Wildfire",
+     "weight": 11690
+    },
+    {
+     "key": "Nova | Blaze Orange",
+     "weight": 15934
+    },
+    {
+     "key": "M4A4 | Hellish",
+     "weight": 18053
+    },
+    {
+     "key": "XM1014 | Blaze Orange",
+     "weight": 18433
+    },
+    {
+     "key": "UMP-45 | Blaze",
+     "weight": 18869
+    },
+    {
+     "key": "XM1014 | Incinegator",
+     "weight": 31697
+    },
+    {
+     "key": "AK-47 | Searing Rage",
+     "weight": 31933
+    },
+    {
+     "key": "Five-SeveN | Heat Treated",
+     "weight": 43329
+    },
+    {
+     "key": "Desert Eagle | Firebreathing",
+     "weight": 61860
+    },
+    {
+     "key": "Glock-18 | Bunsen Burner",
+     "weight": 65104
+    },
+    {
+     "key": "SSG 08 | Jungle Dashed",
+     "weight": 89578
+    },
+    {
+     "key": "SCAR-20 | Trail Blazer",
+     "weight": 122573
+    },
+    {
+     "key": "M4A1-S | Wash me plz",
+     "weight": 185939
+    },
+    {
+     "key": "P90 | Ash Wood",
+     "weight": 238350
+    }
+   ]
+  },
+  {
+   "slug": "deep-ocean",
+   "name": "Глубина",
+   "description": "Морская коллекция: M4A4 | Poseidon, SSG 08 | Sea Calico, AWP | Man-o'-war, Sawed-Off | The Kraken и перчатки Big Swell и Wave Chaser.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid",
+    "gloves"
+   ],
+   "featured": false,
+   "theme": "waves",
+   "accent": "#38BDF8",
+   "cover": [
+    "M4A4 | Poseidon",
+    "SSG 08 | Sea Calico",
+    "★ Specialist Gloves | Big Swell"
+   ],
+   "items": [
+    {
+     "key": "M4A4 | Poseidon",
+     "weight": 2380
+    },
+    {
+     "key": "★ Karambit | Bright Water",
+     "weight": 3805
+    },
+    {
+     "key": "SSG 08 | Sea Calico",
+     "weight": 4817
+    },
+    {
+     "key": "★ Driver Gloves | Wave Chaser",
+     "weight": 5758
+    },
+    {
+     "key": "★ Specialist Gloves | Big Swell",
+     "weight": 6085
+    },
+    {
+     "key": "AWP | Man-o'-war",
+     "weight": 7627
+    },
+    {
+     "key": "P2000 | Ocean Foam",
+     "weight": 7955
+    },
+    {
+     "key": "Sawed-Off | The Kraken",
+     "weight": 9122
+    },
+    {
+     "key": "Desert Eagle | Ocean Drive",
+     "weight": 9438
+    },
+    {
+     "key": "USP-S | Dark Water",
+     "weight": 10018
+    },
+    {
+     "key": "M4A1-S | Dark Water",
+     "weight": 10054
+    },
+    {
+     "key": "AK-47 | Aquamarine Revenge",
+     "weight": 11979
+    },
+    {
+     "key": "M4A1-S | Bright Water",
+     "weight": 13638
+    },
+    {
+     "key": "Glock-18 | Water Elemental",
+     "weight": 17078
+    },
+    {
+     "key": "Glock-18 | Groundwater",
+     "weight": 21522
+    },
+    {
+     "key": "MAC-10 | Surfwood",
+     "weight": 36952
+    },
+    {
+     "key": "MP7 | Groundwater",
+     "weight": 41982
+    },
+    {
+     "key": "PP-Bizon | Water Sigil",
+     "weight": 55543
+    },
+    {
+     "key": "P90 | Wave Breaker",
+     "weight": 94864
+    },
+    {
+     "key": "SCAR-20 | Green Marine",
+     "weight": 142001
+    },
+    {
+     "key": "P2000 | Coral Halftone",
+     "weight": 178540
+    },
+    {
+     "key": "MP7 | Coral Paisley",
+     "weight": 308842
+    }
+   ]
+  },
+  {
+   "slug": "rising-sun",
+   "name": "Восходящее солнце",
+   "description": "Япония и Восток: AUG | Akihabara Accept, Desert Eagle | Sunset Storm 壱 и 弐, AWP | Oni Taiji, AWP | Silk Tiger и Glock-18 | Shinobu.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid",
+    "rare"
+   ],
+   "featured": false,
+   "theme": "rays",
+   "accent": "#F472B6",
+   "cover": [
+    "AUG | Akihabara Accept",
+    "Desert Eagle | Sunset Storm 壱",
+    "AWP | Oni Taiji"
+   ],
+   "items": [
+    {
+     "key": "AUG | Akihabara Accept",
+     "weight": 2970
+    },
+    {
+     "key": "Desert Eagle | Sunset Storm 壱",
+     "weight": 3184
+    },
+    {
+     "key": "Desert Eagle | Sunset Storm 弐",
+     "weight": 3751
+    },
+    {
+     "key": "AWP | Oni Taiji",
+     "weight": 5600
+    },
+    {
+     "key": "AWP | Silk Tiger",
+     "weight": 8525
+    },
+    {
+     "key": "★ Driver Gloves | Brocade Crane",
+     "weight": 9402
+    },
+    {
+     "key": "Five-SeveN | Crimson Blossom",
+     "weight": 28923
+    },
+    {
+     "key": "M4A4 | Temukau",
+     "weight": 51289
+    },
+    {
+     "key": "Five-SeveN | Fairy Tale",
+     "weight": 54247
+    },
+    {
+     "key": "Desert Eagle | Eastern Enigma",
+     "weight": 103701
+    },
+    {
+     "key": "AK-47 | Crane Flight",
+     "weight": 120086
+    },
+    {
+     "key": "M4A4 | Dark Blossom",
+     "weight": 131401
+    },
+    {
+     "key": "XM1014 | Tranquility",
+     "weight": 156851
+    },
+    {
+     "key": "Glock-18 | Shinobu",
+     "weight": 320070
+    }
+   ]
+  },
+  {
+   "slug": "white-noise",
+   "name": "Белый шум",
+   "description": "Asiimov и Printstream — чёрно-белая классика CS2 — плюс Whiteout и другие светлые скины.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid",
+    "popular"
+   ],
+   "featured": false,
+   "theme": "grid",
+   "accent": "#E5E7EB",
+   "cover": [
+    "M4A1-S | Printstream",
+    "AWP | Asiimov",
+    "Desert Eagle | Printstream"
+   ],
+   "items": [
+    {
+     "key": "M4A1-S | Printstream",
+     "weight": 4624
+    },
+    {
+     "key": "P90 | Asiimov",
+     "weight": 5014
+    },
+    {
+     "key": "M4A4 | Asiimov",
+     "weight": 5917
+    },
+    {
+     "key": "M4A1-S | Mecha Industries",
+     "weight": 6344
+    },
+    {
+     "key": "AWP | Asiimov",
+     "weight": 6840
+    },
+    {
+     "key": "MP7 | Whiteout",
+     "weight": 8929
+    },
+    {
+     "key": "AWP | Printstream",
+     "weight": 9033
+    },
+    {
+     "key": "AK-47 | Asiimov",
+     "weight": 9152
+    },
+    {
+     "key": "USP-S | Whiteout",
+     "weight": 10132
+    },
+    {
+     "key": "USP-S | Printstream",
+     "weight": 10184
+    },
+    {
+     "key": "Desert Eagle | Printstream",
+     "weight": 10524
+    },
+    {
+     "key": "P250 | Whiteout",
+     "weight": 11204
+    },
+    {
+     "key": "AK-47 | Head Shot",
+     "weight": 11764
+    },
+    {
+     "key": "Desert Eagle | Mecha Industries",
+     "weight": 23799
+    },
+    {
+     "key": "AWP | Exoskeleton",
+     "weight": 27203
+    },
+    {
+     "key": "AUG | Arctic Wolf",
+     "weight": 42164
+    },
+    {
+     "key": "SSG 08 | Ghost Crusader",
+     "weight": 52893
+    },
+    {
+     "key": "Tec-9 | Ice Cap",
+     "weight": 94464
+    },
+    {
+     "key": "MAC-10 | Whitefish",
+     "weight": 118250
+    },
+    {
+     "key": "Glock-18 | Winterized",
+     "weight": 178482
+    },
+    {
+     "key": "MP5-SD | Snow Splash",
+     "weight": 353084
+    }
+   ]
+  },
+  {
+   "slug": "beast-mode",
+   "name": "Режим зверя",
+   "description": "Hyper Beast, хищники и звери: AK-47 | Panthera onca, Desert Eagle | Fennec Fox, AWP | LongDog и Driver Gloves | Snow Leopard.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid",
+    "gloves"
+   ],
+   "featured": false,
+   "theme": "shards",
+   "accent": "#A3E635",
+   "cover": [
+    "AK-47 | Panthera onca",
+    "★ Driver Gloves | Snow Leopard",
+    "M4A1-S | Hyper Beast"
+   ],
+   "items": [
+    {
+     "key": "★ Driver Gloves | Snow Leopard",
+     "weight": 1225
+    },
+    {
+     "key": "Five-SeveN | Hyper Beast",
+     "weight": 1714
+    },
+    {
+     "key": "Desert Eagle | Fennec Fox",
+     "weight": 1983
+    },
+    {
+     "key": "AK-47 | Panthera onca",
+     "weight": 2555
+    },
+    {
+     "key": "★ Sport Gloves | Big Game",
+     "weight": 2955
+    },
+    {
+     "key": "M4A1-S | Hyper Beast",
+     "weight": 3160
+    },
+    {
+     "key": "AK-47 | Jaguar",
+     "weight": 3455
+    },
+    {
+     "key": "P90 | Death by Kitty",
+     "weight": 4660
+    },
+    {
+     "key": "AWP | LongDog",
+     "weight": 5602
+    },
+    {
+     "key": "AWP | Hyper Beast",
+     "weight": 10036
+    },
+    {
+     "key": "Nova | Hyper Beast",
+     "weight": 38358
+    },
+    {
+     "key": "M4A1-S | Blood Tiger",
+     "weight": 91061
+    },
+    {
+     "key": "AUG | Death by Puppy",
+     "weight": 124121
+    },
+    {
+     "key": "USP-S | Blood Tiger",
+     "weight": 127749
+    },
+    {
+     "key": "MP9 | Food Chain",
+     "weight": 129156
+    },
+    {
+     "key": "AWP | PAW",
+     "weight": 213728
+    },
+    {
+     "key": "Glock-18 | Weasel",
+     "weight": 238482
+    }
+   ]
+  },
+  {
+   "slug": "star-route",
+   "name": "Звёздный путь",
+   "description": "Космос и звёзды: Glock-18 | Twilight Galaxy, MP9 | Starlight Protector, USP-S | Orion, M4A4 | The Battlestar и Karambit | Gamma Doppler.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid",
+    "knives"
+   ],
+   "featured": false,
+   "theme": "dots",
+   "accent": "#818CF8",
+   "cover": [
+    "Glock-18 | Twilight Galaxy",
+    "★ Karambit | Gamma Doppler @ Phase 2",
+    "USP-S | Orion"
+   ],
+   "items": [
+    {
+     "key": "★ Karambit | Gamma Doppler @ Phase 2",
+     "weight": 395
+    },
+    {
+     "key": "★ Flip Knife | Gamma Doppler @ Phase 1",
+     "weight": 1751
+    },
+    {
+     "key": "Glock-18 | Twilight Galaxy",
+     "weight": 2345
+    },
+    {
+     "key": "MP9 | Starlight Protector",
+     "weight": 8803
+    },
+    {
+     "key": "AK-47 | Nightwish",
+     "weight": 8891
+    },
+    {
+     "key": "USP-S | Orion",
+     "weight": 8945
+    },
+    {
+     "key": "M4A4 | The Battlestar",
+     "weight": 14905
+    },
+    {
+     "key": "AK-47 | Orbit Mk01",
+     "weight": 15284
+    },
+    {
+     "key": "M4A4 | Desolate Space",
+     "weight": 26648
+    },
+    {
+     "key": "M4A1-S | Stratosphere",
+     "weight": 69206
+    },
+    {
+     "key": "AWP | Phobos",
+     "weight": 123859
+    },
+    {
+     "key": "Desert Eagle | Sputnik",
+     "weight": 146193
+    },
+    {
+     "key": "Glock-18 | Moonrise",
+     "weight": 267843
+    },
+    {
+     "key": "Desert Eagle | Meteorite",
+     "weight": 304932
+    }
+   ]
+  },
+  {
+   "slug": "toxic-waste",
+   "name": "Токсичные отходы",
+   "description": "Радиация и кислота: M4A1-S | Welcome to the Jungle, SG 553 | Hazard Pay, Five-SeveN | Fall Hazard, AWP | Containment Breach и Moto Gloves | Spearmint.",
+   "group": "themed",
+   "categories": [
+    "themed",
+    "mid",
+    "gloves"
+   ],
+   "featured": false,
+   "theme": "topo",
+   "accent": "#84CC16",
+   "cover": [
+    "M4A1-S | Welcome to the Jungle",
+    "★ Moto Gloves | Spearmint",
+    "SG 553 | Hazard Pay"
+   ],
+   "items": [
+    {
+     "key": "★ Moto Gloves | Spearmint",
+     "weight": 61
+    },
+    {
+     "key": "M4A1-S | Welcome to the Jungle",
+     "weight": 126
+    },
+    {
+     "key": "SG 553 | Hazard Pay",
+     "weight": 673
+    },
+    {
+     "key": "Five-SeveN | Fall Hazard",
+     "weight": 1468
+    },
+    {
+     "key": "AWP | Containment Breach",
+     "weight": 4044
+    },
+    {
+     "key": "Tec-9 | Nuclear Threat",
+     "weight": 7152
+    },
+    {
+     "key": "P250 | Nuclear Threat",
+     "weight": 10456
+    },
+    {
+     "key": "M4A4 | Radiation Hazard",
+     "weight": 14741
+    },
+    {
+     "key": "MAG-7 | Hazard",
+     "weight": 37478
+    },
+    {
+     "key": "AK-47 | Green Laminate",
+     "weight": 49198
+    },
+    {
+     "key": "XM1014 | Fallout Warning",
+     "weight": 147468
+    },
+    {
+     "key": "AWP | Green Energy",
+     "weight": 204865
+    },
+    {
+     "key": "Nova | Green Apple",
+     "weight": 216489
+    },
+    {
+     "key": "Glock-18 | Nuclear Garden",
+     "weight": 305781
+    }
+   ]
+  },
+  {
+   "slug": "ak-arsenal",
+   "name": "Арсенал AK-47",
+   "description": "Только AK-47: от повседневных расцветок до Fire Serpent, X-Ray, Vulcan и Bloodsport.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "ak47"
+   ],
+   "featured": false,
+   "theme": "stripes",
+   "accent": "#F87171",
+   "cover": [
+    "AK-47 | Fire Serpent",
+    "AK-47 | Vulcan",
+    "AK-47 | Bloodsport"
+   ],
+   "items": [
+    {
+     "key": "AK-47 | Fire Serpent",
+     "weight": 1894
+    },
+    {
+     "key": "AK-47 | X-Ray",
+     "weight": 2518
+    },
+    {
+     "key": "AK-47 | Vulcan",
+     "weight": 5376
+    },
+    {
+     "key": "AK-47 | Bloodsport",
+     "weight": 6847
+    },
+    {
+     "key": "AK-47 | Neon Revolution",
+     "weight": 7797
+    },
+    {
+     "key": "AK-47 | The Empress",
+     "weight": 8205
+    },
+    {
+     "key": "AK-47 | First Class",
+     "weight": 9579
+    },
+    {
+     "key": "AK-47 | Nightwish",
+     "weight": 12148
+    },
+    {
+     "key": "AK-47 | Inheritance",
+     "weight": 15434
+    },
+    {
+     "key": "AK-47 | Head Shot",
+     "weight": 19021
+    },
+    {
+     "key": "AK-47 | Cartel",
+     "weight": 25906
+    },
+    {
+     "key": "AK-47 | Crane Flight",
+     "weight": 32549
+    },
+    {
+     "key": "AK-47 | The Outsiders",
+     "weight": 43461
+    },
+    {
+     "key": "AK-47 | Rat Rod",
+     "weight": 50546
+    },
+    {
+     "key": "AK-47 | Slate",
+     "weight": 67154
+    },
+    {
+     "key": "AK-47 | Safety Net",
+     "weight": 88896
+    },
+    {
+     "key": "AK-47 | Breakthrough",
+     "weight": 113468
+    },
+    {
+     "key": "AK-47 | Elite Build",
+     "weight": 119299
+    },
+    {
+     "key": "AK-47 | Crossfade",
+     "weight": 126922
+    },
+    {
+     "key": "AK-47 | Uncharted",
+     "weight": 242980
+    }
+   ]
+  },
+  {
+   "slug": "awp-scope",
+   "name": "Прицел AWP",
+   "description": "Только AWP: Asiimov, Hyper Beast, Containment Breach, Neo-Noir, Wildfire и десяток расцветок попроще.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "awp"
+   ],
+   "featured": false,
+   "theme": "rings",
+   "accent": "#10B981",
+   "cover": [
+    "AWP | Asiimov",
+    "AWP | Hyper Beast",
+    "AWP | Wildfire"
+   ],
+   "items": [
+    {
+     "key": "AWP | Silk Tiger",
+     "weight": 6545
+    },
+    {
+     "key": "AWP | CMYK",
+     "weight": 8039
+    },
+    {
+     "key": "AWP | Asiimov",
+     "weight": 9765
+    },
+    {
+     "key": "AWP | Containment Breach",
+     "weight": 10336
+    },
+    {
+     "key": "AWP | Snake Camo",
+     "weight": 11201
+    },
+    {
+     "key": "AWP | Wildfire",
+     "weight": 12624
+    },
+    {
+     "key": "AWP | Hyper Beast",
+     "weight": 14022
+    },
+    {
+     "key": "AWP | Neo-Noir",
+     "weight": 14200
+    },
+    {
+     "key": "AWP | Chromatic Aberration",
+     "weight": 15855
+    },
+    {
+     "key": "AWP | Corticera",
+     "weight": 18786
+    },
+    {
+     "key": "AWP | Elite Build",
+     "weight": 24150
+    },
+    {
+     "key": "AWP | The End",
+     "weight": 27433
+    },
+    {
+     "key": "AWP | POP AWP",
+     "weight": 30196
+    },
+    {
+     "key": "AWP | Atheris",
+     "weight": 37278
+    },
+    {
+     "key": "AWP | Mortis",
+     "weight": 42177
+    },
+    {
+     "key": "AWP | PAW",
+     "weight": 51214
+    },
+    {
+     "key": "AWP | Phobos",
+     "weight": 51905
+    },
+    {
+     "key": "AWP | Worm God",
+     "weight": 53532
+    },
+    {
+     "key": "AWP | Acheron",
+     "weight": 73320
+    },
+    {
+     "key": "AWP | Capillary",
+     "weight": 87660
+    },
+    {
+     "key": "AWP | Pit Viper",
+     "weight": 88565
+    },
+    {
+     "key": "AWP | Arsenic Spill",
+     "weight": 138189
+    },
+    {
+     "key": "AWP | Safari Mesh",
+     "weight": 173008
+    }
+   ]
+  },
+  {
+   "slug": "m4-duo",
+   "name": "Дуэт M4",
+   "description": "M4A4 и M4A1-S: The Emperor, Printstream, Chantico's Fire, Hyper Beast, Neo-Noir и другие.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "m4"
+   ],
+   "featured": false,
+   "theme": "grid",
+   "accent": "#93C5FD",
+   "cover": [
+    "M4A1-S | Printstream",
+    "M4A4 | The Emperor",
+    "M4A1-S | Chantico's Fire"
+   ],
+   "items": [
+    {
+     "key": "M4A4 | Buzz Kill",
+     "weight": 5376
+    },
+    {
+     "key": "M4A1-S | Printstream",
+     "weight": 5478
+    },
+    {
+     "key": "M4A4 | Asiimov",
+     "weight": 7128
+    },
+    {
+     "key": "M4A1-S | Chantico's Fire",
+     "weight": 7184
+    },
+    {
+     "key": "M4A1-S | Master Piece",
+     "weight": 7820
+    },
+    {
+     "key": "M4A1-S | Golden Coil",
+     "weight": 9679
+    },
+    {
+     "key": "M4A4 | The Emperor",
+     "weight": 9875
+    },
+    {
+     "key": "M4A4 | Modern Hunter",
+     "weight": 11827
+    },
+    {
+     "key": "M4A1-S | Atomic Alloy",
+     "weight": 13622
+    },
+    {
+     "key": "M4A4 | Falak",
+     "weight": 15775
+    },
+    {
+     "key": "M4A4 | Hellish",
+     "weight": 18966
+    },
+    {
+     "key": "M4A4 | Dark Blossom",
+     "weight": 23639
+    },
+    {
+     "key": "M4A4 | Desert Storm",
+     "weight": 27210
+    },
+    {
+     "key": "M4A1-S | Briefing",
+     "weight": 32649
+    },
+    {
+     "key": "M4A1-S | Black Lotus",
+     "weight": 38552
+    },
+    {
+     "key": "M4A4 | Evil Daimyo",
+     "weight": 45162
+    },
+    {
+     "key": "M4A1-S | Liquidation",
+     "weight": 60638
+    },
+    {
+     "key": "M4A4 | Turbine",
+     "weight": 66891
+    },
+    {
+     "key": "M4A1-S | Electrum",
+     "weight": 76194
+    },
+    {
+     "key": "M4A4 | Sheet Lightning",
+     "weight": 98994
+    },
+    {
+     "key": "M4A1-S | Night Terror",
+     "weight": 110002
+    },
+    {
+     "key": "M4A1-S | Nitro",
+     "weight": 132301
+    },
+    {
+     "key": "M4A1-S | VariCamo",
+     "weight": 175038
+    }
+   ]
+  },
+  {
+   "slug": "desert-eagle",
+   "name": "Пустынный орёл",
+   "description": "Только Desert Eagle: Code Red, Printstream, Golden Koi, Fennec Fox, Ocean Drive и Hand Cannon.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "pistols"
+   ],
+   "featured": false,
+   "theme": "topo",
+   "accent": "#FCD34D",
+   "cover": [
+    "Desert Eagle | Golden Koi",
+    "Desert Eagle | Code Red",
+    "Desert Eagle | Printstream"
+   ],
+   "items": [
+    {
+     "key": "Desert Eagle | Emerald Jörmungandr",
+     "weight": 1733
+    },
+    {
+     "key": "Desert Eagle | Fennec Fox",
+     "weight": 2810
+    },
+    {
+     "key": "Desert Eagle | Golden Koi",
+     "weight": 2859
+    },
+    {
+     "key": "Desert Eagle | Hypnotic",
+     "weight": 3367
+    },
+    {
+     "key": "Desert Eagle | Cobalt Disruption",
+     "weight": 4972
+    },
+    {
+     "key": "Desert Eagle | Ocean Drive",
+     "weight": 5330
+    },
+    {
+     "key": "Desert Eagle | Code Red",
+     "weight": 6899
+    },
+    {
+     "key": "Desert Eagle | Starcade",
+     "weight": 7903
+    },
+    {
+     "key": "Desert Eagle | Printstream",
+     "weight": 8271
+    },
+    {
+     "key": "Desert Eagle | Night Heist",
+     "weight": 11639
+    },
+    {
+     "key": "Desert Eagle | Conspiracy",
+     "weight": 13683
+    },
+    {
+     "key": "Desert Eagle | Heirloom",
+     "weight": 18264
+    },
+    {
+     "key": "Desert Eagle | Mecha Industries",
+     "weight": 25701
+    },
+    {
+     "key": "Desert Eagle | The Bronze",
+     "weight": 31485
+    },
+    {
+     "key": "Desert Eagle | Heat Treated",
+     "weight": 48340
+    },
+    {
+     "key": "Desert Eagle | Directive",
+     "weight": 61133
+    },
+    {
+     "key": "Desert Eagle | Urban DDPAT",
+     "weight": 82723
+    },
+    {
+     "key": "Desert Eagle | Trigger Discipline",
+     "weight": 105971
+    },
+    {
+     "key": "Desert Eagle | Serpent Strike",
+     "weight": 146301
+    },
+    {
+     "key": "Desert Eagle | Oxide Blaze",
+     "weight": 175539
+    },
+    {
+     "key": "Desert Eagle | Bronze Deco",
+     "weight": 235077
+    }
+   ]
+  },
+  {
+   "slug": "sidearm-pro",
+   "name": "Табельное оружие",
+   "description": "Пистолеты всех моделей: USP-S, Glock-18, P250, Five-SeveN, CZ75-Auto, Tec-9, P2000, Dual Berettas и R8 Revolver.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "pistols"
+   ],
+   "featured": false,
+   "theme": "rings",
+   "accent": "#A5B4FC",
+   "cover": [
+    "Glock-18 | Bullet Queen",
+    "USP-S | Kill Confirmed",
+    "Five-SeveN | Hyper Beast"
+   ],
+   "items": [
+    {
+     "key": "Five-SeveN | Hyper Beast",
+     "weight": 1059
+    },
+    {
+     "key": "Glock-18 | Ghost Protocol",
+     "weight": 1179
+    },
+    {
+     "key": "Dual Berettas | Duelist",
+     "weight": 1429
+    },
+    {
+     "key": "Glock-18 | Dragon Tattoo",
+     "weight": 1992
+    },
+    {
+     "key": "USP-S | Kill Confirmed",
+     "weight": 2044
+    },
+    {
+     "key": "USP-S | Dark Water",
+     "weight": 2563
+    },
+    {
+     "key": "Glock-18 | Bullet Queen",
+     "weight": 2892
+    },
+    {
+     "key": "Dual Berettas | Cobra Strike",
+     "weight": 3376
+    },
+    {
+     "key": "P250 | Whiteout",
+     "weight": 4115
+    },
+    {
+     "key": "USP-S | Spiral Glitch",
+     "weight": 5372
+    },
+    {
+     "key": "Tec-9 | Titanium Bit",
+     "weight": 6807
+    },
+    {
+     "key": "P250 | Muertos",
+     "weight": 8737
+    },
+    {
+     "key": "Tec-9 | Rust Leaf",
+     "weight": 11419
+    },
+    {
+     "key": "USP-S | Cyrex",
+     "weight": 14494
+    },
+    {
+     "key": "CZ75-Auto | Nitro",
+     "weight": 18707
+    },
+    {
+     "key": "R8 Revolver | Phoenix Marker",
+     "weight": 23763
+    },
+    {
+     "key": "Five-SeveN | Urban Hazard",
+     "weight": 30606
+    },
+    {
+     "key": "P250 | Wingshot",
+     "weight": 39052
+    },
+    {
+     "key": "R8 Revolver | Amber Fade",
+     "weight": 49915
+    },
+    {
+     "key": "Five-SeveN | Withered Vine",
+     "weight": 63936
+    },
+    {
+     "key": "Glock-18 | Warhawk",
+     "weight": 81968
+    },
+    {
+     "key": "Glock-18 | Umbral Rabbit",
+     "weight": 103375
+    },
+    {
+     "key": "CZ75-Auto | Tuxedo",
+     "weight": 135366
+    },
+    {
+     "key": "Tec-9 | Red Quartz",
+     "weight": 167790
+    },
+    {
+     "key": "P2000 | Urban Hazard",
+     "weight": 218044
+    }
+   ]
+  },
+  {
+   "slug": "smg-blitz",
+   "name": "Блиц SMG",
+   "description": "Пистолеты-пулемёты: P90 | Asiimov, MAC-10 | Neon Rider, UMP-45 | Fade, MP7 | Bloodsport и другие.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "smg"
+   ],
+   "featured": false,
+   "theme": "stripes",
+   "accent": "#2DD4BF",
+   "cover": [
+    "P90 | Asiimov",
+    "MAC-10 | Neon Rider",
+    "UMP-45 | Fade"
+   ],
+   "items": [
+    {
+     "key": "UMP-45 | Fade",
+     "weight": 1989
+    },
+    {
+     "key": "P90 | Asiimov",
+     "weight": 2002
+    },
+    {
+     "key": "MAC-10 | Neon Rider",
+     "weight": 2553
+    },
+    {
+     "key": "PP-Bizon | Judgement of Anubis",
+     "weight": 2605
+    },
+    {
+     "key": "MP9 | Starlight Protector",
+     "weight": 3955
+    },
+    {
+     "key": "MP7 | Bloodsport",
+     "weight": 5775
+    },
+    {
+     "key": "P90 | Shallow Grave",
+     "weight": 7513
+    },
+    {
+     "key": "P90 | Death Grip",
+     "weight": 9819
+    },
+    {
+     "key": "MP9 | Setting Sun",
+     "weight": 12237
+    },
+    {
+     "key": "MAC-10 | Commuter",
+     "weight": 16190
+    },
+    {
+     "key": "UMP-45 | Bone Pile",
+     "weight": 20859
+    },
+    {
+     "key": "MP7 | Groundwater",
+     "weight": 27370
+    },
+    {
+     "key": "UMP-45 | Crimson Foil",
+     "weight": 36482
+    },
+    {
+     "key": "UMP-45 | Full Stop",
+     "weight": 47314
+    },
+    {
+     "key": "MP7 | Amberline",
+     "weight": 60741
+    },
+    {
+     "key": "MP5-SD | Gauss",
+     "weight": 79619
+    },
+    {
+     "key": "MAC-10 | Sakkaku",
+     "weight": 104039
+    },
+    {
+     "key": "MAC-10 | Echoing Sands",
+     "weight": 139044
+    },
+    {
+     "key": "P90 | Aeolian Light",
+     "weight": 185555
+    },
+    {
+     "key": "MP9 | Broken Record",
+     "weight": 234339
+    }
+   ]
+  },
+  {
+   "slug": "heavy-metal",
+   "name": "Тяжёлый металл",
+   "description": "Дробовики и пулемёты: MAG-7 | Cinquedea, Negev | Anodized Navy, XM1014 | Red Leather, Sawed-Off | The Kraken.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "heavy"
+   ],
+   "featured": false,
+   "theme": "carbon",
+   "accent": "#FDBA74",
+   "cover": [
+    "MAG-7 | Cinquedea",
+    "Sawed-Off | The Kraken",
+    "XM1014 | Red Leather"
+   ],
+   "items": [
+    {
+     "key": "MAG-7 | Cinquedea",
+     "weight": 555
+    },
+    {
+     "key": "Negev | Anodized Navy",
+     "weight": 852
+    },
+    {
+     "key": "XM1014 | Red Leather",
+     "weight": 986
+    },
+    {
+     "key": "Nova | Baroque Orange",
+     "weight": 1927
+    },
+    {
+     "key": "Sawed-Off | The Kraken",
+     "weight": 2090
+    },
+    {
+     "key": "MAG-7 | Prism Terrace",
+     "weight": 5205
+    },
+    {
+     "key": "M249 | Blizzard Marbleized",
+     "weight": 6118
+    },
+    {
+     "key": "XM1014 | Tranquility",
+     "weight": 7744
+    },
+    {
+     "key": "Nova | Graphite",
+     "weight": 10592
+    },
+    {
+     "key": "Nova | Tempest",
+     "weight": 13915
+    },
+    {
+     "key": "MAG-7 | Memento",
+     "weight": 18620
+    },
+    {
+     "key": "XM1014 | Monster Melt",
+     "weight": 24861
+    },
+    {
+     "key": "XM1014 | Urban Perforated",
+     "weight": 33677
+    },
+    {
+     "key": "MAG-7 | Sonar",
+     "weight": 43872
+    },
+    {
+     "key": "M249 | System Lock",
+     "weight": 58457
+    },
+    {
+     "key": "Sawed-Off | Lunar Wyrm",
+     "weight": 79859
+    },
+    {
+     "key": "Sawed-Off | Black Sand",
+     "weight": 106272
+    },
+    {
+     "key": "Sawed-Off | Full Stop",
+     "weight": 140860
+    },
+    {
+     "key": "Negev | Ultralight",
+     "weight": 188304
+    },
+    {
+     "key": "Nova | Morning Sun",
+     "weight": 255234
+    }
+   ]
+  },
+  {
+   "slug": "sniper-nest",
+   "name": "Снайперское гнездо",
+   "description": "Снайперские винтовки кроме AWP: SSG 08, SCAR-20 и G3SG1 — Sea Calico, Dragonfire, Chronos и другие.",
+   "group": "weapon",
+   "categories": [
+    "weapon",
+    "sniper"
+   ],
+   "featured": false,
+   "theme": "rings",
+   "accent": "#86EFAC",
+   "cover": [
+    "SSG 08 | Dragonfire",
+    "SSG 08 | Sea Calico",
+    "G3SG1 | Chronos"
+   ],
+   "items": [
+    {
+     "key": "SSG 08 | Sea Calico",
+     "weight": 1168
+    },
+    {
+     "key": "G3SG1 | Chronos",
+     "weight": 1467
+    },
+    {
+     "key": "SSG 08 | Dragonfire",
+     "weight": 1502
+    },
+    {
+     "key": "SSG 08 | Death Strike",
+     "weight": 1548
+    },
+    {
+     "key": "SSG 08 | Blood in the Water",
+     "weight": 2280
+    },
+    {
+     "key": "SCAR-20 | Brass",
+     "weight": 3013
+    },
+    {
+     "key": "SCAR-20 | Splash Jam",
+     "weight": 3732
+    },
+    {
+     "key": "SCAR-20 | Emerald",
+     "weight": 5386
+    },
+    {
+     "key": "SSG 08 | Orange Filigree",
+     "weight": 6335
+    },
+    {
+     "key": "SSG 08 | Threat Detected",
+     "weight": 8558
+    },
+    {
+     "key": "G3SG1 | Flux",
+     "weight": 10915
+    },
+    {
+     "key": "SSG 08 | Sand Dune",
+     "weight": 14103
+    },
+    {
+     "key": "SSG 08 | Red Stone",
+     "weight": 17684
+    },
+    {
+     "key": "G3SG1 | Contractor",
+     "weight": 21990
+    },
+    {
+     "key": "SSG 08 | Rapid Transit",
+     "weight": 29051
+    },
+    {
+     "key": "SSG 08 | Fever Dream",
+     "weight": 35480
+    },
+    {
+     "key": "G3SG1 | Keeping Tabs",
+     "weight": 49211
+    },
+    {
+     "key": "SCAR-20 | Grotto",
+     "weight": 64993
+    },
+    {
+     "key": "SCAR-20 | Blueprint",
+     "weight": 81676
+    },
+    {
+     "key": "SCAR-20 | Green Marine",
+     "weight": 106090
+    },
+    {
+     "key": "SSG 08 | Blush Pour",
+     "weight": 129409
+    },
+    {
+     "key": "SSG 08 | Mainframe 001",
+     "weight": 178604
+    },
+    {
+     "key": "SCAR-20 | Fragments",
+     "weight": 225805
+    }
+   ]
+  }
+ ]
+}
