@@ -25,7 +25,8 @@
     "seed:cases4": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/seed-cases-v4.ts",
     "audit:images": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/audit-images.ts",
     "test:v4": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/v4-test.ts",
-    "test:cine": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/cine-test.ts"
+    "test:cine": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/cine-test.ts",
+    "images:sync": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning scripts/images-sync.ts"
   },
   "devDependencies": {
     "typescript": "^5.8.0",
