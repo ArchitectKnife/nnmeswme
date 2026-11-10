@@ -4,3 +4,6 @@ data/
 !data/.keep
 
 .vercel
+
+# images:sync stores extra official Steam images on the server (PNG); committed catalog images are WebP
+public/img/skins/**/*.png

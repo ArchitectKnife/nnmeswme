@@ -139,7 +139,7 @@ page('/admin/images', async (ctx) => {
   const d = await api('/api/admin/images-audit');
   if (!ctx.alive()) return;
   const s = d.summary;
-  const stat = (label, val, good) => html`<div class="card"><div class="xs dim">${label}</div><b class="lg" style="color:${good ? 'var(--let)' : 'var(--ket2)'}">${num(val)}</b></div>`;
+  const stat = (label, val, good) => html`<div class="card"><div class="xs dim">${label}</div><b class="lg" style="color:${good ? 'var(--let)' : 'var(--ket2)'}">${typeof val === 'number' ? num(val) : val}</b></div>`;
   const list = (title, rows, cols) => (rows?.length ? html`<div class="card mt"><h3>${title} (${num(rows.length)})</h3>${autoTable(rows, cols, { empty: '—' })}</div>` : '');
   const itemLink = (x) => (x.id ? html`<a href="/admin/items/${x.id}">${x.name}</a>` : x.name);
   mount(box, html`${notice('Каждый скин и каждый кейс должны показывать настоящее изображение CS2: локальную копию официального изображения Steam (public/img/skins) или адрес CDN Steam. Полная онлайн-проверка всех адресов: npm run audit:images -- --online.')}
