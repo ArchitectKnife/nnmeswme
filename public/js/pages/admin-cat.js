@@ -60,14 +60,20 @@ page('/admin/cases/:id', async (ctx) => {
   const box = shell(ctx, '/admin/cases', isNew ? 'Новый кейс' : 'Редактирование кейса', loader(), html`<a class="btn ghost" href="/admin/cases">← К списку кейсов</a>`);
   const root = wire(box);
   bindUploads(root, 'cover');
-  let d = { case: null }; let cats = []; let contents = []; let timer = 0;
+  let d = { case: null }; let cats = []; let contents = []; let timer = 0; let themes = {};
   const cid = () => encodeURIComponent(d.case ? d.case.id : ctx.params.id);
   const total = () => contents.reduce((a, x) => a + (Number(x.weight) || 0), 0);
+  const sumLine = () => {
+    const t = total();
+    const exact = t === 1e6 && contents.every((x) => Number.isInteger(Number(x.weight)));
+    return html`Сумма весов: <b class="mono">${num(t)}</b> · сумма шансов: <b>100%</b> ${exact ? html`<span class="badge ok">ровно 1 000 000 — точные проценты</span>` : html`<span class="badge warn">нажмите «Точно 100%», чтобы задать целые веса</span>`}`;
+  };
   const contentsHtml = () => {
     const t = total();
     const ev = t ? contents.reduce((a, x) => a + ((x.price || 0) * (Number(x.weight) || 0)) / t, 0) : 0;
-    return html`<div class="row between wrap gap"><h3 style="margin:0">Содержимое и шансы (${contents.length})</h3><div class="row gap wrap"><button type="button" class="btn ghost sm" data-odds>Шансы как в официальных кейсах</button><button type="button" class="btn ghost sm" data-eq>Равные шансы</button><button type="button" class="btn sm" data-save-items>Сохранить содержимое</button></div></div>
+    return html`<div class="row between wrap gap"><h3 style="margin:0">Содержимое и шансы (${contents.length})</h3><div class="row gap wrap"><button type="button" class="btn ghost sm" data-odds>Шансы как в официальных кейсах</button><button type="button" class="btn ghost sm" data-eq>Равные шансы</button><button type="button" class="btn ghost sm" data-norm title="Целые веса с суммой ровно 1 000 000: шансы в сумме дают ровно 100,0000%">Точно 100%</button><button type="button" class="btn sm" data-save-items>Сохранить содержимое</button></div></div>
       <p class="muted sm">Шанс предмета = его вес / сумма весов. Ожидаемая стоимость дропа по текущим весам: <b data-ev>${bc(Math.round(ev))}</b>. Игроки видят те же шансы на странице кейса; изменения вступают в силу только после сохранения и не влияют на уже сделанные открытия.</p>
+      <p class="sm" data-sum>${sumLine()}</p>
       ${contents.length ? html`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Предмет</th><th class="r">Цена</th><th class="r">Вес</th><th class="r">Шанс</th><th></th></tr></thead><tbody>${contents.map((x, i) => html`<tr><td>${itemCell(x)}</td><td class="r">${bc(x.price)}</td><td class="r"><input type="number" min="0" step="any" value="${x.weight}" data-w="${i}" style="width:110px"></td><td class="r mono" data-ch="${i}">${t ? pct((Number(x.weight) || 0) / t) : '—'}</td><td class="r"><button type="button" class="btn ghost sm" data-rm="${i}">Убрать</button></td></tr>`)}</tbody></table></div>` : html`<p class="muted">В кейсе пока нет предметов — добавьте их через поиск ниже.</p>`}`;
   };
   const resultsHtml = (rows) => (rows.length ? autoTable(rows, [{ t: 'Предмет', f: itemCell }, { t: 'Цена', r: 1, f: (x) => (x.price ? bc(x.price) : html`<span class="badge warn">нет цены</span>`) }, { t: '', r: 1, f: (x) => (contents.some((c) => c.id === x.id) ? html`<span class="muted sm">уже в кейсе</span>` : html`<button type="button" class="btn ghost sm" data-add="${x.id}">Добавить</button>`) }]) : html`<p class="muted sm">Ничего не найдено</p>`);
@@ -87,6 +93,12 @@ page('/admin/cases/:id', async (ctx) => {
           <label class="fld"><span>Статус</span><select name="status">${opts(Object.entries(CASE_ST), c.status)}</select></label>
           <label class="fld"><span>Порядок сортировки</span><input name="sort" type="number" step="1" value="${c.sort ?? 100}"></label>
         </div>
+        <div class="g3">
+          <label class="fld"><span>Тема обложки</span><select name="coverTheme"><option value="">Авто</option>${Object.entries(themes).map(([k, l]) => html`<option value="${k}" ${c.coverTheme === k ? raw('selected') : ''}>${l}</option>`)}</select></label>
+          <label class="fld"><span>Цвет кейса</span><input name="accent" type="color" value="${/^#[0-9a-f]{6}$/i.test(c.rawAccent || '') ? c.rawAccent : '#ffb627'}"></label>
+          <label class="check" style="align-self:end;margin-bottom:10px"><input type="checkbox" name="featured" ${c.featured ? raw('checked') : ''}><span>Рекомендуемый (витрина каталога и главной)</span></label>
+        </div>
+        <label class="check"><input type="checkbox" name="accentAuto" ${c.rawAccent ? '' : raw('checked')}><span>Цвет кейса — автоматически по самому дорогому предмету</span></label>
         <div><span class="sm muted">Категории каталога</span><div class="row gap wrap mt">${cats.map(([k, l]) => html`<label class="check"><input type="checkbox" name="cat_${k}" ${(c.categories || []).includes(k) ? raw('checked') : ''}><span>${l}</span></label>`)}</div></div>
         <div class="row gap wrap"><button class="btn">${isNew ? 'Создать кейс' : 'Сохранить'}</button>${!isNew ? html`<a class="btn ghost" href="/cases/${c.slug}" target="_blank" rel="noopener">Предпросмотр</a><button type="button" class="btn red" data-del>Удалить или архивировать</button>` : ''}</div>
       </form>
@@ -96,10 +108,10 @@ page('/admin/cases/:id', async (ctx) => {
       <div class="card mt"><h3>Добавить предметы</h3><input data-isearch placeholder="Поиск по каталогу: AK-47, Kukri, Kilowatt..." style="width:100%"><div data-ires class="mt"><p class="muted sm">Начните вводить название предмета.</p></div></div>`}`);
   };
   const load = async () => {
-    if (isNew) { const r = await api('/api/admin/cases?page=1'); cats = catList(r.categories); }
+    if (isNew) { const r = await api('/api/admin/cases?page=1'); cats = catList(r.categories); themes = r.themes || {}; }
     else {
       d = await api('/api/admin/cases/' + encodeURIComponent(ctx.params.id));
-      cats = catList(d.categories);
+      cats = catList(d.categories); themes = d.themes || {};
       contents = (d.case.contents || []).map((x) => ({ id: x.id, name: x.name, image: x.image, color: x.color, rarityName: x.rarityName, price: x.price, weight: x.weight }));
     }
     if (ctx.alive()) draw();
@@ -109,6 +121,7 @@ page('/admin/cases/:id', async (ctx) => {
     busy(f.querySelector('button:not([type])'), async () => {
       const v = formData(f);
       const body = { name: v.name, description: v.description, priceMode: v.priceMode, status: v.status, sort: Number(v.sort) || 0, categories: cats.map(([k]) => k).filter((k) => v['cat_' + k]) };
+      body.featured = !!v.featured; body.coverTheme = v.coverTheme || ''; body.accent = v.accentAuto ? '' : v.accent;
       if (v.slug) body.slug = v.slug;
       if (v.image) body.image = v.image;
       if (v.priceMode === 'manual') body.price = Number(v.price);
@@ -123,8 +136,22 @@ page('/admin/cases/:id', async (ctx) => {
     contents[Number(t.dataset.w)].weight = Number(t.value) || 0;
     const tt = total();
     for (const el of $$('[data-ch]', box)) { const x = contents[Number(el.dataset.ch)]; el.textContent = tt ? pct((Number(x.weight) || 0) / tt) : '—'; }
+    const sumEl = $('[data-sum]', box); if (sumEl) mount(sumEl, sumLine());
     const evEl = $('[data-ev]', box);
     if (evEl) mount(evEl, bc(Math.round(tt ? contents.reduce((a, x) => a + ((x.price || 0) * (Number(x.weight) || 0)) / tt, 0) : 0)));
+  });
+  on(root, 'click', '[data-norm]', () => {
+    // Те же пропорции, целые веса, сумма ровно 1 000 000 (метод наибольших остатков, как на сервере).
+    const ws = contents.map((x) => Number(x.weight) || 0); const S = ws.reduce((a, x) => a + x, 0);
+    if (!(S > 0)) return toast('Сначала задайте веса', 'err');
+    const ex = ws.map((x) => (x / S) * 1e6); const w = ex.map((x) => Math.max(1, Math.floor(x)));
+    let diff = 1e6 - w.reduce((a, x) => a + x, 0);
+    const order = ex.map((x, i) => [x - Math.floor(x), i]).sort((p, q) => q[0] - p[0]);
+    for (let k = 0; diff > 0; k = (k + 1) % order.length, diff--) w[order[k][1]]++;
+    while (diff < 0) { const i = w.indexOf(Math.max(...w)); w[i]--; diff++; }
+    contents.forEach((x, i) => { x.weight = w[i]; });
+    redrawContents();
+    toast('Веса приведены к сумме 1 000 000 (шансы ровно 100%). Не забудьте сохранить.', 'info', 6000);
   });
   on(root, 'click', '[data-rm]', (e, t) => { contents.splice(Number(t.dataset.rm), 1); redrawContents(); });
   on(root, 'click', '[data-eq]', () => { for (const x of contents) x.weight = 1; redrawContents(); toast('Всем предметам задан одинаковый вес. Не забудьте сохранить.', 'info'); });

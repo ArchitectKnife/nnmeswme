@@ -1,7 +1,8 @@
 // Кейсы: вероятности, ожидаемая стоимость, цена и серверное открытие.
 import { one, all, run, tx, now } from './db.ts';
 import { HttpError, broadcast } from './http.ts';
-import { WEARS, hasWear, priceOf, imageUrl, addInventory, roll, change, track, getSetting, publicUser, itemView } from './core.ts';
+import { WEARS, hasWear, priceOf, imageUrl, itemImage, addInventory, roll, change, track, getSetting, publicUser, itemView } from './core.ts';
+import { isCoverTheme, isAccent } from './covers.ts';
 import { dropFx, shareToken } from './dropfx.ts';
 
 export const ST_CHANCE = 0.1;
@@ -45,7 +46,7 @@ export function recalcAllCases() {
   for (const c of all("SELECT id FROM cases WHERE status<>'archived'")) recalcCase(c.id);
 }
 
-/** Обложка кейса: загруженное изображение (mode=image) или композиция из реальных предметов кейса (mode=auto). */
+/** Обложка кейса: загруженное изображение (mode=image) или композиция из реальных предметов кейса (mode=auto) на фоне темы. */
 export function caseCover(c: any) {
   const legacy = !c.image || /^\/img\/cases\//.test(c.image);
   const mode = c.cover_mode === 'image' && !legacy ? 'image' : 'auto';
@@ -54,20 +55,26 @@ export function caseCover(c: any) {
   let rows: any[] = ids.map((id) => one('SELECT i.id, i.name, i.image, i.rarity_color FROM case_items ci JOIN items i ON i.id=ci.item_id WHERE ci.case_id=? AND i.id=?', c.id, id)).filter(Boolean);
   if (!rows.length) rows = all('SELECT i.id, i.name, i.image, i.rarity_color FROM case_items ci JOIN items i ON i.id=ci.item_id WHERE ci.case_id=? ORDER BY COALESCE(i.base_price,0) DESC LIMIT 3', c.id);
   const items = rows.map((r) => ({ id: r.id, name: r.name, image: imageUrl(r.image), color: r.rarity_color, real: !!r.image }));
-  return { mode, image: mode === 'image' ? imageUrl(c.image) : null, items, custom: ids.length > 0, missing: mode === 'auto' && !items.some((i) => i.real) };
+  const theme = isCoverTheme(c.cover_theme) ? c.cover_theme : 'burst';
+  const accent = isAccent(c.accent) ? c.accent : items[0]?.color || '#FFB627';
+  return { mode, image: mode === 'image' ? imageUrl(c.image) : null, items, custom: ids.length > 0, missing: mode === 'auto' && !items.some((i) => i.real), theme, accent };
 }
+export const CASE_GROUPS = ['starter', 'premium', 'knives', 'gloves', 'legendary', 'themed', 'weapon'];
+export const NEW_DAYS = 30;
 export function caseCard(c: any) {
   const cover = caseCover(c);
   const top = cover.items[0];
-  return { id: c.id, slug: c.slug, name: c.name, image: cover.mode === 'image' ? cover.image : top ? top.image : '/img/brand/case.svg', cover, accent: top?.color || '#FFB627',
-    price: c.price, ev: c.ev, categories: JSON.parse(c.categories || '[]'), opens: c.opens, status: c.status, createdAt: c.created_at,
+  const categories: string[] = JSON.parse(c.categories || '[]');
+  return { id: c.id, slug: c.slug, name: c.name, description: c.description || null, image: cover.mode === 'image' ? cover.image : top ? top.image : '/img/brand/case.svg', cover, accent: cover.accent, theme: cover.theme,
+    price: c.price, ev: c.ev, categories, group: categories.find((g) => CASE_GROUPS.includes(g)) || null, featured: !!c.featured,
+    isNew: !!c.created_at && c.created_at > now() - NEW_DAYS * 86400_000, opens: c.opens, status: c.status, createdAt: c.created_at,
     items: one('SELECT COUNT(*) n FROM case_items WHERE case_id=?', c.id).n };
 }
 export function caseDetail(c: any) {
   const rows = caseRows(c.id);
   const W = rows.reduce((s, r) => s + r.weight, 0);
-  const items = rows.map((r) => ({ ...itemView(r), chance: W ? r.weight / W : 0, value: Math.round(itemEV(r, c)),
-    wears: wearOdds(r).map((o) => ({ ...o, price: priceOf(r.id, o.wear, variantKind(c, r)) })) }))
+  const items = rows.map((r) => ({ ...itemView(r), chance: W ? r.weight / W : 0, weight: r.weight, value: Math.round(itemEV(r, c)),
+    wears: wearOdds(r).map((o) => ({ ...o, price: priceOf(r.id, o.wear, variantKind(c, r)), image: itemImage(r.id, o.wear, r.image) })) }))
     .sort((a, b) => b.value - a.value);
   const byRarity: Record<string, { name: string; color: string; chance: number; count: number }> = {};
   for (const it of items) {
@@ -76,8 +83,9 @@ export function caseDetail(c: any) {
     byRarity[k].chance += it.chance;
     byRarity[k].count++;
   }
-  return { ...caseCard(c), description: c.description, priceMode: c.price_mode, rtp: c.price ? c.ev / c.price : 0, items,
-    rarities: Object.values(byRarity).sort((a, b) => a.chance - b.chance), stattrakChance: ST_CHANCE };
+  // Шансы = вес / сумма весов, поэтому их сумма всегда 100%; exact — веса целые и в сумме ровно 1 000 000 (шаг 0,0001%).
+  return { ...caseCard(c), description: c.description, priceMode: c.price_mode, rtp: c.price ? c.ev / c.price : 0, items, weightTotal: W,
+    exact: W === 1_000_000 && rows.every((r) => Number.isInteger(r.weight)), rarities: Object.values(byRarity).sort((a, b) => a.chance - b.chance), stattrakChance: ST_CHANCE };
 }
 
 /** Выбор по весам: тикет = r × сумма весов, порядок — по id предмета (воспроизводимо при проверке). */

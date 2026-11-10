@@ -73,6 +73,7 @@ export function itemCard(it, o = {}) {
   if (it.variant === 'st') badges.push(html`<span class="tag st">ST™</span>`);
   if (it.variant === 'sv') badges.push(html`<span class="tag sv">SV</span>`);
   if (it.wear) badges.push(html`<span class="tag" title="${WEARS[it.wear] || it.wear}">${it.wear}</span>`);
+  if (it.phase) badges.push(html`<span class="tag ph" title="Фаза">${it.phase}</span>`);
   if (o.chance != null) badges.push(html`<span class="tag ch">${pct(o.chance)}</span>`);
   const tag = o.href ? 'a' : 'div';
   return html`<${raw(tag)} class="item ${o.cls || ''} ${o.selected ? 'sel' : ''}" style="--rc:${cssColor(it.color)}" ${o.href ? raw(`href="${esc(o.href)}"`) : ''} ${o.id != null ? raw(`data-id="${esc(o.id)}"`) : ''} title="${it.name}${it.wear ? ' · ' + (WEARS[it.wear] || it.wear) : ''}">
@@ -83,21 +84,31 @@ export function itemCard(it, o = {}) {
     ${o.extra || ''}
   </${raw(tag)}>`;
 }
-/** Обложка кейса: композиция из 1–3 реальных предметов или загруженное изображение. */
+/** Обложка кейса: фон темы + композиция из 1–3 настоящих предметов кейса, либо загруженное изображение. */
+const THEMES = new Set(['burst', 'rays', 'hex', 'grid', 'rings', 'carbon', 'waves', 'circuit', 'prism', 'topo', 'stripes', 'dots', 'shards']);
 export function coverHtml(c, cls = '') {
   const cv = c && c.cover;
+  const theme = THEMES.has(cv?.theme || c?.theme) ? cv?.theme || c?.theme : 'burst';
+  const ac = cssColor(cv?.accent || c?.accent || (cv?.items?.[0]?.color), '#FFB627');
   const its = cv && cv.mode !== 'image' && Array.isArray(cv.items) ? cv.items.filter((x) => x && x.image).slice(0, 3) : [];
-  if (its.length) return html`<div class="cover n${its.length} ${cls}" style="--ac:${cssColor(its[0].color, '#FFB627')}">${its.map((it) => html`<img src="${safeUrl(it.image, '/img/brand/item.svg')}" alt="${it.name || ''}" loading="lazy" decoding="async">`)}</div>`;
-  return html`<div class="cover n1 ${cls}">${img((cv && cv.image) || (c && c.image), '', c && c.name)}</div>`;
+  if (its.length) return html`<div class="cover n${its.length} t-${theme} ${cls}" style="--ac:${ac}"><span class="cover-bg" aria-hidden="true"></span>${its.map((it) => html`<img src="${safeUrl(it.image, '/img/brand/item.svg')}" alt="${it.name || ''}" loading="lazy" decoding="async">`)}</div>`;
+  return html`<div class="cover n1 t-${theme} ${cls}" style="--ac:${ac}"><span class="cover-bg" aria-hidden="true"></span>${img((cv && cv.image) || (c && c.image), '', c && c.name)}</div>`;
 }
-export function caseCard(c) {
-  return html`<a class="case" href="/cases/${encodeURIComponent(c.slug)}" style="--ac:${cssColor(c.accent, '#FFB627')}">
+export const GROUP_LABEL = { starter: 'Стартовый', premium: 'Премиум', knives: 'Ножи', gloves: 'Перчатки', legendary: 'Легендарный', themed: 'Тематический', weapon: 'По оружию' };
+export function caseCard(c, o = {}) {
+  const rtp = c.price ? (c.ev || 0) / c.price : 0;
+  return html`<a class="case t-${THEMES.has(c.theme) ? c.theme : 'burst'} ${o.cls || ''} ${c.group ? 'g-' + c.group : ''}" href="/cases/${encodeURIComponent(c.slug)}" style="--ac:${cssColor(c.accent, '#FFB627')}">
     <div class="case-glow"></div>
+    <div class="case-flags">${c.featured ? html`<span class="cflag hot" title="Рекомендуем">${raw(iconStar)}</span>` : ''}${c.isNew ? html`<span class="cflag new">NEW</span>` : ''}${c.group && o.group !== false ? html`<span class="cflag grp">${GROUP_LABEL[c.group] || ''}</span>` : ''}</div>
     <div class="case-img">${coverHtml(c)}</div>
     <div class="case-name">${c.name}</div>
-    <div class="case-meta"><span class="case-price">${bc(c.price)}</span>${c.opens ? html`<span class="muted sm">${num(c.opens)} откр.</span>` : html`<span class="muted sm">${c.items || ''} предм.</span>`}</div>
+    ${o.desc && c.description ? html`<p class="case-desc">${c.description}</p>` : ''}
+    <div class="case-meta"><span class="case-price">${bc(c.price)}</span>${c.opens ? html`<span class="muted sm">${num(c.opens)} откр.</span>` : o.stats ? '' : html`<span class="muted sm">${c.items || ''} предм.</span>`}</div>
+    ${o.stats ? html`<div class="case-stats"><span><b>${c.items || 0}</b> предметов</span><span>Отдача <b>${Math.round(rtp * 100)}%</b></span></div>` : ''}
   </a>`;
 }
+// Иконка «звезда» (Lucide, ISC) — встроена, чтобы не тянуть icons.js в ядро.
+const iconStar = '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" stroke="none" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>';
 const hue = (s) => { let h = 0; for (const ch of String(s)) h = (h * 31 + ch.charCodeAt(0)) % 360; return h; };
 export function avatar(u, cls = '') { const src = safeUrl(u?.avatar); const n = String(u?.nickname || '?').trim() || '?'; return src ? html`<img class="ava ${cls}" src="${src}" alt="" loading="lazy">` : html`<span class="ava ${cls}" style="--h:${hue(n)}">${n[0].toUpperCase()}</span>`; }
 export const userLink = (u, cls = '') => (!u?.id || u.role === 'BOT' ? html`<span class="ulink ${cls}">${avatar(u)}<span>${u?.nickname || 'Игрок'}</span></span>` : html`<a class="ulink ${cls}" href="/u/${u.id}">${avatar(u)}<span>${u.nickname}</span></a>`);
