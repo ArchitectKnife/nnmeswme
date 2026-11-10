@@ -7,7 +7,7 @@ import { route, v, bad, notFound, forbidden, onlineCount, broadcast } from '../l
 import { getSetting, setSetting, DEFAULTS, audit, verifyAudit, change, notify, publicUser, invView, INV_SELECT, itemView, imageUrl, rub } from '../lib/core.ts';
 import { ROLES, ROLE_RANK, PERMS, DEFAULT_ROLE_PERMS, permsOf, can } from '../lib/auth.ts';
 import { recalcCase, recalcAllCases, caseCard, caseRows, itemEV, caseCover, caseDetail } from '../lib/cases.ts';
-import { dropFxStats } from '../lib/dropfx.ts';
+import { dropFxStats, FX_LEVELS } from '../lib/dropfx.ts';
 import { importItems, importPrices, buildThemedCases, parseImport, catalogStats } from '../lib/catalog.ts';
 import { mailConfigured, sendMail } from '../lib/mailer.ts';
 import { ticketView, finView, TICKET_STATUSES, TICKET_PRIORITIES, EVENT_METRICS } from './social.ts';
@@ -730,8 +730,13 @@ route('POST', '/api/admin/settings', (c) => {
   }
   if (key === 'sound') { val.master = clamp(val.master, 0, 1); val.effects = clamp(val.effects, 0, 1); val.upgrade = clamp(val.upgrade, 0, 1); val.cinema = clamp(val.cinema, 0, 1); }
   if (key === 'drop_fx') {
-    for (const k of ['godlike', 'mythic', 'divine']) val[k] = clamp(Math.round(val[k]), 100, 1e11);
-    if (!(val.godlike < val.mythic && val.mythic < val.divine)) throw bad('Пороги должны возрастать: GODLIKE < MYTHIC < DIVINE');
+    const L = val.levels;
+    for (const k of ['rare', 'epic', 'legendary', 'godlike']) L[k] = clamp(Math.round(L[k]), 100, 1e11);
+    if (!(L.rare < L.epic && L.epic < L.legendary && L.legendary < L.godlike)) throw bad('Пороги должны возрастать: RARE < EPIC < LEGENDARY < GODLIKE');
+    if (!FX_LEVELS.includes(val.trigger)) val.trigger = 'rare';
+    if (!FX_LEVELS.includes(val.special_floor)) val.special_floor = 'epic';
+    // Старые ключи версии 3 держим согласованными с новыми порогами (их читают только старые ставки и внешние скрипты).
+    val.godlike = L.epic; val.mythic = L.legendary; val.divine = L.godlike;
     val.min_x = clamp(Math.round(val.min_x * 100) / 100, 0, 1000);
     if (!['full', 'short', 'off'].includes(val.default_mode)) val.default_mode = 'full';
   }
