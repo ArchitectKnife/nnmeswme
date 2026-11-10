@@ -28,8 +28,11 @@ export const DEFAULTS: Record<string, any> = {
   finance: { provider: '', deposit_note: 'Платёжный провайдер не подключён.', withdraw_note: 'Вывод предметов в Steam не подключён.' },
   fair: { public_salt: '' },
   sound: { enabled_default: true, master: 0.7, effects: 0.8, upgrade: 0.8, cinema: 0.9, case_sounds: true, upgrade_sounds: true, cinema_sounds: true },
-  // Кинематографичные дропы: пороги в копейках (GODLIKE < MYTHIC < DIVINE), min_x — дроп не дешевле N× цены кейса (0 — без условия).
-  drop_fx: { enabled: true, godlike: 500000, mythic: 2500000, divine: 10000000, min_x: 1, knife_scene: true, glove_scene: true, share: true, default_mode: 'full' },
+  // Кинематографичные дропы: пороги уровней в копейках (RARE < EPIC < LEGENDARY < GODLIKE), trigger — с какого уровня играет сцена,
+  // special_floor — минимальный уровень для ножей и перчаток, min_x — дроп не дешевле N× цены кейса (0 — без условия).
+  // godlike/mythic/divine — пороги версии 3, оставлены для совместимости (миграция 4 перенесла их в levels).
+  drop_fx: { enabled: true, trigger: 'rare', levels: { rare: 150000, epic: 500000, legendary: 2500000, godlike: 10000000 }, special_floor: 'epic',
+    min_x: 1, knife_scene: true, glove_scene: true, share: true, default_mode: 'full', reduced_default: false, godlike: 500000, mythic: 2500000, divine: 10000000 },
   upgrade: { presets: [2, 3, 5, 10], min_mult: 1.1, max_mult: 20, rtp: 0.95, max_chance: 0.75, min_chance: 0.01, curve: 1, max_items: 6, tolerance: 0.2 },
   role_permissions: null,
 };
@@ -168,7 +171,7 @@ export function priceOf(itemId: number, wear: string, variant = ''): number {
 export function itemView(it: any) {
   return { id: it.id, name: it.name, weapon: it.weapon, category: it.category, pattern: it.pattern, rarity: it.rarity, rarityName: it.rarity_name,
     color: it.rarity_color, image: imageUrl(it.image), stattrak: !!it.stattrak, souvenir: !!it.souvenir, minFloat: it.min_float, maxFloat: it.max_float,
-    price: it.base_price, priceSource: it.price_source, collection: it.collection, extId: it.ext_id };
+    price: it.base_price, priceSource: it.price_source, collection: it.collection, extId: it.ext_id, phase: it.phase || null };
 }
 /** Внешние картинки отдаём через собственный кеширующий прокси (список разрешённых доменов). */
 export function imageUrl(src: string | null): string {
@@ -178,10 +181,11 @@ export function imageUrl(src: string | null): string {
 }
 export function invView(r: any) {
   return { id: r.id, itemId: r.item_id, name: r.name, weapon: r.weapon, rarity: r.rarity, rarityName: r.rarity_name, color: r.rarity_color,
-    image: imageUrl(r.image), category: r.category, wear: r.wear, float: r.float, variant: r.variant, stattrak: r.variant === 'st', souvenir: r.variant === 'sv',
+    image: imageUrl(r.image), category: r.category, phase: r.phase || null, wear: r.wear, float: r.float, variant: r.variant, stattrak: r.variant === 'st', souvenir: r.variant === 'sv',
     status: r.status, source: r.source, dropPrice: r.price, price: priceOf(r.item_id, r.wear || '', r.variant), createdAt: r.created_at };
 }
-export const INV_SELECT = 'SELECT inv.*, i.name, i.weapon, i.rarity, i.rarity_name, i.rarity_color, i.image, i.category FROM inventory inv JOIN items i ON i.id = inv.item_id';
+// Изображение — официальное изображение именно этого качества (item_images), иначе основное изображение предмета.
+export const INV_SELECT = "SELECT inv.*, i.name, i.weapon, i.rarity, i.rarity_name, i.rarity_color, COALESCE(inv_img.image, i.image) image, i.category, i.phase FROM inventory inv JOIN items i ON i.id = inv.item_id LEFT JOIN item_images inv_img ON inv_img.item_id = inv.item_id AND inv_img.wear = COALESCE(inv.wear, '')";
 
 export function addInventory(userId: number, itemId: number, fl: number | null, variant: string, source: string, sourceId: any) {
   const it = one('SELECT * FROM items WHERE id=?', itemId);

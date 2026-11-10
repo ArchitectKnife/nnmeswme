@@ -110,9 +110,12 @@ async function main() {
   if (!rows.length) throw new Error('В файле нет записей');
 
   // ---------- 2. Сопоставление с каталогом (в памяти, без запросов на каждую строку) ----------
+  // Фазы Doppler/Gamma Doppler (поле version) с версии 4 — отдельные предметы (items.phase): цена фазы идёт в свой предмет.
   const index = new Map<string, number>();
-  for (const it of all('SELECT id, name FROM items WHERE archived=0 ORDER BY id')) {
+  const phaseIndex = new Map<string, number>();
+  for (const it of all('SELECT id, name, phase FROM items WHERE archived=0 ORDER BY id')) {
     const k = fold(String(it.name));
+    if (it.phase) { const pk = k + '|' + fold(String(it.phase)); if (!phaseIndex.has(pk)) phaseIndex.set(pk, Number(it.id)); continue; }
     if (!index.has(k)) index.set(k, Number(it.id));
   }
 
@@ -130,7 +133,8 @@ async function main() {
     const p = pickPrice(r);
     if (!p) { st.noPrice++; noPriceNames.push(name); continue; }
     const parsed = parseMarketName(name);
-    const itemId = index.get(fold(parsed.name));
+    const ver = r.version == null || r.version === '' ? null : String(r.version);
+    const itemId = (ver != null ? phaseIndex.get(fold(parsed.name) + '|' + fold(ver)) : undefined) ?? index.get(fold(parsed.name));
     if (itemId == null) { st.unmatched++; unmatched.push(name); continue; }
     st.matched++;
     usedField[p.field] = (usedField[p.field] || 0) + 1;

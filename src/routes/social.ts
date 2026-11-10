@@ -9,6 +9,7 @@ import { getSetting, requireFeature, change, notify, track, addXp, activeSeason,
 import { openCase } from '../lib/cases.ts';
 import { can, isStaff } from '../lib/auth.ts';
 import { paymentProviders } from '../lib/payments.ts';
+import { dropFxPublic } from '../lib/dropfx.ts';
 
 const bc = (x: number) => rub(x);
 const AUTH_IDEM = { auth: true, idem: true, rate: [20, 10_000] as [number, number] };
@@ -516,7 +517,7 @@ route('GET', '/api/site', () => {
     finance: { depositNote: fin.deposit_note, withdrawNote: fin.withdraw_note, providers: paymentProviders().map((p: any) => ({ id: p.id, name: p.name })) },
     online: onlineCount(),
     sound: getSetting('sound'),
-    dropFx: (({ enabled, godlike, mythic, divine, share, default_mode }) => ({ enabled, share, defaultMode: default_mode, tiers: { godlike, mythic, divine } }))(getSetting('drop_fx')),
+    dropFx: dropFxPublic(),
     currency: { code: 'RUB', sign: '₽' },
     upgrade: (({ presets, min_mult, max_mult, max_items }) => ({ presets, minMult: min_mult, maxMult: max_mult, maxItems: max_items }))(getSetting('upgrade')),
   };
