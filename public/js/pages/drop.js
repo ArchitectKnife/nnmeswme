@@ -2,29 +2,25 @@
 // Данные берутся из записанной ставки: игрок не может «нарисовать» себе чужой или фальшивый дроп.
 import { page, api, html, mount, on, busy, rub, img, fdate, WEARS, splitName, rarityRu, cssColor, userLink, state } from '../core.js';
 import { icon } from '../icons.js';
-import { cineOn, shareOn, loadCine } from '../cine-mode.js';
-
-const PAL = {
-  godlike: ['255,182,39', '255,226,150'], mythic: ['150,80,255', '214,150,255'], divine: ['255,232,176', '200,230,255'],
-  knife: ['205,222,245', '255,255,255'], glove: ['122,199,79', '244,162,89'],
-};
+import { cineOn, shareOn, loadCine, normFx, fxBadge, fxRgb } from '../cine-mode.js';
 
 page('/drop/:token', async (ctx) => {
   const { drop: d } = await api('/api/drops/' + encodeURIComponent(ctx.params.token));
-  const it = d.item; const fx = d.fx; const [w, p] = splitName(it.name);
-  const pal = PAL[fx?.scene] || PAL.godlike;
+  const it = d.item; const fx = normFx(d.fx); const [w, p] = splitName(it.name);
+  const [ca, cb] = fxRgb(fx || { level: 'epic' });
   document.title = (fx?.label || 'Дроп') + ': ' + it.name + ' — ' + (state.site?.site?.name || 'BURGER SKIN');
   const caseLink = d.case?.slug ? html`<a href="/cases/${d.case.slug}">${d.case.name}</a>` : html`<span>${d.case?.name || 'Кейс'}</span>`;
   mount(ctx.el, html`<div class="wrap">
-    <section class="drop-hero" style="--ca:rgb(${pal[0]});--cb:rgb(${pal[1]})">
+    <section class="drop-hero" style="--ca:rgb(${ca});--cb:rgb(${cb})">
       <div class="dh-img">${img(it.image, '', it.name)}</div>
       <div>
-        ${fx ? html`<span class="drop-fx-badge ${fx.scene}">${icon('trophy')} ${fx.label}</span>` : ''}
+        ${fx ? fxBadge(fx, icon) : ''}
         <h1 class="dh-label" style="margin-top:10px">${fx?.label || 'Дроп'}</h1>
         <div class="muted">${p ? w : ''}</div>
         <h2 style="margin:2px 0 10px">${p || w}</h2>
         <div class="chips mb">
           <span class="badge" style="color:${cssColor(it.color)}">${rarityRu(it.rarityName)}</span>
+          ${it.phase ? html`<span class="badge">${it.phase}</span>` : ''}
           ${it.wear ? html`<span class="badge">${WEARS[it.wear] || it.wear} (${it.wear})</span>` : ''}
           ${it.float != null ? html`<span class="badge mono">float ${Number(it.float).toFixed(6)}</span>` : ''}
           ${it.stattrak ? html`<span class="tag st">StatTrak™</span>` : ''}${it.souvenir ? html`<span class="tag sv">Сувенир</span>` : ''}
