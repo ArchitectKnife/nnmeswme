@@ -6,9 +6,10 @@ import { one, all, run, tx, now, DATA } from '../lib/db.ts';
 import { route, v, bad, notFound, forbidden, HttpError, randomToken, broadcast, onlineCount } from '../lib/http.ts';
 import { getSetting, requireFeature, change, notify, track, addXp, activeSeason, periodKey, addInventory, roll, publicUser, invView, INV_SELECT,
   imageUrl, itemView, feature, consumeInventory, audit, checkRestriction, rub } from '../lib/core.ts';
-import { openCase } from '../lib/cases.ts';
+import { openCase, caseCard } from '../lib/cases.ts';
 import { can, isStaff } from '../lib/auth.ts';
 import { paymentProviders } from '../lib/payments.ts';
+import { dropFxPublic } from '../lib/dropfx.ts';
 
 const bc = (x: number) => rub(x);
 const AUTH_IDEM = { auth: true, idem: true, rate: [20, 10_000] as [number, number] };
@@ -17,9 +18,9 @@ const AUTH_IDEM = { auth: true, idem: true, rate: [20, 10_000] as [number, numbe
 export function passLevel(s: any, xp: number) { return Math.min(100, Math.floor(xp / s.xp_per_level)); }
 function rewardView(r: any) {
   const it = r.item_id ? one('SELECT * FROM items WHERE id=?', r.item_id) : null;
-  const cs = r.case_id ? one('SELECT id, slug, name, image FROM cases WHERE id=?', r.case_id) : null;
+  const cs = r.case_id ? one('SELECT * FROM cases WHERE id=?', r.case_id) : null;
   return { id: r.id, level: r.level, track: r.track, type: r.type, amount: r.amount, label: r.label, item: it ? itemView(it) : null,
-    case: cs ? { ...cs, image: cs.image ? imageUrl(cs.image) : '/img/brand/case.svg' } : null };
+    case: cs ? { id: cs.id, slug: cs.slug, name: cs.name, image: caseCard(cs).image } : null };
 }
 function grantReward(userId: number, r: any) {
   if (r.type === 'balance') change(userId, r.amount, 'pass', { ref: 'pass_reward', refId: r.id, reason: `BURGER PASS: уровень ${r.level}` });
@@ -516,7 +517,7 @@ route('GET', '/api/site', () => {
     finance: { depositNote: fin.deposit_note, withdrawNote: fin.withdraw_note, providers: paymentProviders().map((p: any) => ({ id: p.id, name: p.name })) },
     online: onlineCount(),
     sound: getSetting('sound'),
-    dropFx: (({ enabled, godlike, mythic, divine, share, default_mode }) => ({ enabled, share, defaultMode: default_mode, tiers: { godlike, mythic, divine } }))(getSetting('drop_fx')),
+    dropFx: dropFxPublic(),
     currency: { code: 'RUB', sign: '₽' },
     upgrade: (({ presets, min_mult, max_mult, max_items }) => ({ presets, minMult: min_mult, maxMult: max_mult, maxItems: max_items }))(getSetting('upgrade')),
   };
