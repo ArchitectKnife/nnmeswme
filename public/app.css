@@ -1078,3 +1078,5 @@ a.item,.item[data-id]{cursor:pointer}
   .case-flags{left:8px;top:8px}
 }
 @media (prefers-reduced-motion:reduce){.case::after,.case:hover .cover .cover-bg{transition:none;transform:none}}
+.tbl img.mini-it{width:48px;height:36px;object-fit:contain;flex:none}
+input[type=color]{height:44px;padding:4px 6px;cursor:pointer;min-width:64px}
