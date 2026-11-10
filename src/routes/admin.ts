@@ -7,12 +7,14 @@ import { route, v, bad, notFound, forbidden, onlineCount, broadcast } from '../l
 import { getSetting, setSetting, DEFAULTS, audit, verifyAudit, change, notify, publicUser, invView, INV_SELECT, itemView, imageUrl, rub } from '../lib/core.ts';
 import { ROLES, ROLE_RANK, PERMS, DEFAULT_ROLE_PERMS, permsOf, can } from '../lib/auth.ts';
 import { recalcCase, recalcAllCases, caseCard, caseRows, itemEV, caseCover, caseDetail } from '../lib/cases.ts';
-import { dropFxStats } from '../lib/dropfx.ts';
+import { dropFxStats, FX_LEVELS } from '../lib/dropfx.ts';
 import { importItems, importPrices, buildThemedCases, parseImport, catalogStats } from '../lib/catalog.ts';
 import { mailConfigured, sendMail } from '../lib/mailer.ts';
 import { ticketView, finView, TICKET_STATUSES, TICKET_PRIORITIES, EVENT_METRICS } from './social.ts';
 import { betView, CASE_CATEGORIES } from './play.ts';
 import { paymentProviders } from '../lib/payments.ts';
+import { COVER_THEMES, isCoverTheme, isAccent } from '../lib/covers.ts';
+import { imageAudit, checkImage } from '../lib/imageaudit.ts';
 
 const DAY = 86400_000;
 const MSK = 3 * 3600_000;
@@ -176,12 +178,16 @@ function caseFields(c: any, partial: boolean) {
   if (b.categories !== undefined) { if (!Array.isArray(b.categories)) throw bad('Категории: ожидается список'); f.categories = JSON.stringify(b.categories.filter((x: any) => x in CASE_CATEGORIES)); }
   if (b.status !== undefined) f.status = v.oneOf(b.status, 'Статус', ['draft', 'published', 'hidden', 'archived']);
   if (b.sort !== undefined) f.sort = v.int(b.sort, 'Порядок', -1e6, 1e6);
+  if (b.featured !== undefined) f.featured = v.bool(b.featured) ? 1 : 0;
+  if (b.coverTheme !== undefined) { if (b.coverTheme && !isCoverTheme(b.coverTheme)) throw bad('Неизвестная тема обложки'); f.cover_theme = b.coverTheme || null; }
+  if (b.accent !== undefined) { if (b.accent && !isAccent(b.accent)) throw bad('Цвет кейса: формат #RRGGBB'); f.accent = b.accent || null; }
   return f;
 }
 function adminCase(cs: any) {
   const rows = caseRows(cs.id);
   const W = rows.reduce((s, r) => s + r.weight, 0);
   return { ...caseCard(cs), description: cs.description, rawImage: cs.image, priceMode: cs.price_mode, sort: cs.sort, source: cs.source, rtp: cs.price ? cs.ev / cs.price : 0,
+    coverTheme: cs.cover_theme || null, rawAccent: cs.accent || null, weightTotal: W, exact: W === WEIGHT_TOTAL && rows.every((r) => Number.isInteger(r.weight)),
     contents: rows.map((r) => ({ ...itemView(r), weight: r.weight, chance: W ? r.weight / W : 0, ev: itemEV(r, cs) })) };
 }
 route('GET', '/api/admin/cases', (c) => {
@@ -193,18 +199,19 @@ route('GET', '/api/admin/cases', (c) => {
   if (q) { w.push('(name LIKE ? OR slug LIKE ?)'); prm.push(`%${q}%`, `%${q}%`); }
   if (st) { w.push('status=?'); prm.push(st); }
   return { rows: all(`SELECT * FROM cases WHERE ${w.join(' AND ')} ORDER BY sort, id LIMIT ? OFFSET ?`, ...prm, limit, offset).map((cs) => ({ ...caseCard(cs), priceMode: cs.price_mode, rtp: cs.price ? cs.ev / cs.price : 0, source: cs.source })),
-    total: one(`SELECT COUNT(*) n FROM cases WHERE ${w.join(' AND ')}`, ...prm).n, page: p, categories: CASE_CATEGORIES };
+    total: one(`SELECT COUNT(*) n FROM cases WHERE ${w.join(' AND ')}`, ...prm).n, page: p, categories: CASE_CATEGORIES, themes: COVER_THEMES };
 }, { perm: 'cases.manage' });
 route('GET', '/api/admin/cases/:id', (c) => {
   const cs = one('SELECT * FROM cases WHERE id=?', v.int(c.params.id, 'id', 1));
   if (!cs) throw notFound('Кейс не найден');
-  return { case: adminCase(cs), categories: CASE_CATEGORIES };
+  return { case: adminCase(cs), categories: CASE_CATEGORIES, themes: COVER_THEMES };
 }, { perm: 'cases.manage' });
 route('POST', '/api/admin/cases', (c) => {
   const f = caseFields(c, false);
   if (one('SELECT 1 FROM cases WHERE slug=?', f.slug)) f.slug += '-' + Date.now().toString(36);
-  const id = run('INSERT INTO cases(slug,name,description,image,price,price_mode,categories,status,sort,source,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
-    f.slug, f.name, f.description ?? null, f.image ?? null, f.price ?? 100, f.price_mode ?? 'auto', f.categories ?? '[]', f.status ?? 'draft', f.sort ?? 0, 'admin', now(), now()).lastInsertRowid;
+  const id = run('INSERT INTO cases(slug,name,description,image,price,price_mode,categories,status,sort,source,created_at,updated_at,featured,cover_theme,accent) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    f.slug, f.name, f.description ?? null, f.image ?? null, f.price ?? 100, f.price_mode ?? 'auto', f.categories ?? '[]', f.status ?? 'draft', f.sort ?? 0, 'admin', now(), now(),
+    f.featured ?? 0, f.cover_theme ?? null, f.accent ?? null).lastInsertRowid;
   audit(c.user.id, 'case.create', 'case', id, f, c.ip);
   return { case: adminCase(one('SELECT * FROM cases WHERE id=?', id)) };
 }, { perm: 'cases.manage' });
@@ -237,6 +244,31 @@ route('POST', '/api/admin/cases/:id/items', (c) => {
   });
   return { case: adminCase(one('SELECT * FROM cases WHERE id=?', cs.id)) };
 }, { perm: 'cases.manage' });
+const WEIGHT_TOTAL = 1_000_000;
+export function exactWeights(ws: number[]): number[] {
+  const S = ws.reduce((a, x) => a + x, 0);
+  if (!(S > 0)) throw bad('Сумма весов должна быть больше нуля');
+  const exact = ws.map((x) => (x / S) * WEIGHT_TOTAL);
+  const w = exact.map((x) => Math.max(1, Math.floor(x)));
+  let diff = WEIGHT_TOTAL - w.reduce((a, x) => a + x, 0);
+  const order = exact.map((x, i) => [x - Math.floor(x), i]).sort((p, q) => q[0] - p[0]);
+  for (let k = 0; diff > 0; k = (k + 1) % order.length, diff--) w[order[k][1]]++;
+  while (diff < 0) { const i = w.indexOf(Math.max(...w)); w[i]--; diff++; }
+  return w;
+}
+route('POST', '/api/admin/cases/:id/normalize', (c) => {
+  const cs = one('SELECT * FROM cases WHERE id=?', v.int(c.params.id, 'id', 1));
+  if (!cs) throw notFound('Кейс не найден');
+  const rows = all('SELECT item_id, weight FROM case_items WHERE case_id=? ORDER BY item_id', cs.id);
+  if (!rows.length) throw bad('В кейсе нет предметов');
+  const w = exactWeights(rows.map((r) => r.weight));
+  tx(() => {
+    rows.forEach((r, i) => run('UPDATE case_items SET weight=? WHERE case_id=? AND item_id=?', w[i], cs.id, r.item_id));
+    recalcCase(cs.id);
+    audit(c.user.id, 'case.normalize', 'case', cs.id, { before: rows.map((r) => [r.item_id, r.weight]), after: w }, c.ip);
+  });
+  return { case: adminCase(one('SELECT * FROM cases WHERE id=?', cs.id)) };
+}, { perm: 'cases.manage' });
 route('POST', '/api/admin/cases/:id/delete', (c) => {
   const cs = one('SELECT * FROM cases WHERE id=?', v.int(c.params.id, 'id', 1));
   if (!cs) throw notFound('Кейс не найден');
@@ -265,7 +297,7 @@ function itemFields(b: any, partial: boolean) {
   s('weapon', 'weapon', 'Оружие'); s('category', 'category', 'Категория'); s('pattern', 'pattern', 'Скин');
   s('rarity', 'rarity', 'Редкость (код)'); s('rarityName', 'rarity_name', 'Редкость'); s('collection', 'collection', 'Коллекция', 200); s('extId', 'ext_id', 'Внешний ID', 120);
   if (b.color !== undefined) { if (b.color && !/^#[0-9a-f]{6}$/i.test(b.color)) throw bad('Цвет: формат #RRGGBB'); f.rarity_color = b.color || null; }
-  if (b.image !== undefined) { const img = v.optStr(b.image, 'Изображение', 600); if (img && !/^\/(uploads\/public|img)\/[\w./-]+$/.test(img) && !/^https:\/\/[\w.-]+\/[\w./%-]+$/.test(img)) throw bad('Изображение: загрузите файл или укажите https-адрес'); f.image = img || null; }
+  if (b.image !== undefined) { const img = v.optStr(b.image, 'Изображение', 600); if (img && !/^\/(uploads\/public|img)\/[\w./-]+$/.test(img) && !/^https:\/\/[\w.-]+\/[\w./%-]+$/.test(img)) throw bad('Изображение: загрузите файл или укажите https-адрес'); f.image = img || null; f.image_status = img ? (checkImage(img).ok ? 'manual' : 'missing') : 'missing'; f.image_checked_at = now(); }
   if (b.minFloat !== undefined) f.min_float = v.num(b.minFloat, 'Min float', 0, 1);
   if (b.maxFloat !== undefined) f.max_float = v.num(b.maxFloat, 'Max float', 0, 1);
   if (b.stattrak !== undefined) f.stattrak = v.bool(b.stattrak) ? 1 : 0;
@@ -292,9 +324,27 @@ route('GET', '/api/admin/items', (c) => {
 route('GET', '/api/admin/items/:id', (c) => {
   const i = one('SELECT * FROM items WHERE id=?', v.int(c.params.id, 'id', 1));
   if (!i) throw notFound('Предмет не найден');
-  return { item: { ...itemView(i), archived: !!i.archived, rawImage: i.image }, prices: all('SELECT * FROM item_prices WHERE item_id=? ORDER BY variant, wear', i.id),
+  return { item: { ...itemView(i), archived: !!i.archived, rawImage: i.image, imageStatus: i.image_status || null, imageSource: i.image_source || null, imageCheck: checkImage(i.image) },
+    wearImages: all("SELECT wear, image, source, verified_at FROM item_images WHERE item_id=? ORDER BY CASE wear WHEN 'FN' THEN 0 WHEN 'MW' THEN 1 WHEN 'FT' THEN 2 WHEN 'WW' THEN 3 WHEN 'BS' THEN 4 ELSE 5 END", i.id)
+      .map((w: any) => ({ wear: w.wear, image: imageUrl(w.image), raw: w.image, source: w.source, verifiedAt: w.verified_at, check: checkImage(w.image) })),
+    prices: all('SELECT * FROM item_prices WHERE item_id=? ORDER BY variant, wear', i.id),
     cases: all('SELECT c.id, c.name, c.slug, ci.weight FROM case_items ci JOIN cases c ON c.id=ci.case_id WHERE ci.item_id=?', i.id) };
 }, { perm: 'items.manage' });
+// Изображение для конкретного качества: загруженный файл или https-адрес; пустое значение удаляет привязку.
+route('POST', '/api/admin/items/:id/wear-image', (c) => {
+  const i = one('SELECT * FROM items WHERE id=?', v.int(c.params.id, 'id', 1));
+  if (!i) throw notFound('Предмет не найден');
+  const wear = v.oneOf(c.body.wear ?? '', 'Качество', ['', 'FN', 'MW', 'FT', 'WW', 'BS']);
+  const img = v.optStr(c.body.image, 'Изображение', 600);
+  if (img && !/^\/(uploads\/public|img)\/[\w./-]+$/.test(img) && !/^https:\/\/[\w.-]+\/[\w./%-]+$/.test(img)) throw bad('Изображение: загрузите файл или укажите https-адрес');
+  if (img && !checkImage(img).ok) throw bad('Изображение не прошло проверку: ' + checkImage(img).reason);
+  const before = one('SELECT image FROM item_images WHERE item_id=? AND wear=?', i.id, wear);
+  if (img) run('INSERT INTO item_images(item_id,wear,image,source,verified_at) VALUES(?,?,?,?,?) ON CONFLICT(item_id,wear) DO UPDATE SET image=excluded.image, source=excluded.source, verified_at=excluded.verified_at', i.id, wear, img, 'admin:' + c.user.id, now());
+  else run('DELETE FROM item_images WHERE item_id=? AND wear=?', i.id, wear);
+  audit(c.user.id, 'item.wear_image', 'item', i.id, { wear, before: before?.image || null, after: img || null }, c.ip);
+  return { ok: true };
+}, { perm: 'items.manage' });
+route('GET', '/api/admin/images-audit', () => imageAudit(), { perm: 'items.manage' });
 route('POST', '/api/admin/items', (c) => {
   const f = itemFields(c.body, false);
   const cols = Object.keys(f);
@@ -658,7 +708,7 @@ route('GET', '/api/admin/covers', () => {
   const list = rows.map((cs: any) => ({ id: cs.id, slug: cs.slug, name: cs.name, status: cs.status, image: cs.image || null, coverMode: cs.cover_mode || 'auto', cover: caseCover(cs),
     candidates: all('SELECT i.id, i.name, i.image, i.rarity_color FROM case_items ci JOIN items i ON i.id=ci.item_id WHERE ci.case_id=? ORDER BY COALESCE(i.base_price,0) DESC LIMIT 24', cs.id)
       .map((i: any) => ({ id: i.id, name: i.name, image: imageUrl(i.image), color: i.rarity_color, real: !!i.image })) }));
-  return { cases: list, missing: list.filter((x: any) => x.cover.missing).map((x: any) => ({ id: x.id, slug: x.slug, name: x.name })) };
+  return { cases: list, themes: COVER_THEMES, missing: list.filter((x: any) => x.cover.missing).map((x: any) => ({ id: x.id, slug: x.slug, name: x.name })) };
 }, { perm: 'cases.manage' });
 route('POST', '/api/admin/cases/:id/cover', (c) => {
   const cs = one('SELECT * FROM cases WHERE id=?', v.int(c.params.id, 'id', 1));
@@ -671,8 +721,12 @@ route('POST', '/api/admin/cases/:id/cover', (c) => {
   }
   const items = Array.isArray(c.body.items) ? [...new Set(c.body.items.map(Number).filter((x: number) => Number.isInteger(x) && x > 0))].slice(0, 3) : [];
   for (const id of items) if (!one('SELECT 1 x FROM case_items WHERE case_id=? AND item_id=?', cs.id, id)) throw bad('Предмет для обложки должен входить в состав кейса');
-  run('UPDATE cases SET cover_mode=?, cover_items=?, image=?, updated_at=? WHERE id=?', mode, items.length ? JSON.stringify(items) : null, image, now(), cs.id);
-  audit(c.user.id, 'case.cover', 'case', cs.id, { mode, items, image }, c.ip);
+  const theme = c.body.theme === undefined ? cs.cover_theme : c.body.theme || null;
+  const accent = c.body.accent === undefined ? cs.accent : c.body.accent || null;
+  if (theme && !isCoverTheme(theme)) throw bad('Неизвестная тема обложки');
+  if (accent && !isAccent(accent)) throw bad('Цвет кейса: формат #RRGGBB');
+  run('UPDATE cases SET cover_mode=?, cover_items=?, image=?, cover_theme=?, accent=?, updated_at=? WHERE id=?', mode, items.length ? JSON.stringify(items) : null, image, theme, accent, now(), cs.id);
+  audit(c.user.id, 'case.cover', 'case', cs.id, { mode, items, image, theme, accent }, c.ip);
   return { cover: caseCover(one('SELECT * FROM cases WHERE id=?', cs.id)) };
 }, { perm: 'cases.manage' });
 
@@ -730,8 +784,13 @@ route('POST', '/api/admin/settings', (c) => {
   }
   if (key === 'sound') { val.master = clamp(val.master, 0, 1); val.effects = clamp(val.effects, 0, 1); val.upgrade = clamp(val.upgrade, 0, 1); val.cinema = clamp(val.cinema, 0, 1); }
   if (key === 'drop_fx') {
-    for (const k of ['godlike', 'mythic', 'divine']) val[k] = clamp(Math.round(val[k]), 100, 1e11);
-    if (!(val.godlike < val.mythic && val.mythic < val.divine)) throw bad('Пороги должны возрастать: GODLIKE < MYTHIC < DIVINE');
+    const L = val.levels;
+    for (const k of ['rare', 'epic', 'legendary', 'godlike']) L[k] = clamp(Math.round(L[k]), 100, 1e11);
+    if (!(L.rare < L.epic && L.epic < L.legendary && L.legendary < L.godlike)) throw bad('Пороги должны возрастать: RARE < EPIC < LEGENDARY < GODLIKE');
+    if (!FX_LEVELS.includes(val.trigger)) val.trigger = 'rare';
+    if (!FX_LEVELS.includes(val.special_floor)) val.special_floor = 'epic';
+    // Старые ключи версии 3 держим согласованными с новыми порогами (их читают только старые ставки и внешние скрипты).
+    val.godlike = L.epic; val.mythic = L.legendary; val.divine = L.godlike;
     val.min_x = clamp(Math.round(val.min_x * 100) / 100, 0, 1000);
     if (!['full', 'short', 'off'].includes(val.default_mode)) val.default_mode = 'full';
   }

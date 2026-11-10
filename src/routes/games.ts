@@ -2,9 +2,9 @@
 // Все результаты считаются на сервере из заранее зафиксированных seed (хеш публикуется до ставки).
 import { one, all, run, tx, now } from '../lib/db.ts';
 import { route, v, bad, notFound, forbidden, broadcast, sha256, randomToken } from '../lib/http.ts';
-import { getSetting, requireFeature, checkRestriction, gameLimits, wager, change, track, notify, roll, newSeed, floatsFrom, publicSalt,
+import { getSetting, itemImage, requireFeature, checkRestriction, gameLimits, wager, change, track, notify, roll, newSeed, floatsFrom, publicSalt,
   publicUser, addInventory, priceOf, hasWear, wearOf, imageUrl, activeSeed, logError, rub } from '../lib/core.ts';
-import { caseRows, dropFrom } from '../lib/cases.ts';
+import { caseRows, dropFrom, caseCard } from '../lib/cases.ts';
 import { can } from '../lib/auth.ts';
 
 const AUTH = { auth: true, idem: true, rate: [40, 10_000] as [number, number] };
@@ -479,7 +479,8 @@ function battleView(b: any, c: any = null, full = false) {
   const t = now();
   const players = all('SELECT * FROM battle_players WHERE battle_id=? ORDER BY slot', b.id)
     .map((p) => ({ slot: p.slot, bot: !!p.bot, user: p.bot ? BOT(p.slot) : publicUser(one('SELECT * FROM users WHERE id=?', p.user_id)), total: b.status === 'finished' ? p.total : null }));
-  const cases = JSON.parse(b.cases);
+  // Изображение кейса — текущая обложка из настоящих предметов (в старых битвах хранилась иконка-заглушка).
+  const cases = JSON.parse(b.cases).map((x: any) => { const cs = x?.id ? one('SELECT * FROM cases WHERE id=?', x.id) : null; return cs ? { ...x, image: caseCard(cs).image } : x; });
   const res = b.result ? JSON.parse(b.result) : null;
   let revealed = 0;
   if (b.status === 'finished') revealed = cases.length;
@@ -496,7 +497,7 @@ route('GET', '/api/battles', (c) => {
   const live = all("SELECT * FROM battles WHERE status IN ('waiting','starting','running') AND (private=0 OR creator_id=? OR EXISTS (SELECT 1 FROM battle_players p WHERE p.battle_id=battles.id AND p.user_id=?)) ORDER BY id DESC LIMIT 60", uid, uid);
   return { live: live.map((b) => battleView(b, c)), recent: all("SELECT * FROM battles WHERE status='finished' AND private=0 ORDER BY id DESC LIMIT 20").map((b) => battleView(b, c)),
     mine: uid ? all("SELECT b.* FROM battles b WHERE EXISTS (SELECT 1 FROM battle_players p WHERE p.battle_id=b.id AND p.user_id=?) ORDER BY b.id DESC LIMIT 20", uid).map((b) => battleView(b, c)) : [],
-    cases: all("SELECT id, slug, name, price, image FROM cases WHERE status='published' ORDER BY price").map((x) => ({ ...x, image: x.image ? imageUrl(x.image) : null })),
+    cases: all("SELECT * FROM cases WHERE status='published' ORDER BY price").map((x) => { const k = caseCard(x); return { id: x.id, slug: x.slug, name: x.name, price: x.price, image: k.image, accent: k.accent }; }),
     enabled: getSetting('features').battles && getSetting('games').battles.enabled };
 });
 route('GET', '/api/battles/:id', (c) => {
@@ -515,7 +516,7 @@ route('POST', '/api/battles', (c) => {
   const cases = ids.map((id) => {
     const cs = one("SELECT * FROM cases WHERE id=? AND status='published'", id);
     if (!cs) throw bad('Кейс недоступен');
-    return { id: cs.id, slug: cs.slug, name: cs.name, price: cs.price, image: cs.image ? imageUrl(cs.image) : null };
+    return { id: cs.id, slug: cs.slug, name: cs.name, price: cs.price, image: caseCard(cs).image };
   });
   const cost = cases.reduce((s, x) => s + x.price, 0);
   gameLimits('battles', cost);
@@ -605,7 +606,7 @@ function battleStart(b: any) {
       const it = d.item;
       const realFloat = d.float == null ? null : it.min_float + d.float * (it.max_float - it.min_float);
       const wear = hasWear(it) && realFloat != null ? wearOf(realFloat) : '';
-      return { slot: p.slot, itemId: it.id, name: it.name, image: imageUrl(it.image), color: it.rarity_color, rarityName: it.rarity_name, wear, variant: d.variant,
+      return { slot: p.slot, itemId: it.id, name: it.name, image: itemImage(it.id, wear, it.image), color: it.rarity_color, rarityName: it.rarity_name, wear, variant: d.variant,
         fl: d.float, float: realFloat, price: priceOf(it.id, wear, d.variant) };
     });
   });

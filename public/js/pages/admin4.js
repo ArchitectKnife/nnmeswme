@@ -104,6 +104,8 @@ page('/admin/covers', async (ctx) => {
       <div class="cov-top"><div class="cov-prev case-img" style="--ac:${cssColor(c.cover.items[0]?.color, '#FFB627')}">${coverHtml({ ...c, image: c.cover.image || c.image })}</div>
         <div class="grow"><b>${c.name}</b><div class="xs muted mono">${c.slug}</div>${c.cover.missing ? html`<div class="badge warn mt">нет реальных изображений</div>` : ''}
           <div class="seg sm mt" data-mode><button type="button" data-m="auto" class="${c.cover.mode === 'auto' ? 'on' : ''}">Из предметов</button><button type="button" data-m="image" class="${c.cover.mode === 'image' ? 'on' : ''}">Своё изображение</button></div></div></div>
+      <div class="row gap wrap mt"><label class="fld" style="margin:0"><span class="xs">Фон обложки</span><select data-theme>${Object.entries(d.themes || {}).map(([k, l]) => html`<option value="${k}" ${c.cover.theme === k ? raw('selected') : ''}>${l}</option>`)}</select></label>
+        <label class="fld" style="margin:0"><span class="xs">Цвет кейса</span><input type="color" data-accent value="${/^#[0-9a-f]{6}$/i.test(c.cover.accent || '') ? c.cover.accent : '#ffb627'}"></label></div>
       <div class="xs muted mt">Предметы на обложке (до 3; если не выбрано — самые дорогие):</div>
       <div class="cov-items">${c.candidates.map((it) => html`<label class="cov-it" title="${it.name}" style="--rc:${cssColor(it.color)}"><input type="checkbox" value="${it.id}" ${sel.has(it.id) ? raw('checked') : ''}>${img(it.image, '', it.name)}</label>`)}</div>
       <div class="row gap mt"><label class="btn ghost sm">${icon('upload')}<span>Загрузить изображение</span><input type="file" accept="image/png,image/jpeg,image/webp" data-file hidden></label><button type="button" class="btn sm" data-save>${icon('save')}<span>Сохранить</span></button></div>
@@ -123,12 +125,34 @@ page('/admin/covers', async (ctx) => {
   on(box, 'click', '[data-save]', (e, b) => { const cardEl = b.closest('.cov-card'); busy(b, async () => {
     const mode = $('[data-mode] button.on', cardEl)?.dataset.m || 'auto';
     const items = $$('.cov-items input:checked', cardEl).map((x) => Number(x.value)).slice(0, 3);
-    await api(`/api/admin/cases/${cardEl.dataset.id}/cover`, { mode, items, image: cardEl.dataset.img || '' });
+    await api(`/api/admin/cases/${cardEl.dataset.id}/cover`, { mode, items, image: cardEl.dataset.img || '', theme: $('[data-theme]', cardEl)?.value || '', accent: $('[data-accent]', cardEl)?.value || '' });
     toast('Обложка сохранена', 'ok'); await load();
   }); });
   on(box, 'change', '.cov-items input', (e, inp) => { const all = $$('.cov-items input:checked', inp.closest('.cov-card')); if (all.length > 3) { inp.checked = false; toast('Можно выбрать до трёх предметов', 'info'); } });
   await load();
 }, P('Обложки кейсов'));
+
+// ---------- Проверка изображений ----------
+page('/admin/images', async (ctx) => {
+  const box = shell(ctx, '/admin/images', 'Проверка изображений', loader());
+  wire(box);
+  const d = await api('/api/admin/images-audit');
+  if (!ctx.alive()) return;
+  const s = d.summary;
+  const stat = (label, val, good) => html`<div class="card"><div class="xs dim">${label}</div><b class="lg" style="color:${good ? 'var(--let)' : 'var(--ket2)'}">${num(val)}</b></div>`;
+  const list = (title, rows, cols) => (rows?.length ? html`<div class="card mt"><h3>${title} (${num(rows.length)})</h3>${autoTable(rows, cols, { empty: '—' })}</div>` : '');
+  const itemLink = (x) => (x.id ? html`<a href="/admin/items/${x.id}">${x.name}</a>` : x.name);
+  mount(box, html`${notice('Каждый скин и каждый кейс должны показывать настоящее изображение CS2: локальную копию официального изображения Steam (public/img/skins) или адрес CDN Steam. Полная онлайн-проверка всех адресов: npm run audit:images -- --online.')}
+    <div class="grid g4 mt">${stat('Скинов всего', s.skins, true)}${stat('С проверенным изображением', s.skinsVerified, s.skinsVerified === s.skins)}${stat('Без изображения / битые', s.skinsMissing, !s.skinsMissing)}${stat('Источник не подтверждён', s.skinsUnverified, !s.skinsUnverified)}</div>
+    <div class="grid g4 mt">${stat('Изображений по качеству', s.wearImages, true)}${stat('Битых по качеству', s.wearImagesBroken, !s.wearImagesBroken)}${stat('Кейсов с проверенной обложкой', s.casesWithVerifiedCover + ' / ' + s.cases, s.casesWithVerifiedCover === s.cases)}${stat('Одно изображение у разных скинов', s.duplicateImageAssignments, !s.duplicateImageAssignments)}</div>
+    ${list('Скины без изображения', d.missing, [{ t: 'Скин', f: itemLink }, { t: 'Причина', k: 'reason' }, { t: 'Адрес', f: (x) => html`<span class="xs mono">${x.image || '—'}</span>` }])}
+    ${list('Источник не подтверждён', d.unverified, [{ t: 'Скин', f: itemLink }, { t: 'Адрес', f: (x) => html`<span class="xs mono">${x.image}</span>` }])}
+    ${list('Битые изображения качества', d.brokenWear, [{ t: 'Скин', f: itemLink }, { t: 'Качество', k: 'wear' }, { t: 'Причина', k: 'reason' }])}
+    ${list('Проблемы обложек', d.coverProblems, [{ t: 'Кейс', f: (x) => html`<a href="/admin/cases/${x.id}">${x.name}</a>` }, { t: 'Причина', k: 'reason' }])}
+    ${list('Одинаковые обложки', d.duplicateCovers, [{ t: 'Кейс', k: 'slug' }, { t: 'Совпадает с', k: 'sameAs' }])}
+    ${list('Одно изображение у разных скинов', d.duplicates, [{ t: 'Скины', f: (x) => x.items.join(', ') }])}
+    ${!s.skinsMissing && !s.wearImagesBroken && !s.coverProblems && !s.duplicateCovers && !s.duplicateImageAssignments ? html`<div class="mt">${notice('Проблем не найдено: у всех скинов и кейсов есть проверенные изображения.', 'ok')}</div>` : ''}`);
+}, P('Проверка изображений'));
 
 // ---------- Премиум-каталог ----------
 page('/admin/wishlist', async (ctx) => {

@@ -1,0 +1,858 @@
+{
+ "built_at": "2026-11-10T18:38:26.728Z",
+ "version": 4,
+ "sources": {
+  "items": {
+   "name": "ByMykel CSGO-API (MIT)",
+   "url": "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins.json",
+   "variants": "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins_not_grouped.json",
+   "fetched": "2026-11-09T13:43:38.000Z"
+  },
+  "images": {
+   "name": "Steam Community CDN (official item images)",
+   "host": "community.akamai.steamstatic.com"
+  },
+  "prices": {
+   "name": "Skinport API, suggested_price",
+   "currency": "RUB",
+   "file": "prices-rub.json",
+   "updated_from": "2026-11-09T13:50:13.000Z",
+   "updated_to": "2026-11-09T13:50:13.000Z",
+   "source_tag": "skinport:2026-11-09"
+  }
+ },
+ "weights_total": 1000000,
+ "margin": 0.12,
+ "took_s": 9,
+ "totals": {
+  "items": 2126,
+  "priced": 2054,
+  "phaseItems": 181,
+  "caseItems": 678,
+  "cases": 47
+ },
+ "images": {
+  "urls": 5557,
+  "verified": 5557,
+  "failed": 0,
+  "local": 1725,
+  "itemsWithoutImage": [],
+  "caseItemsWithoutLocal": []
+ },
+ "duplicateImageAssignments": [],
+ "failedImages": [],
+ "unresolved": [],
+ "dropped": [
+  {
+   "case": "lucky-ticket",
+   "item": "★ Shadow Daggers | Boreal Forest",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "karambit-claw",
+   "item": "★ Karambit | Ultraviolet",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "karambit-claw",
+   "item": "★ Karambit | Scorched",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "karambit-claw",
+   "item": "★ Karambit | Urban Masked",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "karambit-claw",
+   "item": "★ Karambit | Safari Mesh",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "karambit-claw",
+   "item": "★ Karambit | Boreal Forest",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "karambit-claw",
+   "item": "★ Karambit | Forest DDPAT",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "steel-wings",
+   "item": "★ Butterfly Knife | Crimson Web",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "steel-wings",
+   "item": "★ Butterfly Knife | Ultraviolet",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "steel-wings",
+   "item": "★ Butterfly Knife | Scorched",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "bayonet-squad",
+   "item": "★ M9 Bayonet | Boreal Forest",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "bayonet-squad",
+   "item": "★ Bayonet | Crimson Web",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  },
+  {
+   "case": "bayonet-squad",
+   "item": "★ Bayonet | Forest DDPAT",
+   "reason": "нет полной цены (все качества и StatTrak)"
+  }
+ ],
+ "cases": [
+  {
+   "slug": "first-bite",
+   "items": 18,
+   "alpha": 0.891,
+   "targetRub": 19,
+   "evRub": 16.96,
+   "priceRub": 19,
+   "topChance": 0.180988,
+   "minChance": 0.000444,
+   "rarities": {
+    "Classified": 0.006448000000000001,
+    "Restricted": 0.022421,
+    "Mil-Spec Grade": 0.3091,
+    "Industrial Grade": 0.662031
+   }
+  },
+  {
+   "slug": "camo-pack",
+   "items": 17,
+   "alpha": 0.942,
+   "targetRub": 59,
+   "evRub": 52.67,
+   "priceRub": 58.99,
+   "topChance": 0.224466,
+   "minChance": 0.000253,
+   "rarities": {
+    "Extraordinary": 0.001248,
+    "Restricted": 0.001626,
+    "Industrial Grade": 0.814449,
+    "Mil-Spec Grade": 0.182677
+   }
+  },
+  {
+   "slug": "pistol-start",
+   "items": 18,
+   "alpha": 0.842,
+   "targetRub": 25,
+   "evRub": 22.33,
+   "priceRub": 25.01,
+   "topChance": 0.211538,
+   "minChance": 0.000149,
+   "rarities": {
+    "Covert": 0.000925,
+    "Classified": 0.007320999999999999,
+    "Consumer Grade": 0.39417800000000003,
+    "Mil-Spec Grade": 0.14146999999999998,
+    "Industrial Grade": 0.45610599999999996
+   }
+  },
+  {
+   "slug": "daily-burger",
+   "items": 18,
+   "alpha": 0.973,
+   "targetRub": 49,
+   "evRub": 43.75,
+   "priceRub": 49,
+   "topChance": 0.240342,
+   "minChance": 0.000818,
+   "rarities": {
+    "Covert": 0.000818,
+    "Classified": 0.027084,
+    "Restricted": 0.117235,
+    "Mil-Spec Grade": 0.8548629999999999
+   }
+  },
+  {
+   "slug": "lucky-ticket",
+   "items": 19,
+   "alpha": 1.001,
+   "targetRub": 99,
+   "evRub": 88.4,
+   "priceRub": 99,
+   "topChance": 0.178424,
+   "minChance": 0.000573,
+   "rarities": {
+    "Covert": 0.003109,
+    "Extraordinary": 0.004135,
+    "Classified": 0.001418,
+    "Restricted": 0.991338
+   }
+  },
+  {
+   "slug": "covert-ops",
+   "items": 18,
+   "alpha": 2.851,
+   "targetRub": 3990,
+   "evRub": 3562.48,
+   "priceRub": 3989.98,
+   "topChance": 0.29053,
+   "minChance": 0.000022,
+   "rarities": {
+    "Covert": 1
+   }
+  },
+  {
+   "slug": "black-card",
+   "items": 18,
+   "alpha": 0.683,
+   "targetRub": 2490,
+   "evRub": 2223.21,
+   "priceRub": 2489.99,
+   "topChance": 0.228883,
+   "minChance": 0.002845,
+   "rarities": {
+    "Covert": 0.102494,
+    "Extraordinary": 0.038203,
+    "Classified": 0.158242,
+    "Mil-Spec Grade": 0.376689,
+    "Restricted": 0.035023,
+    "Industrial Grade": 0.289349
+   }
+  },
+  {
+   "slug": "business-class",
+   "items": 16,
+   "alpha": 1.007,
+   "targetRub": 990,
+   "evRub": 883.93,
+   "priceRub": 990.01,
+   "topChance": 0.331632,
+   "minChance": 0.00173,
+   "rarities": {
+    "Classified": 0.38362199999999996,
+    "Covert": 0.007246,
+    "Restricted": 0.239198,
+    "Mil-Spec Grade": 0.306633,
+    "Industrial Grade": 0.063301
+   }
+  },
+  {
+   "slug": "chrome-district",
+   "items": 18,
+   "alpha": 1.206,
+   "targetRub": 690,
+   "evRub": 616.07,
+   "priceRub": 689.99,
+   "topChance": 0.464981,
+   "minChance": 0.00054,
+   "rarities": {
+    "Restricted": 0.125289,
+    "Classified": 0.637096,
+    "Mil-Spec Grade": 0.070133,
+    "Covert": 0.012246,
+    "Industrial Grade": 0.15523599999999999
+   }
+  },
+  {
+   "slug": "million-grill",
+   "items": 20,
+   "alpha": 1.979,
+   "targetRub": 4990,
+   "evRub": 4455.32,
+   "priceRub": 4989.95,
+   "topChance": 0.357632,
+   "minChance": 0.000072,
+   "rarities": {
+    "Extraordinary": 0.000172,
+    "Restricted": 0.000996,
+    "Classified": 0.000658,
+    "Covert": 0.9981740000000001
+   }
+  },
+  {
+   "slug": "karambit-claw",
+   "items": 21,
+   "alpha": 2.155,
+   "targetRub": 64990,
+   "evRub": 58027.03,
+   "priceRub": 64990.27,
+   "topChance": 0.130788,
+   "minChance": 0.000421,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "steel-wings",
+   "items": 18,
+   "alpha": 2.019,
+   "targetRub": 62000,
+   "evRub": 55357.39,
+   "priceRub": 62000.28,
+   "topChance": 0.165511,
+   "minChance": 0.000281,
+   "rarities": {
+    "Extraordinary": 0.9999999999999999
+   }
+  },
+  {
+   "slug": "pocket-blade",
+   "items": 24,
+   "alpha": 3.085,
+   "targetRub": 5490,
+   "evRub": 4901.77,
+   "priceRub": 5489.99,
+   "topChance": 0.226762,
+   "minChance": 0.00059,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "knife-hunt",
+   "items": 27,
+   "alpha": 1.232,
+   "targetRub": 1290,
+   "evRub": 1151.78,
+   "priceRub": 1290,
+   "topChance": 0.237222,
+   "minChance": 0.00058,
+   "rarities": {
+    "Extraordinary": 0.050920999999999994,
+    "Covert": 0.02731,
+    "Classified": 0.9217690000000001
+   }
+  },
+  {
+   "slug": "doppler-prism",
+   "items": 26,
+   "alpha": 1.444,
+   "targetRub": 24990,
+   "evRub": 22312.6,
+   "priceRub": 24990.12,
+   "topChance": 0.236365,
+   "minChance": 0.000342,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "fade-factory",
+   "items": 25,
+   "alpha": 1.613,
+   "targetRub": 5990,
+   "evRub": 5348.14,
+   "priceRub": 5989.92,
+   "topChance": 0.579058,
+   "minChance": 0.000245,
+   "rarities": {
+    "Extraordinary": 0.177915,
+    "Restricted": 0.000532,
+    "Covert": 0.061685,
+    "Classified": 0.014657,
+    "Mil-Spec Grade": 0.745211
+   }
+  },
+  {
+   "slug": "bayonet-squad",
+   "items": 16,
+   "alpha": 1.306,
+   "targetRub": 29990,
+   "evRub": 26776.89,
+   "priceRub": 29990.11,
+   "topChance": 0.22603,
+   "minChance": 0.000916,
+   "rarities": {
+    "Extraordinary": 0.9999999999999998
+   }
+  },
+  {
+   "slug": "tiger-marble",
+   "items": 22,
+   "alpha": 1.56,
+   "targetRub": 14990,
+   "evRub": 13383.9,
+   "priceRub": 14989.97,
+   "topChance": 0.192989,
+   "minChance": 0.002022,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "factory-steel",
+   "items": 20,
+   "alpha": 0.168,
+   "targetRub": 19990,
+   "evRub": 17848.29,
+   "priceRub": 19990.08,
+   "topChance": 0.060736,
+   "minChance": 0.0348,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "glove-locker",
+   "items": 28,
+   "alpha": 0.953,
+   "targetRub": 14990,
+   "evRub": 13383.76,
+   "priceRub": 14989.81,
+   "topChance": 0.154997,
+   "minChance": 0.001692,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "sport-luxe",
+   "items": 19,
+   "alpha": 0.402,
+   "targetRub": 39990,
+   "evRub": 35705.3,
+   "priceRub": 39989.93,
+   "topChance": 0.087072,
+   "minChance": 0.018974,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "specialist-ops",
+   "items": 19,
+   "alpha": 0.358,
+   "targetRub": 22990,
+   "evRub": 20526.7,
+   "priceRub": 22989.9,
+   "topChance": 0.087501,
+   "minChance": 0.024424,
+   "rarities": {
+    "Extraordinary": 1
+   }
+  },
+  {
+   "slug": "drive-and-wrap",
+   "items": 27,
+   "alpha": 0.47,
+   "targetRub": 12990,
+   "evRub": 11598.21,
+   "priceRub": 12990,
+   "topChance": 0.067599,
+   "minChance": 0.017473,
+   "rarities": {
+    "Extraordinary": 0.9999999999999999
+   }
+  },
+  {
+   "slug": "moto-and-fang",
+   "items": 18,
+   "alpha": 0.629,
+   "targetRub": 7990,
+   "evRub": 7133.9,
+   "priceRub": 7989.96,
+   "topChance": 0.095853,
+   "minChance": 0.010142,
+   "rarities": {
+    "Extraordinary": 0.9999999999999999
+   }
+  },
+  {
+   "slug": "blade-and-fist",
+   "items": 23,
+   "alpha": 0.62,
+   "targetRub": 3490,
+   "evRub": 3116.06,
+   "priceRub": 3489.99,
+   "topChance": 0.141185,
+   "minChance": 0.005847,
+   "rarities": {
+    "Extraordinary": 0.172898,
+    "Covert": 0.059378,
+    "Classified": 0.767724
+   }
+  },
+  {
+   "slug": "dragon-hoard",
+   "items": 17,
+   "alpha": 1.233,
+   "targetRub": 9990,
+   "evRub": 8919.62,
+   "priceRub": 9989.97,
+   "topChance": 0.21123,
+   "minChance": 0.000314,
+   "rarities": {
+    "Covert": 0.970407,
+    "Classified": 0.029593
+   }
+  },
+  {
+   "slug": "contraband",
+   "items": 24,
+   "alpha": 0.532,
+   "targetRub": 6990,
+   "evRub": 6241.26,
+   "priceRub": 6990.21,
+   "topChance": 0.249536,
+   "minChance": 0.002,
+   "rarities": {
+    "Contraband": 0.002,
+    "Classified": 0.058817,
+    "Covert": 0.12184900000000001,
+    "Restricted": 0.686282,
+    "Industrial Grade": 0.056428,
+    "Mil-Spec Grade": 0.074624
+   }
+  },
+  {
+   "slug": "lotus-throne",
+   "items": 23,
+   "alpha": 0.374,
+   "targetRub": 7990,
+   "evRub": 7133.68,
+   "priceRub": 7989.72,
+   "topChance": 0.254215,
+   "minChance": 0.003396,
+   "rarities": {
+    "Covert": 0.052795,
+    "Classified": 0.047049,
+    "Restricted": 0.095887,
+    "Mil-Spec Grade": 0.48706499999999997,
+    "Consumer Grade": 0.062989,
+    "Industrial Grade": 0.254215
+   }
+  },
+  {
+   "slug": "olympus",
+   "items": 23,
+   "alpha": 1.232,
+   "targetRub": 29990,
+   "evRub": 26777.27,
+   "priceRub": 29990.55,
+   "topChance": 0.214444,
+   "minChance": 0.000762,
+   "rarities": {
+    "Extraordinary": 0.008650999999999999,
+    "Covert": 0.963004,
+    "Contraband": 0.001545,
+    "Classified": 0.017393,
+    "Restricted": 0.009407
+   }
+  },
+  {
+   "slug": "collectors-vault",
+   "items": 25,
+   "alpha": 0.487,
+   "targetRub": 9990,
+   "evRub": 8919.65,
+   "priceRub": 9990.01,
+   "topChance": 0.174574,
+   "minChance": 0.006343,
+   "rarities": {
+    "Covert": 0.017426,
+    "Restricted": 0.7411300000000001,
+    "Classified": 0.17510399999999998,
+    "Mil-Spec Grade": 0.06634000000000001
+   }
+  },
+  {
+   "slug": "dragon-den",
+   "items": 19,
+   "alpha": 0.505,
+   "targetRub": 990,
+   "evRub": 883.95,
+   "priceRub": 990.02,
+   "topChance": 0.293703,
+   "minChance": 0.004233,
+   "rarities": {
+    "Restricted": 0.329451,
+    "Covert": 0.014676000000000002,
+    "Classified": 0.049348,
+    "Mil-Spec Grade": 0.312822,
+    "Industrial Grade": 0.293703
+   }
+  },
+  {
+   "slug": "neon-district",
+   "items": 22,
+   "alpha": 0.562,
+   "targetRub": 590,
+   "evRub": 526.79,
+   "priceRub": 590.01,
+   "topChance": 0.370984,
+   "minChance": 0.001999,
+   "rarities": {
+    "Restricted": 0.20679800000000004,
+    "Covert": 0.05927299999999999,
+    "Classified": 0.07256599999999999,
+    "Mil-Spec Grade": 0.290379,
+    "Industrial Grade": 0.370984
+   }
+  },
+  {
+   "slug": "inferno-grill",
+   "items": 20,
+   "alpha": 0.452,
+   "targetRub": 990,
+   "evRub": 883.93,
+   "priceRub": 990.01,
+   "topChance": 0.23835,
+   "minChance": 0.003857,
+   "rarities": {
+    "Restricted": 0.109046,
+    "Extraordinary": 0.007968,
+    "Covert": 0.038175,
+    "Classified": 0.090031,
+    "Mil-Spec Grade": 0.240913,
+    "Consumer Grade": 0.089578,
+    "Industrial Grade": 0.424289
+   }
+  },
+  {
+   "slug": "deep-ocean",
+   "items": 22,
+   "alpha": 0.488,
+   "targetRub": 1490,
+   "evRub": 1330.33,
+   "priceRub": 1489.97,
+   "topChance": 0.308842,
+   "minChance": 0.00238,
+   "rarities": {
+    "Classified": 0.027413,
+    "Extraordinary": 0.015648000000000002,
+    "Restricted": 0.133391,
+    "Covert": 0.038166000000000005,
+    "Industrial Grade": 0.508904,
+    "Consumer Grade": 0.078934,
+    "Mil-Spec Grade": 0.197544
+   }
+  },
+  {
+   "slug": "rising-sun",
+   "items": 14,
+   "alpha": 1.009,
+   "targetRub": 2490,
+   "evRub": 2223.21,
+   "priceRub": 2489.99,
+   "topChance": 0.32007,
+   "minChance": 0.00297,
+   "rarities": {
+    "Covert": 0.059859,
+    "Restricted": 0.006935,
+    "Classified": 0.7634799999999999,
+    "Extraordinary": 0.009402,
+    "Mil-Spec Grade": 0.028923,
+    "Industrial Grade": 0.131401
+   }
+  },
+  {
+   "slug": "white-noise",
+   "items": 21,
+   "alpha": 0.517,
+   "targetRub": 790,
+   "evRub": 705.35,
+   "priceRub": 789.99,
+   "topChance": 0.353084,
+   "minChance": 0.004624,
+   "rarities": {
+    "Covert": 0.079396,
+    "Mil-Spec Grade": 0.411329,
+    "Classified": 0.033931,
+    "Restricted": 0.12226000000000001,
+    "Industrial Grade": 0.353084
+   }
+  },
+  {
+   "slug": "beast-mode",
+   "items": 17,
+   "alpha": 1.147,
+   "targetRub": 790,
+   "evRub": 705.36,
+   "priceRub": 790.01,
+   "topChance": 0.238482,
+   "minChance": 0.001225,
+   "rarities": {
+    "Extraordinary": 0.00418,
+    "Covert": 0.028627,
+    "Classified": 0.296173,
+    "Mil-Spec Grade": 0.21881,
+    "Restricted": 0.45221
+   }
+  },
+  {
+   "slug": "star-route",
+   "items": 14,
+   "alpha": 0.873,
+   "targetRub": 690,
+   "evRub": 616.11,
+   "priceRub": 690.05,
+   "topChance": 0.304932,
+   "minChance": 0.000395,
+   "rarities": {
+    "Extraordinary": 0.002146,
+    "Classified": 0.107144,
+    "Covert": 0.032599,
+    "Restricted": 0.40698599999999996,
+    "Mil-Spec Grade": 0.451125
+   }
+  },
+  {
+   "slug": "toxic-waste",
+   "items": 14,
+   "alpha": 1.625,
+   "targetRub": 990,
+   "evRub": 883.9,
+   "priceRub": 989.97,
+   "topChance": 0.305781,
+   "minChance": 0.000061,
+   "rarities": {
+    "Extraordinary": 0.000061,
+    "Covert": 0.00417,
+    "Classified": 0.207006,
+    "Restricted": 0.32338900000000004,
+    "Mil-Spec Grade": 0.10141700000000001,
+    "Industrial Grade": 0.363957
+   }
+  },
+  {
+   "slug": "ak-arsenal",
+   "items": 20,
+   "alpha": 0.716,
+   "targetRub": 1290,
+   "evRub": 1151.76,
+   "priceRub": 1289.98,
+   "topChance": 0.24298,
+   "minChance": 0.001894,
+   "rarities": {
+    "Covert": 0.07923999999999999,
+    "Restricted": 0.329643,
+    "Classified": 0.101916,
+    "Mil-Spec Grade": 0.489201
+   }
+  },
+  {
+   "slug": "awp-scope",
+   "items": 23,
+   "alpha": 0.486,
+   "targetRub": 990,
+   "evRub": 883.94,
+   "priceRub": 990.01,
+   "topChance": 0.173008,
+   "minChance": 0.006545,
+   "rarities": {
+    "Classified": 0.119091,
+    "Covert": 0.084841,
+    "Mil-Spec Grade": 0.31037000000000003,
+    "Restricted": 0.31269,
+    "Industrial Grade": 0.173008
+   }
+  },
+  {
+   "slug": "m4-duo",
+   "items": 23,
+   "alpha": 0.553,
+   "targetRub": 990,
+   "evRub": 883.95,
+   "priceRub": 990.02,
+   "topChance": 0.175038,
+   "minChance": 0.005376,
+   "rarities": {
+    "Covert": 0.04472,
+    "Classified": 0.094735,
+    "Restricted": 0.602009,
+    "Industrial Grade": 0.050849000000000005,
+    "Mil-Spec Grade": 0.207687
+   }
+  },
+  {
+   "slug": "desert-eagle",
+   "items": 21,
+   "alpha": 0.719,
+   "targetRub": 590,
+   "evRub": 526.79,
+   "priceRub": 590,
+   "topChance": 0.235077,
+   "minChance": 0.001733,
+   "rarities": {
+    "Restricted": 0.333402,
+    "Classified": 0.10677600000000001,
+    "Covert": 0.023359,
+    "Mil-Spec Grade": 0.42225500000000005,
+    "Industrial Grade": 0.114208
+   }
+  },
+  {
+   "slug": "sidearm-pro",
+   "items": 25,
+   "alpha": 0.776,
+   "targetRub": 290,
+   "evRub": 258.92,
+   "priceRub": 289.99,
+   "topChance": 0.218044,
+   "minChance": 0.001059,
+   "rarities": {
+    "Covert": 0.007174,
+    "Restricted": 0.33750199999999997,
+    "Classified": 0.0674,
+    "Mil-Spec Grade": 0.48880599999999996,
+    "Industrial Grade": 0.09911800000000001
+   }
+  },
+  {
+   "slug": "smg-blitz",
+   "items": 20,
+   "alpha": 0.674,
+   "targetRub": 290,
+   "evRub": 258.92,
+   "priceRub": 289.99,
+   "topChance": 0.234339,
+   "minChance": 0.001989,
+   "rarities": {
+    "Classified": 0.009502,
+    "Covert": 0.01689,
+    "Restricted": 0.2907,
+    "Mil-Spec Grade": 0.500304,
+    "Industrial Grade": 0.155234,
+    "Consumer Grade": 0.02737
+   }
+  },
+  {
+   "slug": "heavy-metal",
+   "items": 20,
+   "alpha": 0.685,
+   "targetRub": 190,
+   "evRub": 169.66,
+   "priceRub": 190.02,
+   "topChance": 0.255234,
+   "minChance": 0.000555,
+   "rarities": {
+    "Classified": 0.008299,
+    "Mil-Spec Grade": 0.651997,
+    "Restricted": 0.042585,
+    "Covert": 0.00209,
+    "Industrial Grade": 0.26135200000000003,
+    "Consumer Grade": 0.033677
+   }
+  },
+  {
+   "slug": "sniper-nest",
+   "items": 23,
+   "alpha": 0.65,
+   "targetRub": 290,
+   "evRub": 258.94,
+   "priceRub": 290.01,
+   "topChance": 0.225805,
+   "minChance": 0.001168,
+   "rarities": {
+    "Restricted": 0.072552,
+    "Covert": 0.0037819999999999998,
+    "Classified": 0.016195,
+    "Mil-Spec Grade": 0.8536940000000001,
+    "Consumer Grade": 0.05377699999999999
+   }
+  }
+ ]
+}

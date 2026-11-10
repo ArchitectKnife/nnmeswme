@@ -65,6 +65,7 @@ export function normalizeItem(s: any) {
     image: s.image || null,
     collection: (Array.isArray(s.collections) ? s.collections[0]?.name : s.collection) || null,
     crates: Array.isArray(s.crates) ? JSON.stringify(s.crates.map((c: any) => c.name).filter(Boolean)) : s.crates || null,
+    phase: typeof s.phase === 'string' && s.phase.trim() ? s.phase.trim().slice(0, 40) : null,
   };
 }
 export function importItems(rows: any[], source: string): ImportReport {
@@ -77,16 +78,19 @@ export function importItems(rows: any[], source: string): ImportReport {
       const mn = it.min_float == null || it.min_float === '' ? 0 : Number(it.min_float);
       const mx = it.max_float == null || it.max_float === '' ? 1 : Number(it.max_float);
       if (!(mn >= 0 && mx <= 1 && mn <= mx)) { rep.skipped++; rep.errors.push({ row: i + 1, error: `некорректный float: ${it.name}` }); return; }
-      const ex = (it.ext_id && one('SELECT * FROM items WHERE ext_id=?', String(it.ext_id))) || one('SELECT * FROM items WHERE name=? COLLATE NOCASE ORDER BY id LIMIT 1', it.name);
+      // Фаза Doppler — отдельный предмет: строка с фазой сопоставляется только с той же фазой, иначе добавляется новым предметом.
+      const ex = (it.ext_id && one('SELECT * FROM items WHERE ext_id=?', String(it.ext_id)))
+        || (it.phase ? one('SELECT * FROM items WHERE name=? COLLATE NOCASE AND phase=? ORDER BY id LIMIT 1', it.name, it.phase)
+          : one('SELECT * FROM items WHERE name=? COLLATE NOCASE AND phase IS NULL ORDER BY id LIMIT 1', it.name) || one('SELECT * FROM items WHERE name=? COLLATE NOCASE ORDER BY id LIMIT 1', it.name));
       if (ex) {
         run(`UPDATE items SET ext_id=COALESCE(?, ext_id), name=?, weapon=COALESCE(?, weapon), category=COALESCE(?, category), pattern=COALESCE(?, pattern), rarity=COALESCE(?, rarity),
           rarity_name=COALESCE(?, rarity_name), rarity_color=COALESCE(?, rarity_color), min_float=?, max_float=?, stattrak=?, souvenir=?,
-          image=CASE WHEN image LIKE '/img/%' OR image LIKE '/uploads/%' THEN image ELSE COALESCE(?, image) END, collection=COALESCE(?, collection), crates=COALESCE(?, crates), updated_at=? WHERE id=?`,
-          it.ext_id ? String(it.ext_id) : null, it.name, it.weapon, it.category, it.pattern, it.rarity, it.rarity_name, it.rarity_color, mn, mx, it.stattrak, it.souvenir, it.image, it.collection, it.crates, now(), ex.id);
+          image=CASE WHEN image LIKE '/img/%' OR image LIKE '/uploads/%' THEN image ELSE COALESCE(?, image) END, collection=COALESCE(?, collection), crates=COALESCE(?, crates), phase=COALESCE(?, phase), updated_at=? WHERE id=?`,
+          it.ext_id ? String(it.ext_id) : null, it.name, it.weapon, it.category, it.pattern, it.rarity, it.rarity_name, it.rarity_color, mn, mx, it.stattrak, it.souvenir, it.image, it.collection, it.crates, it.phase, now(), ex.id);
         rep.updated++;
       } else {
-        run('INSERT INTO items(ext_id,name,weapon,category,pattern,rarity,rarity_name,rarity_color,min_float,max_float,stattrak,souvenir,image,collection,crates,price_source,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-          it.ext_id ? String(it.ext_id) : null, it.name, it.weapon, it.category, it.pattern, it.rarity, it.rarity_name, it.rarity_color, mn, mx, it.stattrak, it.souvenir, it.image, it.collection, it.crates, null, now(), now());
+        run('INSERT INTO items(ext_id,name,weapon,category,pattern,rarity,rarity_name,rarity_color,min_float,max_float,stattrak,souvenir,image,collection,crates,phase,price_source,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+          it.ext_id ? String(it.ext_id) : null, it.name, it.weapon, it.category, it.pattern, it.rarity, it.rarity_name, it.rarity_color, mn, mx, it.stattrak, it.souvenir, it.image, it.collection, it.crates, it.phase, null, now(), now());
         rep.added++;
       }
     });
@@ -119,7 +123,9 @@ export function importPrices(rows: any[], source: string): ImportReport & { unma
       const raw = r.price ?? r.suggested_price ?? r.median_price ?? r.min_price ?? r.mean_price;
       const price = Math.round(Number(raw) * 100);
       if (!parsed.name || !Number.isFinite(price) || price <= 0) { rep.skipped++; return; }
-      const it = one('SELECT id FROM items WHERE name=? COLLATE NOCASE AND archived=0 ORDER BY id LIMIT 1', parsed.name);
+      const ver = typeof r.version === 'string' && r.version ? r.version : null;
+      const it = (ver && one('SELECT id FROM items WHERE name=? COLLATE NOCASE AND phase=? AND archived=0 ORDER BY id LIMIT 1', parsed.name, ver))
+        || one('SELECT id FROM items WHERE name=? COLLATE NOCASE AND archived=0 ORDER BY (phase IS NOT NULL), id LIMIT 1', parsed.name);
       if (!it) { rep.skipped++; if (rep.unmatched.length < 200) rep.unmatched.push(r.market_hash_name || parsed.name); return; }
       const ex = one('SELECT 1 FROM item_prices WHERE item_id=? AND wear=? AND variant=?', it.id, parsed.wear, parsed.variant);
       run('INSERT INTO item_prices(item_id,wear,variant,price,source,updated_at) VALUES(?,?,?,?,?,?) ON CONFLICT(item_id,wear,variant) DO UPDATE SET price=excluded.price, source=excluded.source, updated_at=excluded.updated_at',
